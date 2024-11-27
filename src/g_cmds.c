@@ -189,7 +189,7 @@ void Cmd_Response_f (edict_t *ent)
 
 void Vote_Ban( edict_t *ent, char *name )
 {
-	edict_t *target;
+	edict_t *target = NULL;
 	int		i;
 	char	*ip;
 
@@ -1553,16 +1553,19 @@ void Cmd_Order_f (edict_t *ent, edict_t *other, char *cmd)
 
 			break;
 		}
-		
+	}
+
+	if (ent->client)
+	{
 		// JOSEPH 19-FEB-99 
 		if ((flags) && (!ent->client->hud_self_talk_time == (level.time + 2.0)) &&
-			(!((ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_YES) || 
-			(ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_NO))))
+			(!((ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_YES) ||
+				(ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_NO))))
 		{
-		ent->client->ps.stats[STAT_HUD_SELF_TALK] = TT_COMMAND;
-		ent->client->hud_self_talk_time = level.time + 2.0;
+			ent->client->ps.stats[STAT_HUD_SELF_TALK] = TT_COMMAND;
+			ent->client->hud_self_talk_time = level.time + 2.0;
 		}
-		// END JOSEPH	
+		// END JOSEPH
 	}
 
 	if (ordertime < (level.time - 0.5))
@@ -1609,9 +1612,118 @@ edict_t	*GetKeyEnt( edict_t *ent )
 }
 // END JOSEPH
 
+/*
+=================
+Cmd_Wave_f
+=================
+*/
+void Cmd_Wave_f(edict_t* ent, edict_t* other)
+{
+	char* cmd;
+	int	rnd;
+
+	cmd = gi.argv(0);
+
+	if (!other->client)
+		return;
+
+	if (!ent->solid)
+		return;
+
+	// can't wave when ducked
+	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
+		return;
+
+	if (ent->client->last_wave > (level.time - 2) && (ent->client->last_wave <= level.time))
+		return;
+
+	ent->client->last_wave = level.time;
+
+	// say something
+	{
+
+		if (!teamplay->value || (ent->client->pers.team != other->client->pers.team))
+		{
+			if (strstr(cmd, "key1"))
+			{
+				if (ent->gender == GENDER_MALE)
+					Voice_Random(ent, other, player_profanity_level2, NUM_PLAYER_PROFANITY_LEVEL2);
+				else if (ent->gender == GENDER_FEMALE)
+					Voice_Random(ent, other, f_profanity_level2, F_NUM_PROFANITY_LEVEL2);
+			}
+			else	// profanity 3
+			{
+				if (ent->gender == GENDER_MALE)
+					Voice_Random(ent, other, player_profanity_level3, NUM_PLAYER_PROFANITY_LEVEL3);
+				else if (ent->gender == GENDER_FEMALE)
+					Voice_Random(ent, other, f_profanity_level3, F_NUM_PROFANITY_LEVEL3);
+			}
+		}
+		else	// stay here/moving out
+		{
+			if (strstr(cmd, "key3"))
+			{		// hold
+				if (ent->gender == GENDER_MALE)
+					Voice_Random(ent, other, holdposition, NUM_HOLDPOSITION);
+				else if (ent->gender == GENDER_FEMALE)
+					//					Voice_Random(ent, other, f_holdposition, F_NUM_HOLDPOSITION);
+					Voice_Random(ent, other, rc_f_profanity_level1, 5);
+			}
+			else if (strstr(cmd, "key2"))	// lets go
+			{
+				if (ent->gender == GENDER_MALE)
+					Voice_Random(ent, other, followme, NUM_FOLLOWME);
+				else if (ent->gender == GENDER_FEMALE)
+					//					Voice_Random(ent, other, f_followme, F_NUM_FOLLOWME);
+					Voice_Random(ent, other, rc_lola, 7);
+			}
+			else // converse
+			{
+				if (ent->gender == GENDER_MALE)
+				{
+					if (other->gender == GENDER_FEMALE)
+						Voice_Random(ent, other, f_neutral_talk_player, F_NUM_NEUTRAL_TALK_PLAYER);
+					else
+						Voice_Random(ent, other, neutral_talk_player, NUM_NEUTRAL_TALK_PLAYER);
+				}
+				else if (ent->gender == GENDER_FEMALE)
+				{
+					Voice_Random(ent, other, f_neutral_talk, F_NUM_NEUTRAL_TALK);
+				}
+			}
+		}
+	}
+
+	if (ent->client->anim_priority > ANIM_WAVE)
+		return;
+
+	ent->client->anim_priority = ANIM_WAVE;
+
+	rnd = rand() % 3;
+
+	switch (rnd)
+	{
+	case 0:
+		//		gi.cprintf (ent, PRINT_HIGH, "flipoff\n");
+		ent->s.frame = FRAME_tg_bird_01 - 1;
+		ent->client->anim_end = FRAME_tg_bird_10;
+		break;
+	case 1:
+		//		gi.cprintf (ent, PRINT_HIGH, "salute\n");
+		ent->s.frame = FRAME_tg_crch_grab_01 - 1;
+		ent->client->anim_end = FRAME_tg_crch_grab_16;
+		break;
+	case 2:
+		//		gi.cprintf (ent, PRINT_HIGH, "taunt\n");
+		ent->s.frame = FRAME_tg_chin_flip_01 - 1;
+		ent->client->anim_end = FRAME_tg_chin_flip_15;
+		break;
+	}
+}
+
 void Cmd_Key_f (edict_t *ent)
 {
-	char		*cmd;
+	char *cmd;
 
 	
 	if (level.speaktime > level.time)
@@ -1619,9 +1731,8 @@ void Cmd_Key_f (edict_t *ent)
 	
 	cmd = gi.argv (0);
 
-	if (key_ent = GetKeyEnt( ent ))
+	if ((key_ent = GetKeyEnt( ent )) != NULL)
 	{
-		void Cmd_Wave_f (edict_t *ent, edict_t *other);
 		cast_memory_t *mem;
 
 		if (deathmatch->value)
@@ -1653,7 +1764,7 @@ void Cmd_Key_f (edict_t *ent)
 		}
 		else if (mem->response)		// we're responding to a question
 		{
-			response_t resp;
+			response_t resp = resp_no;
 
 			if (Q_stricmp (cmd, "key1") == 0)
 				resp = resp_yes;
@@ -1673,7 +1784,7 @@ void Cmd_Key_f (edict_t *ent)
 	}
 	else	// noone to talk to, so make it an order in case anyone's listening
 	{
-		int flags;
+		int flags = ORDER_HOLD;
 
 		if (Q_stricmp (cmd, "key1") == 0)		// Stay Here
 			flags = ORDER_FOLLOWME;
@@ -1743,7 +1854,7 @@ void Cmd_FryAll_f (edict_t *ent)
 	if (deathmatch->value)
 		return;
 
-	while (e = findradius(e, ent->s.origin, 512))
+	while ((e = findradius(e, ent->s.origin, 512)) != NULL)
 	{
 		if (e->svflags & SVF_MONSTER)
 		{
@@ -2021,8 +2132,6 @@ void Cmd_Give_f (edict_t *ent)
 	// JOSEPH 30-APR-99
 	if (Q_stricmp(name, "armor") == 0)
 	{
-		gitem_t	*it;
-
 		it = FindItem("Jacket Armor Heavy");
 		ent->client->pers.inventory[ITEM_INDEX(it)] = 100;
 
@@ -2032,7 +2141,7 @@ void Cmd_Give_f (edict_t *ent)
 		it = FindItem("Helmet Armor Heavy");
 		ent->client->pers.inventory[ITEM_INDEX(it)] = 100;
 
-			return;
+		return;
 	}
 
 	/*if (give_all || Q_stricmp(name, "Power Shield") == 0)
@@ -2537,7 +2646,7 @@ void Cmd_Activate_f (edict_t *ent)
 		// find the near enemy 
 		trav = best = NULL;
 		// JOSEPH 13-MAY-99
-		while (trav = findradius( trav, ent->s.origin, 80 ))
+		while ((trav = findradius( trav, ent->s.origin, 80 )) != NULL)
 		// END JOSEPH
 		{
 			// JOSEPH 14-MAY-99
@@ -2921,7 +3030,7 @@ startyourtriggers:
 	}
 
 	// Ridah, moveout command
- 	if ((ent->cast_info.aiflags & AI_DOKEY || ent->cast_info.aiflags & AI_MOVEOUT) && ent->client->pers.friends > 0)
+	if ((ent->cast_info.aiflags & AI_DOKEY || ent->cast_info.aiflags & AI_MOVEOUT) && ent->client->pers.friends > 0)
 	{
 		vec3_t	start, end, dir;
 		trace_t tr;
@@ -3026,7 +3135,7 @@ void Cmd_Holster_f (edict_t *ent)
 	{
 		if (cl->ps.gunindex != 0)
 			return;
-  
+	
 		cl->newweapon = cl->pers.holsteredweapon;
 		ChangeWeapon (ent);
 		cl->pers.holsteredweapon = 0;  
@@ -3060,7 +3169,7 @@ void Cmd_HolsterBar_f (edict_t *ent)
 	{
 		if (cl->ps.gunindex != 0)
 			return;
-  
+	
 		cl->newweapon = cl->pers.holsteredweapon;
 		ChangeWeapon (ent);
 		cl->pers.holsteredweapon = 0;  
@@ -3326,116 +3435,6 @@ void Cmd_Players_f (edict_t *ent)
 }
 
 /*
-=================
-Cmd_Wave_f
-=================
-*/
-void Cmd_Wave_f (edict_t *ent, edict_t *other)
-{
-	char *cmd;
-	int	rnd;
-
-	cmd = gi.argv(0);
-
-	if (!other->client)
-		return;
-
-	if (!ent->solid)
-		return;
-
-	// can't wave when ducked
-	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED)
-		return;
-
-	if (ent->client->last_wave > (level.time - 2) && (ent->client->last_wave <= level.time))
-		return;
-
-	ent->client->last_wave = level.time;
-
-	// say something
-	{
-
-		if (!teamplay->value || (ent->client->pers.team != other->client->pers.team))
-		{
-			if (strstr(cmd, "key1"))
-			{
-				if (ent->gender == GENDER_MALE)
-					Voice_Random(ent, other, player_profanity_level2, NUM_PLAYER_PROFANITY_LEVEL2);
-				else if (ent->gender == GENDER_FEMALE)
-					Voice_Random(ent, other, f_profanity_level2, F_NUM_PROFANITY_LEVEL2);
-			}
-			else	// profanity 3
-			{
-				if (ent->gender == GENDER_MALE)
-					Voice_Random(ent, other, player_profanity_level3, NUM_PLAYER_PROFANITY_LEVEL3);
-				else if (ent->gender == GENDER_FEMALE)
-					Voice_Random(ent, other, f_profanity_level3, F_NUM_PROFANITY_LEVEL3);
-			}
-		}
-		else	// stay here/moving out
-		{
-			if (strstr(cmd, "key3"))
-			{		// hold
-				if (ent->gender == GENDER_MALE)
-					Voice_Random(ent, other, holdposition, NUM_HOLDPOSITION);
-				else if (ent->gender == GENDER_FEMALE)
-//					Voice_Random(ent, other, f_holdposition, F_NUM_HOLDPOSITION);
-					Voice_Random(ent, other, rc_f_profanity_level1, 5);
-			}
-			else if (strstr(cmd, "key2"))	// lets go
-			{
-				if (ent->gender == GENDER_MALE)
-					Voice_Random(ent, other, followme, NUM_FOLLOWME);
-				else if (ent->gender == GENDER_FEMALE)
-//					Voice_Random(ent, other, f_followme, F_NUM_FOLLOWME);
-					Voice_Random(ent, other, rc_lola, 7);
-			}
-			else // converse
-			{
-				if (ent->gender == GENDER_MALE)
-				{
-					if (other->gender == GENDER_FEMALE)
-						Voice_Random(ent, other, f_neutral_talk_player, F_NUM_NEUTRAL_TALK_PLAYER);
-					else
-						Voice_Random(ent, other, neutral_talk_player, NUM_NEUTRAL_TALK_PLAYER);
-				}
-				else if (ent->gender == GENDER_FEMALE)
-				{
-					Voice_Random(ent, other, f_neutral_talk, F_NUM_NEUTRAL_TALK);
-				}
-			}
-		}
-	}
-
-	if (ent->client->anim_priority > ANIM_WAVE)
-		return;
-
-	ent->client->anim_priority = ANIM_WAVE;
-
-	rnd = rand() % 3;
-
-	switch (rnd)
-	{
-	case 0:
-//		gi.cprintf (ent, PRINT_HIGH, "flipoff\n");
-		ent->s.frame = FRAME_tg_bird_01-1;
-		ent->client->anim_end = FRAME_tg_bird_10;
-		break;
-	case 1:
-//		gi.cprintf (ent, PRINT_HIGH, "salute\n");
-		ent->s.frame = FRAME_tg_crch_grab_01-1;
-		ent->client->anim_end = FRAME_tg_crch_grab_16;
-		break;
-	case 2:
-//		gi.cprintf (ent, PRINT_HIGH, "taunt\n");
-		ent->s.frame = FRAME_tg_chin_flip_01-1;
-		ent->client->anim_end = FRAME_tg_chin_flip_15;
-		break;
-	}
-
-}
-
-/*
 ==================
 Cmd_Say_f
 ==================
@@ -3498,30 +3497,30 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 	if (flood_msgs->value) {
 		cl = ent->client;
 
-      if (level.time < cl->flood_locktill) {
+			if (level.time < cl->flood_locktill) {
 			gi.cprintf(ent, PRINT_HIGH, "You can't talk for %d more seconds\n",
 				(int)(cl->flood_locktill - level.time));
-            return;
-      }
-      i = cl->flood_whenhead - flood_msgs->value + 1;
-      if (i < 0)
-          i = (sizeof(cl->flood_when)/sizeof(cl->flood_when[0])) + i;
+						return;
+			}
+			i = cl->flood_whenhead - flood_msgs->value + 1;
+			if (i < 0)
+					i = (sizeof(cl->flood_when)/sizeof(cl->flood_when[0])) + i;
 		if (cl->flood_when[i] && 
 			level.time - cl->flood_when[i] < flood_persecond->value) {
 			cl->flood_locktill = level.time + flood_waitdelay->value;
 			gi.cprintf(ent, PRINT_CHAT, "Flood protection:  You can't talk for %d seconds.\n",
 				(int)flood_waitdelay->value);
-         return;
-      }
+				 return;
+			}
 
-      // if they repeat themselves really quickly, bitch-slap time
+			// if they repeat themselves really quickly, bitch-slap time
 		if (cl->flood_when[cl->flood_whenhead] && (cl->flood_when[cl->flood_whenhead] > level.time - 1) &&
 			!strcmp( ent->client->flood_lastmsg, text ))
 		{
 			cl->flood_locktill = level.time + flood_waitdelay->value;
 			gi.cprintf(ent, PRINT_CHAT, "Flood protection:  You can't talk for %d seconds.\n",
 				(int)flood_waitdelay->value);
-         return;
+				 return;
 		}
 
 		cl->flood_whenhead = (cl->flood_whenhead + 1) %
@@ -3789,6 +3788,6 @@ void ClientCommand (edict_t *ent)
 #endif
 
 	else	// anything that doesn't match a command will be a chat
-    Cmd_Say_f (ent, false, true);
+		Cmd_Say_f (ent, false, true);
 
 }

@@ -381,7 +381,6 @@ void SpawnBloodPool (edict_t *self)
 			if (self->s.model_parts[PART_HEAD].object_bounds[0] > 0)
 			{
 				vec3_t org, ang, mins, maxs;
-				vec3_t forward, right, up;
 				vec3_t rmins, rmaxs, pmins, pmaxs;
 
 				VectorCopy (self->s.origin, org);
@@ -897,7 +896,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 			}
 		}
 		
-	    if ((item) && (targ->client->pers.inventory[ITEM_INDEX(item)]))
+			if ((item) && (targ->client->pers.inventory[ITEM_INDEX(item)]))
 		{
 			int takehealth;
 			int takeshield;
@@ -927,7 +926,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 			else
 			{
 				takehealth = ((take - targ->client->pers.inventory[ index ])+
-					          (takefactor*targ->client->pers.inventory[ index ])); 
+										(takefactor*targ->client->pers.inventory[ index ])); 
 				targ->client->pers.inventory[ index ] = 0;
 				take = takehealth;
 				if (!take)
@@ -1079,7 +1078,7 @@ void SpawnPartShotOff (edict_t *self, int mdx_part, vec3_t dir)
 {
 
 	edict_t	*dropped;
-	int		skin, model;
+	int		skin = 0, model = 0;
 	vec3_t	forward, angles;
 	int		i;
 
@@ -1569,7 +1568,7 @@ void ThrowShard (edict_t *self, char *modelname, float speed, vec3_t origin)
 	chunk->think = Think_Shard;
 	chunk->misstime = 20;
 	chunk->nextthink = level.time + 0.1;
-    chunk->s.renderfx2 |= RF2_NOSHADOW;
+		chunk->s.renderfx2 |= RF2_NOSHADOW;
 	
 	gi.linkentity (chunk);
 }
@@ -1577,8 +1576,8 @@ void ThrowShard (edict_t *self, char *modelname, float speed, vec3_t origin)
 
 // RAFAEL
 void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir, vec3_t point, 
-				  vec3_t normal, int damage, int knockback, int dflags, int mod,
-				  int mdx_part, int mdx_subobject)
+					vec3_t normal, int damage, int knockback, int dflags, int mod,
+					int mdx_part, int mdx_subobject)
 {
 	gclient_t	*client;
 	int			take;
@@ -1720,7 +1719,7 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 		{
 			int     index;
 			gitem_t *item = NULL;
-			float   takefactor; 
+			float   takefactor = 0.0f;
 			int takehealth = 0;
 			int takeshield = 0;
 
@@ -1729,14 +1728,14 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 				if (client)
 				{
 					item = FindItem ("Helmet Armor");
-					takefactor = 0.3;
+					takefactor = 0.3f;
 					if (!(client->pers.inventory[ITEM_INDEX(item)]))
 					{
 						item = FindItem ("Helmet Armor Heavy");
-						takefactor = 0.1;						
+						takefactor = 0.1f;
 					}
 				
-					takeshield = (take * (1.0 - takefactor));
+					takeshield = (take * (1.0f - takefactor));
 					if (deathmatch->value)
 						take *= 1.5;
 					else if (skill->value < 3)		// FIXME? note to Rafael/Joeseph: why does it add more damage if lower skill level?
@@ -1756,14 +1755,14 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 				if (client)
 				{
 					item = FindItem ("Legs Armor");
-					takefactor = 0.3;
+					takefactor = 0.3f;
 					if (!(client->pers.inventory[ITEM_INDEX(item)]))
 					{
 						item = FindItem ("Legs Armor Heavy");
-						takefactor = 0.1;						
+						takefactor = 0.1f;
 					}
-				    
-					takeshield = (take * (1.0 - takefactor));
+						
+					takeshield = (take * (1.0f - takefactor));
 					takehealth = take * takefactor;
 				}	
 				else
@@ -1779,20 +1778,20 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 				if (client)
 				{
 					item = FindItem ("Jacket Armor");
-					takefactor = 0.3;
+					takefactor = 0.3f;
 					if (!(client->pers.inventory[ITEM_INDEX(item)]))
 					{
 						item = FindItem ("Jacket Armor Heavy");
-						takefactor = 0.1;						
+						takefactor = 0.1f;
 					}
 
 				
-					takeshield = (take * (1.0 - takefactor));
+					takeshield = (take * (1.0f - takefactor));
 					if (deathmatch->value)
 						take *= 1.5;
-					else if (skill->value < 3)
-						take *= 2;			
-					takehealth = take * takefactor;				
+					else if (skill->value < 3.0f)
+						take *= 2;
+					takehealth = take * takefactor;
 				}
 				else
 				{
@@ -1828,7 +1827,7 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 				else
 				{
 					takehealth = ((take - client->pers.inventory[ index ])+
-								  (takefactor*client->pers.inventory[ index ])); 
+									(takefactor*client->pers.inventory[ index ])); 
 					client->pers.inventory[ index ] = 0;
 					take = takehealth;
 				}
@@ -2234,7 +2233,6 @@ void T_RadiusDamage_Fire (edict_t *inflictor, edict_t *attacker, float damage, e
 	edict_t	*ent = NULL;
 	vec3_t	v;
 	vec3_t	dir;
-	int     mod = MOD_FLAMETHROWER;
 
 	while ((ent = findradius(ent, inflictor->s.origin, radius)) != NULL)
 	{
@@ -2269,9 +2267,9 @@ void T_RadiusDamage_Fire (edict_t *inflictor, edict_t *attacker, float damage, e
 edict_t  *SpawnTheWeapon (edict_t *self, char *var_itemname)
 {
 	edict_t *drop = NULL;
-	int		model;
+	int model = 0;
 	qboolean e_weapon = false;
-	char		itemname[MAX_QPATH];
+	char itemname[MAX_QPATH];
 
 	strcpy( itemname, var_itemname );
 

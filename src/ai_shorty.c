@@ -246,11 +246,12 @@ void shorty_long_attack( edict_t *self )
 
 qboolean shorty_attack( edict_t *self )
 {
+	qboolean result = false;
 
 	if (self->maxs[2] < self->cast_info.standing_max_z)
 	{
 		self->cast_info.currentmove = &shorty_move_crouch_shoot;
-		return true;
+		result = true;
 	}
 	else
 	{
@@ -266,12 +267,10 @@ qboolean shorty_attack( edict_t *self )
 			&&	(self->spawnflags & SHORTY_TOMMYGUN)
 			&&	(self->enemy->client)
 			&&	(self->enemy->client->pers.weapon)
-			&&	(stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
+			&&	(Q_stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
 		{
-			int		side_result;
-
 			// see if we can go backwards
-			if (side_result = AI_SideTrace( self, -64, 0, 1 ))
+			if (AI_SideTrace( self, -64, 0, 1 ) != 0)
 			{
 				self->cast_info.currentmove = &shorty_move_run_reverse_tg_sht;
 				return true;
@@ -424,10 +423,10 @@ stand_shoot:
 			self->cast_info.currentmove = &shorty_move_shg_shoot;
 		}
 
-		return true;
+		result = true;
 	}
 
-	return false;
+	return result;
 }
 
 void shorty_firegun_cr ( edict_t *self )
@@ -838,10 +837,10 @@ skipbail:
 	else if (self->spawnflags & SHORTY_FLAMEGUN)
 	{
 		int damage = 1;
-		int	kick = 4;
+		//int	kick = 4;
 		static int flamesnd = 0;
 		
-		extern void fire_target_flamethrower (edict_t *self, vec3_t start, vec3_t forward, int damage, int kick, int mod);
+		//extern void fire_target_flamethrower (edict_t *self, vec3_t start, vec3_t forward, int damage, int kick, int mod);
 
 		fire_flamethrower(self, start, aim, damage, 0, MOD_FLAMETHROWER);
 		self->s.renderfx2 |= RF2_FLAMETHROWER;
@@ -1290,7 +1289,7 @@ void shorty_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	// END JOSEPH
 
 	// JOSEPH 7-DEC-98
-    //if (!(self->spawnflags & SHORTY_MELEE))
+		//if (!(self->spawnflags & SHORTY_MELEE))
 	//{
 		//self->s.model_parts[PART_GUN].invisible_objects = (1<<0 | 1<<1);
 		//Shot_Drop_Item(self, FindItem("Tommygun"), "models/weapons/g_tomgun/tomgun_pu.mdx");

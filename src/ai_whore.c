@@ -259,11 +259,12 @@ void whore_long_attack( edict_t *self )
 
 qboolean whore_attack( edict_t *self )
 {
+	qboolean result = false;
 
 	if (self->maxs[2] < self->cast_info.standing_max_z)
 	{
 		self->cast_info.currentmove = &whore_move_crouch_shoot;
-		return true;
+		result = true;
 	}
 	else
 	{
@@ -279,12 +280,10 @@ qboolean whore_attack( edict_t *self )
 			&&	(self->spawnflags & WHORE_TOMMYGUN)
 			&&	(self->enemy->client)
 			&&	(self->enemy->client->pers.weapon)
-			&&	(stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
+			&&	(Q_stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
 		{
-			int		side_result;
-
 			// see if we can go backwards
-			if (side_result = AI_SideTrace( self, -64, 0, 1 ))
+			if (AI_SideTrace( self, -64, 0, 1 ) != 0)
 			{
 				self->cast_info.currentmove = &whore_move_run_reverse_tg_sht;
 				return true;
@@ -437,10 +436,10 @@ stand_shoot:
 			self->cast_info.currentmove = &whore_move_shg_shoot;
 		}
 
-		return true;
+		result = true;
 	}
 
-	return false;
+	return result;
 }
 
 void whore_firegun_cr ( edict_t *self )
@@ -827,10 +826,10 @@ skipbail:
 	else if (self->spawnflags & WHORE_FLAMEGUN)
 	{
 		int damage = 1;
-		int	kick = 4;
+		//int	kick = 4;
 		static int flamesnd = 0;
 		
-		extern void fire_target_flamethrower (edict_t *self, vec3_t start, vec3_t forward, int damage, int kick, int mod);
+		//extern void fire_target_flamethrower (edict_t *self, vec3_t start, vec3_t forward, int damage, int kick, int mod);
 
 		fire_flamethrower(self, start, aim, damage, 0, MOD_FLAMETHROWER);
 		self->s.renderfx2 |= RF2_FLAMETHROWER;

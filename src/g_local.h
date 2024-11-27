@@ -420,7 +420,7 @@ typedef struct
 	int			cut_scene_end_count;
 	// END JOSEPH
 	// JOSEPH 19-MAR-99-B
-    float       fadeendtime;
+		float       fadeendtime;
 	float       totalfade;
 	int			inversefade;
 	// END JOSEPH
@@ -600,8 +600,6 @@ typedef struct
 
 } cast_info_t;
 
-
-
 extern	game_locals_t	game;
 extern	level_locals_t	level;
 extern	game_import_t	gi;
@@ -611,19 +609,8 @@ extern	spawn_temp_t	st;
 extern	int	sm_meat_index;
 extern	int	snd_fry;
 
-
-
-
-
-
-extern	int	jacket_armor_index;
-extern	int	combat_armor_index;
-extern	int	body_armor_index;
-
-
 // Ridah, in-game effects
 //extern	int	sp_blood1;
-
 
 // means of death
 #define MOD_UNKNOWN			0
@@ -1540,8 +1527,8 @@ struct edict_s
 
 // JOSEPH 19-MAR-99
 	vec3_t  rotate;
-    vec3_t  nodeorigin;
-    vec3_t  angletarget;
+		vec3_t  nodeorigin;
+		vec3_t  angletarget;
 	vec3_t  save_avel;
 	vec3_t  savecameraorigin;
 	vec3_t  cameraangle;
@@ -1744,3 +1731,14 @@ extern int	num_followers;
 #define	MAX_OBJECT_BOUNDS	2048
 extern	int				num_object_bounds;
 extern	object_bounds_t	*g_objbnds[MAX_OBJECT_BOUNDS];
+
+extern void AI_CreateCharacterMemory(edict_t* src, edict_t* dest);
+extern void AI_CreateCharacterMemory(edict_t* src, edict_t* dest);
+extern void AI_ReleaseCastMemory(edict_t* self, cast_memory_t* cast_memory);
+extern void AI_FreeAndClearGoalEnt(edict_t* self);
+extern void AI_GetAvoidDirection(edict_t* self, edict_t* other);
+extern void SP_props_motorcycle_run(edict_t* self);
+extern void breakittrash_sound(edict_t* self);
+extern void Cmd_HolsterBar_f(edict_t* ent);
+extern void Show_Help(void);
+extern int ClipVelocity(vec3_t in, vec3_t normal, vec3_t out, float overbounce);

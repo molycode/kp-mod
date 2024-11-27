@@ -539,10 +539,9 @@ qboolean SV_Push (edict_t *pusher, vec3_t move, vec3_t amove)
 			// move to a visible node
 			if ((check->svflags & SVF_MONSTER) && !check->goal_ent)
 			{
-				extern void AI_FreeAndClearGoalEnt( edict_t *self );
 				node_t *node;
 
-				if (node = NAV_GetClosestNode( check, VIS_PARTIAL, false, false ))
+				if ((node = NAV_GetClosestNode( check, VIS_PARTIAL, false, false )) != NULL)
 				{
 					check->goal_ent = G_Spawn();
 					check->goal_ent->owner = check;
@@ -879,7 +878,7 @@ void SV_Physics_Toss (edict_t *ent)
 
 		ClipVelocity (ent->velocity, trace.plane.normal, ent->velocity, backoff);
 
-    	// RAFAEL
+			// RAFAEL
 		if (ent->movetype == MOVETYPE_WALLBOUNCE)
 			vectoangles (ent->velocity, ent->s.angles);
 

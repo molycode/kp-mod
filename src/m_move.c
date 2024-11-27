@@ -105,11 +105,10 @@ realcheck:
 void think_checkedges (edict_t *ent)
 {
 	vec3_t	mins, maxs, start, stop;
-	trace_t	trace;
 	int		x, y;
 	float	mid, bottom, stepsize;
 	vec3_t	oldmins, oldmaxs;
-	int		currentcorner, fall;		
+	int		currentcorner, fall;
 	
 	stepsize = 8;
 	fall = 0;
@@ -120,13 +119,13 @@ void think_checkedges (edict_t *ent)
 		(ent->s.origin[2] != ent->s.old_origin[2]))*/
 	{
 		// Set to floor angles
-		vec3_t	avec, stop;
+		vec3_t	avec, stop2;
 		trace_t	trace;
 			
-		VectorCopy(ent->s.origin, stop);
-		stop[2] -= 16*2;
+		VectorCopy(ent->s.origin, stop2);
+		stop2[2] -= 16*2;
 
-		trace = gi.trace (ent->s.origin, ent->mins, ent->maxs, stop, ent, MASK_MONSTERSOLID);
+		trace = gi.trace (ent->s.origin, ent->mins, ent->maxs, stop2, ent, MASK_MONSTERSOLID);
 		if (trace.fraction < 1)
 		{
 			VectorCopy (trace.plane.normal, avec);
@@ -197,7 +196,7 @@ realcheck:
 	start[0] = stop[0] = (mins[0] + maxs[0])*0.5;
 	start[1] = stop[1] = (mins[1] + maxs[1])*0.5;
 	stop[2] = start[2] - 2*stepsize;
-	trace = gi.trace (start, vec3_origin, vec3_origin, stop, ent, MASK_MONSTERSOLID);
+	trace_t	trace = gi.trace (start, vec3_origin, vec3_origin, stop, ent, MASK_MONSTERSOLID);
 
 	//if (trace.fraction == 1.0)
 	//	return false;
@@ -224,12 +223,9 @@ realcheck:
 
 	if (fall)
 	{
-		vec3_t	move, forward, right, up, newvec;
+		vec3_t move, forward, right, up, newvec;
 		int speed = 140;
-		int movesize = 1;
-		float randmove2 = 0; //(random()-0.5)/2;
-		float randmove =  0; //(random()-0.5);
-		int	  nocorner[4] = {0, 0, 0, 0};
+		int nocorner[4] = {0, 0, 0, 0};
 		
 		// Stop any drag sound
 		ent->s.sound = 0;
@@ -313,12 +309,11 @@ realcheck:
 void think_slide (edict_t *ent)
 {
 	vec3_t	mins, maxs, start, stop;
-	trace_t	trace;
 	int		x, y;
 	float	mid, bottom, stepsize;
 	vec3_t	oldmins, oldmaxs;
-    int		nocorner[4];
-	int		currentcorner, fall;		
+		int		nocorner[4];
+	int		currentcorner, fall;
 	
 	stepsize = 1;
 	fall = 0;
@@ -359,7 +354,7 @@ realcheck:
 	start[0] = stop[0] = (mins[0] + maxs[0])*0.5;
 	start[1] = stop[1] = (mins[1] + maxs[1])*0.5;
 	stop[2] = start[2] - 2*stepsize;
-	trace = gi.trace (start, vec3_origin, vec3_origin, stop, ent, MASK_MONSTERSOLID);
+	trace_t	trace = gi.trace (start, vec3_origin, vec3_origin, stop, ent, MASK_MONSTERSOLID);
 
 	//if (trace.fraction == 1.0)
 	//	return false;
@@ -392,7 +387,6 @@ realcheck:
 	if (fall)
 	{
 		vec3_t	move, forward, right, up, endorigin;
-		trace_t	trace;
 		int speed = 4;
 		int movesize = 1;
 		float randmove = (random()-0.5)/3;
@@ -588,8 +582,6 @@ qboolean SV_movestep (edict_t *ent, vec3_t move, qboolean relink)
 	// Ridah, tell this ent to avoid us if possible
 	if ((trace.ent && trace.ent->svflags & SVF_MONSTER) && (ent->health > 0))	// Ridah, Fixes life after death bug
 	{
-		extern void AI_GetAvoidDirection( edict_t *self, edict_t *other );
-
 		AI_GetAvoidDirection( trace.ent, ent );
 		ent->cast_info.currentmove = ent->cast_info.move_avoid_walk;
 	}

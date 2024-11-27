@@ -200,9 +200,9 @@ void cashspawn_think( edict_t *self )
 /*QUAKED dm_cashspawn (0.5 0 1) (-16 -16 -16) (16 16 16)
 Spawn location for cash during "Grab da Loot" games
 
-  angle - direction to project cash upon spawning
-  speed - speed of projection
-  type	- "cashroll" or "cashbag" (more money, longer delay)
+	angle - direction to project cash upon spawning
+	speed - speed of projection
+	type	- "cashroll" or "cashbag" (more money, longer delay)
 */
 void SP_dm_cashspawn( edict_t *self )
 {
@@ -418,7 +418,7 @@ void safebag_think(edict_t *self)
 /*QUAKED dm_safebag (0.5 0 1) (-12 -12 -16) (12 12 12)
 Bag that holds the money in the safe.
 
-  style - team that this bag belongs to (1 or 2)
+	style - team that this bag belongs to (1 or 2)
 */
 void SP_dm_safebag( edict_t *self )
 {
@@ -518,7 +518,7 @@ void SP_dm_props_banner (edict_t *self)
 // Ridah, 1-jun-99, use flag models for now
 #if 1
 	{
-		void think_flag (edict_t *self);
+		//void think_flag (edict_t *self);
 
 //		self->solid = SOLID_BBOX;
 		self->movetype = MOVETYPE_NONE;

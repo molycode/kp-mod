@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  POSIONVILLE - Episode specific code
+	POSIONVILLE - Episode specific code
 
 *******************************************************************************/
 
@@ -271,10 +271,7 @@ qboolean EP_Poisonville_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 						EP_Skidrow_Register_EPFLAG (other, EP_PV_LOUIE_SPEACH_2);
 
 						{
-							cast_memory_t	*mem;
-
 							mem = level.global_cast_memory[ self->character_index ][ other->character_index ];
-							
 							mem->response = Resp_PVLouie_TellsMe;
 						}
 
@@ -680,8 +677,7 @@ qboolean ProcessPVMomo (edict_t *self, edict_t *other)
 	{
 				
 		if (other->last_response == resp_yes)
-		{	
-			edict_t	*door = NULL;
+		{
 			int	cost;
 
 			if ( mem->flags	& MEMORY_ASSHOLE)
@@ -724,7 +720,7 @@ qboolean ProcessPVMomo (edict_t *self, edict_t *other)
 							if (e->key == -1)
 							{
 								e->key = 0;	
-								e->targetname = NULL;							
+								e->targetname = NULL;
 							}
 						}
 					}
@@ -841,6 +837,7 @@ int	EP_PV_HiredGuysFlags (edict_t *player, edict_t *self)
 				if (Buster)
 				{
 					cast_memory = level.global_cast_memory[Buster->character_index][player->character_index];
+
 					if (cast_memory && cast_memory->flags & MEMORY_HIRED)
 					{
 						// gi.dprintf ("FIXME SOUND TODO: %s:sorry I only work alone\n", Fingers->name);
@@ -852,12 +849,10 @@ int	EP_PV_HiredGuysFlags (edict_t *player, edict_t *self)
 		
 
 			{
-				cast_memory_t *cast_memory;
-
 				if (Buster && self == Buster)
 				{
 					cast_memory = level.global_cast_memory[self->character_index][player->character_index];
-				
+
 					if (!(cast_memory->flags & MEMORY_HIRE_FIRST_TIME))
 					{
 						cast_memory->flags |= MEMORY_HIRE_FIRST_TIME;
@@ -870,6 +865,7 @@ int	EP_PV_HiredGuysFlags (edict_t *player, edict_t *self)
 				else if (Fingers && self == Fingers)
 				{
 					cast_memory = level.global_cast_memory[self->character_index][player->character_index];
+
 					if (!(cast_memory->flags & MEMORY_HIRE_FIRST_TIME))
 					{
 						cast_memory->flags |= MEMORY_HIRE_FIRST_TIME;
@@ -956,7 +952,7 @@ void EP_PVFlags (edict_t *self)
 void EP_PV_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 {
 	if (ent->episode_flags & EP_PV_MOMO_ASKED_MONEY)
-	 	mem->inc++;
+		mem->inc++;
 				
 }
 
@@ -1104,8 +1100,6 @@ void EP_PV_ReachedDoKey (edict_t *self)
 			
 			{
 				edict_t *Laurel;
-				vec3_t	vec;
-				
 				Laurel = EP_GetCharacter (NAME_LAUREL);
 
 				if (Laurel)
@@ -1405,7 +1399,7 @@ void SP_pv_fuse_blown1 (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
@@ -1469,7 +1463,7 @@ void SP_pv_fuse_blown2 (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
@@ -1509,7 +1503,7 @@ void SP_pv_deadlouie (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }

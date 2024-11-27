@@ -16,9 +16,9 @@
 =================
 AddCharacterToGame
 
-  Called whenever a character enters the game (whether AI or client)
+	Called whenever a character enters the game (whether AI or client)
 
-  returns FALSE if the character is not allowed to enter the game
+	returns FALSE if the character is not allowed to enter the game
 =================
 */
 qboolean AddCharacterToGame(edict_t *self)
@@ -66,7 +66,7 @@ qboolean AddCharacterToGame(edict_t *self)
 ==============
 AI_RelaseCastMemory
 
-  Release all memory associated to this memory block
+	Release all memory associated to this memory block
 ==============
 */
 void AI_ReleaseCastMemory(edict_t *self, cast_memory_t *cast_memory)
@@ -102,7 +102,7 @@ void AI_InitMemory( edict_t *self )
 ==============
 AI_UnloadCastMemory
 
-  Clears all memory associated with the cast member
+	Clears all memory associated with the cast member
 ==============
 */
 void AI_UnloadCastMemory (edict_t *self)
@@ -213,7 +213,7 @@ void AI_AddToMemory ( edict_t *self, cast_memory_t *memory, int memory_type )
 ===========
 AI_CreateCharacterMemory
 
-  Creates a Character Memory association between 2 characters
+	Creates a Character Memory association between 2 characters
 ===========
 */
 void AI_CreateCharacterMemory(edict_t *src, edict_t *dest)
@@ -293,7 +293,7 @@ void AI_CreateCharacterMemory(edict_t *src, edict_t *dest)
 ===========
 AI_CreateCopyMemory
 
-  creates a memory slot, and copies the given memory information into it
+	creates a memory slot, and copies the given memory information into it
 ===========
 */
 cast_memory_t *AI_CreateCopyMemory ( edict_t *src, edict_t *dest, cast_memory_t *cast_memory )
@@ -317,7 +317,7 @@ cast_memory_t *AI_CreateCopyMemory ( edict_t *src, edict_t *dest, cast_memory_t 
 ===========
 AI_ShareEnemies
 
-  spreads our list of enemies with other
+	spreads our list of enemies with other
 ===========
 */
 void AI_ShareEnemies ( edict_t *self, edict_t *other )
@@ -377,17 +377,17 @@ void AI_ShareEnemies ( edict_t *self, edict_t *other )
 void AI_Think_MakeEnemy_Timer (edict_t *ent)
 {
 	cast_memory_t *cast_memory;
-    
+		
 	ent->reactdelay -= 0.1;
 	
 	if (ent->reactdelay <= 0)
 	{	
 		if ((ent->handle) && (ent->handle2) && (!ent->handle->deadflag) && (!ent->handle2->deadflag))
 		{
-	        if ((!(cast_memory = level.global_cast_memory[ent->handle->character_index][ent->handle2->character_index])) ||
-			   (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
+					if ((!(cast_memory = level.global_cast_memory[ent->handle->character_index][ent->handle2->character_index])) ||
+				 (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
 			{
-			   AI_MakeEnemy(ent->handle, ent->handle2, ent->avelflag);
+				 AI_MakeEnemy(ent->handle, ent->handle2, ent->avelflag);
 			}
 		}
 
@@ -422,9 +422,9 @@ void AI_MakeEnemy_Timer (edict_t *self, edict_t *other, int flags, float delay)
 ===========
 AI_MakeEnemy
 
-  other becomes an enemy of self, and we get hostile at them
+	other becomes an enemy of self, and we get hostile at them
 
-  memory_flags get carried through to the cast_memory->flags variable
+	memory_flags get carried through to the cast_memory->flags variable
 ===========
 */
 void AI_MakeEnemy ( edict_t *self, edict_t *other, int memory_flags )
@@ -447,8 +447,8 @@ if (other->client)// && other->client->gun_noise)
 			if ((!e->deadflag) && (e->localteam) && (e->localteam != self->localteam) &&
 				(!strcmp(e->localteam, self->localteam)))
 			{
-	            if ((!(cast_memory = level.global_cast_memory[self->character_index][other->character_index])) ||
-				   (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
+							if ((!(cast_memory = level.global_cast_memory[self->character_index][other->character_index])) ||
+					 (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
 				{
 					e->localteam = NULL;
 					
@@ -493,7 +493,7 @@ if (other->client)// && other->client->gun_noise)
 ===========
 AI_RecordSighting
 
-  Updates SRC's memory of DEST
+	Updates SRC's memory of DEST
 ===========
 */
 void AI_RecordSighting(edict_t *src, edict_t *dest, float dist)
@@ -523,8 +523,7 @@ void AI_RecordSighting(edict_t *src, edict_t *dest, float dist)
 	{
 		edict_t	*targ;
 
-		targ = NULL;
-		if (targ = G_Find (NULL, FOFS(targetname), src->sight_target))
+		if ((targ = G_Find (NULL, FOFS(targetname), src->sight_target)) != NULL)
 		{
 			src->goal_ent = targ;
 			src->cast_info.aiflags |= AI_GOAL_IGNOREENEMY;
@@ -1081,11 +1080,11 @@ void AI_CheckRecordMemory( edict_t *src, edict_t *dest )
 ===========
 AI_UpdateCharacterMemories
 
-  Called once per frame, this handles all AI character sightings, updating their memories
-  as we go.
-  
-  The individual characters can then evaluate their memory when idle, to see if there's
-  something they can do.
+	Called once per frame, this handles all AI character sightings, updating their memories
+	as we go.
+	
+	The individual characters can then evaluate their memory when idle, to see if there's
+	something they can do.
 ===========
 */
 void AI_UpdateCharacterMemories( int max_iterations )
@@ -1339,7 +1338,7 @@ qboolean AI_FindTarget (edict_t *self)
 {
 	cast_memory_t	*cast_memory;
 	edict_t			*enemy, *best;
-	float			best_dist;
+	float best_dist = 0.0f;
 	int				i;
 
 	if (self->cast_info.aiflags & AI_IMMORTAL)

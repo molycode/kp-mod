@@ -27,7 +27,7 @@ void AI_GetAvoidDirection( edict_t *self, edict_t *other );
 =============
 ai_onfire_run
 
-  Called while a character is running around on fire
+	Called while a character is running around on fire
 ==============
 */
 void ai_onfire_run( edict_t *self, float dist )
@@ -245,7 +245,7 @@ void AI_CheckEvade( edict_t *self )
 =============
 AI_ClearSight
 
-  Checks that we can draw a line to other, without hitting something else in the process
+	Checks that we can draw a line to other, without hitting something else in the process
 =============
 */
 qboolean AI_ClearSight ( edict_t *self, edict_t *other, qboolean boxtrace )
@@ -339,7 +339,7 @@ again:
 =============
 AI_MoveToPlatCenter
 
-  moves the character towards the center position of the platform
+	moves the character towards the center position of the platform
 =============
 */
 void AI_MoveToPlatCenter( edict_t *self, edict_t *plat)
@@ -366,7 +366,7 @@ void AI_MoveToPlatCenter( edict_t *self, edict_t *plat)
 =============
 AI_CheckTalk
 
-  look for a friend in close vicinity, to make a talking jesture at
+	look for a friend in close vicinity, to make a talking jesture at
 =============
 */
 qboolean AI_CheckTalk( edict_t *self )
@@ -521,7 +521,7 @@ done:
 =============
 AI_TalkThink
 
-  Generic talking for all characters (currently only supports males)
+	Generic talking for all characters (currently only supports males)
 =============
 */
 void AI_TalkThink( edict_t *self, qboolean ismale )
@@ -598,9 +598,8 @@ void AI_TalkThink( edict_t *self, qboolean ismale )
 		if (talk_ent->client)
 		{
 			if (!self->cast_group)
-			{	// we're neutral
-				cast_memory_t	*mem;
-
+			{
+				// we're neutral
 				mem = level.global_cast_memory[self->character_index][talk_ent->character_index];
 
 				if (!mem || !(mem->flags & MEMORY_ASSHOLE))
@@ -887,7 +886,7 @@ skiptest:
 				||	(self->owner->health < ((MORAL_MAX - self->owner->moral) * TAKECOVER_INFRONT)))
 			{	// look for somewhere further away
 
-				if (pos = NAV_GetHidePos( self->owner, self->owner->cover_ent, HIDEPOS_FURTHER ))
+				if ((pos = NAV_GetHidePos( self->owner, self->owner->cover_ent, HIDEPOS_FURTHER )) != NULL)
 				{
 					edict_t *combatent;
 
@@ -917,7 +916,7 @@ skiptest:
 				&&	(self->owner->health > ((MORAL_MAX - self->owner->moral) * TAKECOVER_INFRONT)))
 			{	// sneak up on them
 
-				if (pos = NAV_GetHidePos( self->owner, self->owner->cover_ent, HIDEPOS_CLOSER ))
+				if ((pos = NAV_GetHidePos( self->owner, self->owner->cover_ent, HIDEPOS_CLOSER )) != NULL)
 				{
 					edict_t *combatent;
 
@@ -965,7 +964,7 @@ skiptest:
 =============
 AI_CheckTakeCover
 
-  Returns true if we should go hide, and we've found a good hiding position
+	Returns true if we should go hide, and we've found a good hiding position
 =============
 */
 void Weapon_Blackjack (edict_t *ent);
@@ -1048,7 +1047,7 @@ qboolean AI_CheckTakeCover( edict_t *self )
 		&&	(random() < 0.3 || VectorDistance( self->enemy->s.origin, self->s.origin ) > 128))
 	{	// don't do any other tests, we REALLY want to hide from this enemy!
 
-		if (pos = NAV_GetHidePos( self, self->enemy, HIDEPOS_FURTHER ))
+		if ((pos = NAV_GetHidePos( self, self->enemy, HIDEPOS_FURTHER )) != NULL)
 		{
 			goto done;
 		}
@@ -1236,7 +1235,7 @@ qboolean AI_ForceTakeCover( edict_t *self, edict_t *enemy, qboolean ignorehealth
 	else
 		hidepos_type = HIDEPOS_ANY;
 
-	if (pos = NAV_GetHidePos( self, enemy, hidepos_type ))
+	if ((pos = NAV_GetHidePos( self, enemy, hidepos_type )) != NULL)
 	{
 		edict_t *combatent;
 
@@ -1277,8 +1276,8 @@ qboolean AI_ForceTakeCover( edict_t *self, edict_t *enemy, qboolean ignorehealth
 =============
 AI_TooClose
 
-  returns true if "goal" is within the AI_TOO_CLOSE_DIST range from "self"
-  mostly used to make sure followers don't obstruct their leader
+	returns true if "goal" is within the AI_TOO_CLOSE_DIST range from "self"
+	mostly used to make sure followers don't obstruct their leader
 =============
 */
 qboolean AI_TooClose(edict_t *self, edict_t *goal)
@@ -1303,7 +1302,7 @@ qboolean AI_TooClose(edict_t *self, edict_t *goal)
 =============
 AI_FollowLeader
 
-  modification of AI_TooClose(), returns true if we need to move away from, or towards the goal
+	modification of AI_TooClose(), returns true if we need to move away from, or towards the goal
 =============
 */
 qboolean AI_FollowLeader(edict_t *self, edict_t *goal)
@@ -1336,7 +1335,7 @@ qboolean AI_FollowLeader(edict_t *self, edict_t *goal)
 ==============
 AI_End_CrouchStand_Down
 
-  Goes to the standing animation according to what we're currently doing
+	Goes to the standing animation according to what we're currently doing
 ==============
 */
 void AI_End_CrouchStand_Down(edict_t *self)
@@ -1348,7 +1347,7 @@ void AI_End_CrouchStand_Down(edict_t *self)
 ==============
 AI_End_CrouchStand_Up
 
-  Goes to the standing animation according to what we're currently doing
+	Goes to the standing animation according to what we're currently doing
 ==============
 */
 void AI_End_CrouchStand_Up(edict_t *self)
@@ -1360,9 +1359,9 @@ void AI_End_CrouchStand_Up(edict_t *self)
 ==============
 AI_EndAttack
 
-  resume attacking if they so desire, otherwise "stand"
+	resume attacking if they so desire, otherwise "stand"
 
-  usually called at the end of pain, or attacking animations
+	usually called at the end of pain, or attacking animations
 ==============
 */
 void AI_EndAttack(edict_t *self)
@@ -1396,7 +1395,7 @@ void AI_EndAttack(edict_t *self)
 ==============
 AI_GetOrientation
 
-  returns one of ORIENTATION_* depending on which side of "self", "other" is on
+	returns one of ORIENTATION_* depending on which side of "self", "other" is on
 ==============
 */
 int AI_GetOrientation( edict_t *self, edict_t *other )
@@ -1431,7 +1430,7 @@ int AI_GetOrientation( edict_t *self, edict_t *other )
 ==============
 AI_CheckStillInair
 
-  called while jumping, so we stay on a single jumping frame while in the air
+	called while jumping, so we stay on a single jumping frame while in the air
 ==============
 */
 void AI_CheckStillInair(edict_t *self)
@@ -1459,7 +1458,7 @@ void AI_CheckStillInair(edict_t *self)
 ==============
 AI_EndJump
 
-  called at the end of a jump, so we return to running, or crouch walking frames
+	called at the end of a jump, so we return to running, or crouch walking frames
 ==============
 */
 void AI_EndJump(edict_t *self)
@@ -1484,7 +1483,7 @@ void AI_EndJump(edict_t *self)
 ==============
 AI_AfterLife
 
-  Generic character elimination routine.
+	Generic character elimination routine.
 ==============
 */
 void AI_AfterLife(edict_t *self)
@@ -1813,8 +1812,8 @@ void AI_AfterLife(edict_t *self)
 ==============
 AI_EndDeath
 
-  Generic end of death routine. Should call this for all characters that die, then do any
-  special stuff for that character.
+	Generic end of death routine. Should call this for all characters that die, then do any
+	special stuff for that character.
 ==============
 */
 void AI_EndDeath(edict_t *self)
@@ -1868,9 +1867,9 @@ void AI_EndDeath(edict_t *self)
 ===============
 AI_SideTrace
 
-  Returns a 1 if a RIGHT rotation will point in a direction that is free of obstacles
+	Returns a 1 if a RIGHT rotation will point in a direction that is free of obstacles
 
-  Returns -1 if LEFT, 0 otherwise
+	Returns -1 if LEFT, 0 otherwise
 ===============
 */
 int AI_SideTrace( edict_t *self, float dist, float inyaw, int side )
@@ -1965,7 +1964,7 @@ void AI_CheckStillClimbingLadder( edict_t *self )
 ===============
 AI_EndRun
 
-  checks to see if we should walk or run
+	checks to see if we should walk or run
 ===============
 */
 void AI_EndRun( edict_t *self )
@@ -1992,16 +1991,15 @@ void AI_EndRun( edict_t *self )
 ===============
 AI_YawTrace
 
-  Returns a 1 if a YAW rotation from self's angles will point in a direction that is free of obstacles
+	Returns a 1 if a YAW rotation from self's angles will point in a direction that is free of obstacles
 
-  Returns 0 otherwise
+	Returns 0 otherwise
 ===============
 */
 int AI_YawTrace( edict_t *self, float dist, float inyaw )
 {
 	trace_t	tr;
 	vec3_t	angle, vec, end, end2, mins;
-	int		count=0;
 
 	VectorCopy( self->mins, mins );
 	mins[2] += 16;
@@ -2039,7 +2037,7 @@ int AI_YawTrace( edict_t *self, float dist, float inyaw )
 =============
 AI_StartRun
 
-  Start us moving
+	Start us moving
 =============
 */
 void AI_StartRun( edict_t *self )
@@ -2274,7 +2272,7 @@ void ai_stand (edict_t *self, float dist)
 					9999 );
 
 				// look for a safe position
-				if (pos = NAV_GetReachableNodeOutsideBounds ( self, mins, maxs ))
+				if ((pos = NAV_GetReachableNodeOutsideBounds ( self, mins, maxs )) != NULL)
 				{
 					vec3_t vec;
 
@@ -2395,7 +2393,7 @@ void ai_stand (edict_t *self, float dist)
 			{	// face the target (eg. the Radio in Skidrow points into the room)
 				edict_t	*targ;
 
-				if (targ = G_Find( NULL, FOFS( targetname ), self->goal_ent->target ))
+				if ((targ = G_Find( NULL, FOFS( targetname ), self->goal_ent->target )) != NULL)
 				{
 					if (!directly_infront( self, targ ))	// straighten up
 					{
@@ -2744,7 +2742,7 @@ void ai_turn2 (edict_t *self, float dist)
 ==============
 ai_sidestep
 
-  move "dist" to the right
+	move "dist" to the right
 ==============
 */
 void ai_sidestep( edict_t *self, float dist)
@@ -2981,8 +2979,8 @@ extern void func_explosive_explode (edict_t *self, edict_t *inflictor, edict_t *
 ================
 AI_canmove
 
-  tries a (CPU friendly) move to the destination point, making sure we don't move inside
-  another solid, into water, or fall off an edge
+	tries a (CPU friendly) move to the destination point, making sure we don't move inside
+	another solid, into water, or fall off an edge
 ================
 */
 qboolean AI_canmove( edict_t *self, vec3_t dest )
@@ -3104,8 +3102,8 @@ qboolean AI_canmove( edict_t *self, vec3_t dest )
 =================
 AI_movetogoal
 
-  More robust movement code, which tries a CPU friendly move first, and then
-  several walkmove()'s allowing for obstructions
+	More robust movement code, which tries a CPU friendly move first, and then
+	several walkmove()'s allowing for obstructions
 =================
 */
 qboolean AI_movetogoal (edict_t *self, edict_t *goal, float dist)
@@ -3114,7 +3112,6 @@ qboolean AI_movetogoal (edict_t *self, edict_t *goal, float dist)
 	int			yaw, rnd;
 	int			aborted=false;
 	float		diff, goal_dist;
-	float		slide_scale = 1.0;
 	qboolean	moved=false;
 	qboolean changezval = false;
 
@@ -3280,7 +3277,7 @@ qboolean AI_movetogoal (edict_t *self, edict_t *goal, float dist)
 =================
 AI_jump
 
-  Called whenever a character needs to jump somewhere
+	Called whenever a character needs to jump somewhere
 =================
 */
 void AI_jump (edict_t *self, float dist)
@@ -3303,7 +3300,7 @@ void AI_jump (edict_t *self, float dist)
 =================
 AI_climb
 
-  Called whenever a character is climbing a ladder
+	Called whenever a character is climbing a ladder
 =================
 */
 void AI_climb (edict_t *self)
@@ -3703,7 +3700,6 @@ enemy_again:
 					&&	(self->name_index == NAME_ARNOLD))
 				{
 					edict_t	*louie;
-					route_t	route;
 
 					louie = EP_GetCharacter( NAME_LOUIE );
 
@@ -3813,7 +3809,7 @@ gonetolouie:
 			{	// look for a good combat position
 				float	*pos;
 
-				if (pos = NAV_GetCombatPos( self, (*goal), self->cast_info.aiflags & AI_MELEE ))
+				if ((pos = NAV_GetCombatPos( self, (*goal), self->cast_info.aiflags & AI_MELEE )) != NULL)
 				{
 					edict_t *combatent;
 
@@ -4417,7 +4413,6 @@ got_goal:
 
 					if ((speed = VectorLength(goal_node->jump_vel)) > 250)
 					{
-						vec3_t	vec;
 						float	length;
 
 						AI_jump (self, 200);
@@ -4618,13 +4613,13 @@ done:
 
 				targetname = self->groundentity->targetname;
 
-				while (btn = G_Find( btn, FOFS( target ), targetname ))
+				while ((btn = G_Find( btn, FOFS( target ), targetname )) != NULL)
 				{
 					if (!strcmp(btn->classname, "trigger_relay") && btn->targetname)
 					{	// check this target
 
 						btn2 = NULL;
-						while (btn2 = G_Find( btn2, FOFS( target ), btn->targetname ))
+						while ((btn2 = G_Find( btn2, FOFS( target ), btn->targetname )) != NULL)
 						{
 							if (fabs( btn2->absmin[2] - self->s.origin[2] ) < 64)
 							{
@@ -4711,13 +4706,13 @@ done:
 
 							targetname = temp_node->goal_ent->targetname;
 
-							while (btn = G_Find( btn, FOFS( target ), targetname ))
+							while ((btn = G_Find( btn, FOFS( target ), targetname )) != NULL)
 							{
 								if (!strcmp(btn->classname, "trigger_relay") && btn->targetname)
-								{	// check this target
-
+								{
+									// check this target
 									btn2 = NULL;
-									while (btn2 = G_Find( btn2, FOFS( target ), btn->targetname ))
+									while ((btn2 = G_Find( btn2, FOFS( target ), btn->targetname )) != NULL)
 									{
 										if (fabs( btn2->absmin[2] - self->s.origin[2] ) < 64)
 										{

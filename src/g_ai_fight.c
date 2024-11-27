@@ -28,9 +28,9 @@ void AI_CheckMakeEnemy( edict_t *self, edict_t *other )
 ==================
 AI_BeginAttack
 
-  Returns true if OK to attack, false otherwise
+	Returns true if OK to attack, false otherwise
 
-  May start a new movement for the character, to straighten up, or avoid something/someone
+	May start a new movement for the character, to straighten up, or avoid something/someone
 ==================
 */
 qboolean AI_BeginAttack( edict_t *self )
@@ -71,11 +71,9 @@ qboolean AI_BeginAttack( edict_t *self )
 //		&&	(	(dist > FACE_ANIM_DIST)
 //			 ||	(self->cast_info.aiflags & AI_FACE_ATTACK)))
 	{
-
 		if (!directly_infront(self, self->enemy))
-		{	// we need to straighten up
-			float	dist;
-
+		{
+			// we need to straighten up
 			VectorSubtract( self->enemy->s.origin, self->s.origin, vec );
 			dist = VectorNormalize( vec );
 			self->ideal_yaw = vectoyaw( vec );
@@ -178,7 +176,7 @@ qboolean AI_BeginAttack( edict_t *self )
 =============
 AI_AvoidDangerousEntity
 
-  Alerts all AI in vaccinity of the given ent, so they can flee if possible
+	Alerts all AI in vaccinity of the given ent, so they can flee if possible
 =============
 */
 void AI_AvoidDangerousEntity( edict_t *ent )
@@ -234,7 +232,7 @@ void AI_AvoidDangerousEntity( edict_t *ent )
 =============
 AI_CheckAttack
 
-  Generic check for ability and willingness to attack our enemy
+	Generic check for ability and willingness to attack our enemy
 =============
 */
 qboolean AI_CheckAttack(edict_t *self)
@@ -428,7 +426,7 @@ void GotoCombatTargetThink( edict_t *self )
 ===========
 AI_StartAttack
 
-  Begins an attack on enemy
+	Begins an attack on enemy
 ===========
 */
 void AI_StartAttack(edict_t *self, edict_t *enemy)
@@ -443,7 +441,7 @@ void AI_StartAttack(edict_t *self, edict_t *enemy)
 	self->enemy = enemy;
 
 
-	if (mem = level.global_cast_memory[self->character_index][enemy->character_index])
+	if ((mem = level.global_cast_memory[self->character_index][enemy->character_index]) != NULL)
 	{
 		mem->flags |= MEMORY_STARTED_ATTACK;
 	}
@@ -504,8 +502,8 @@ void CombatHideThink ( edict_t *thinker )
 =============
 AI_ProcessCombat
 
-  For each AI character, take a look at what they're currently doing, and look
-  for something they could be doing that would be better for them.
+	For each AI character, take a look at what they're currently doing, and look
+	for something they could be doing that would be better for them.
 =============
 */
 void CheckStillHiding( edict_t *self );

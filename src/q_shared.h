@@ -143,27 +143,27 @@ void vectoangles (vec3_t value1, vec3_t angles);
 
 // JOSEPH 6-NOV-98
 #ifdef _WIN32
-_inline vec_t DotProduct(x,y)
+_inline vec_t DotProduct(vec3_t x, vec3_t y)
 {
-  float dotprod;
-  _asm
-  {
-    mov     ecx, x
-    mov     eax, y
+	float dotprod;
+	_asm
+	{
+	mov     ecx, x
+	mov     eax, y
 
-    ;optimized dot product; 15 cycles
-    fld dword ptr   [eax+0]     ;starts & ends on cycle 0
-    fmul dword ptr  [ecx+0]     ;starts on cycle 1
-    fld dword ptr   [eax+4]     ;starts & ends on cycle 2
-    fmul dword ptr  [ecx+4]     ;starts on cycle 3
-    fld dword ptr   [eax+8]     ;starts & ends on cycle 4
-    fmul dword ptr  [ecx+8]     ;starts on cycle 5
-    fxch            st(1)       ;no cost
-    faddp           st(2),st(0) ;starts on cycle 6, stalls for cycles 7-8
-    faddp           st(1),st(0) ;starts on cycle 9, stalls for cycles 10-12
-    fstp dword ptr  [dotprod]    ;starts on cycle 13, ends on cycle 14
-  }
-  return dotprod;
+	;optimized dot product; 15 cycles
+	fld dword ptr   [eax+0]     ;starts & ends on cycle 0
+	fmul dword ptr  [ecx+0]     ;starts on cycle 1
+	fld dword ptr   [eax+4]     ;starts & ends on cycle 2
+	fmul dword ptr  [ecx+4]     ;starts on cycle 3
+	fld dword ptr   [eax+8]     ;starts & ends on cycle 4
+	fmul dword ptr  [ecx+8]     ;starts on cycle 5
+	fxch            st(1)       ;no cost
+	faddp           st(2),st(0) ;starts on cycle 6, stalls for cycles 7-8
+	faddp           st(1),st(0) ;starts on cycle 9, stalls for cycles 10-12
+	fstp dword ptr  [dotprod]    ;starts on cycle 13, ends on cycle 14
+	}
+	return dotprod;
 }
 #else
 #define DotProduct(x,y)			(x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
@@ -225,9 +225,9 @@ float AngleDiff (float a2, float a1);
 		BoxOnPlaneSide( (emins), (emaxs), (p)))
 #endif
 
-void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal );
-void PerpendicularVector( vec3_t dst, const vec3_t src );
-void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, float degrees );
+void ProjectPointOnPlane( vec3_t dst, vec3_t p, vec3_t normal );
+void PerpendicularVector( vec3_t dst, vec3_t src );
+void RotatePointAroundVector( vec3_t dst, vec3_t dir, const vec3_t point, float degrees );
 
 
 //=============================================
@@ -1166,7 +1166,7 @@ typedef enum
 /*
 ==========================================================
 
-  ELEMENTS COMMUNICATED ACROSS THE NET
+	ELEMENTS COMMUNICATED ACROSS THE NET
 
 ==========================================================
 */
@@ -1450,11 +1450,11 @@ typedef struct
 
 	short		stats[MAX_STATS];		// fast status bar updates
 
- 	// RAFAEL
- 	// weapon mdx
- 	int			num_parts;
- 	model_part_t	model_parts[MAX_MODEL_PARTS];
+	// RAFAEL
+	// weapon mdx
+	int			num_parts;
+	model_part_t	model_parts[MAX_MODEL_PARTS];
 
 	int			weapon_usage;
- 	
+	
 } player_state_t;

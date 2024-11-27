@@ -1,3 +1,5 @@
+#include "g_local.h"
+
 #if 0
 
 /*
@@ -5,9 +7,8 @@
 */
 
 /*QUAKED fog_brush (.5 .5 0) ?
-  "angles" points into the fog brush
+	"angles" points into the fog brush
 */
-#include "g_local.h"
 
 void fog_brush_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
@@ -33,7 +34,7 @@ void fog_brush_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t
 		
 		gi.multicast (other->s.origin, MULTICAST_PVS);
 	}
-	else 	
+	else
 	{
 		gi.dprintf ("going out of fog brush\n");
 
@@ -62,7 +63,7 @@ void SP_fog_brush (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 	// set the center pos

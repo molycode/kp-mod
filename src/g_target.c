@@ -160,7 +160,7 @@ void SP_target_secret (edict_t *ent)
 	ent->svflags = SVF_NOCLIENT;
 	level.total_secrets++;
 	// map bug hack
-	if (!stricmp(level.mapname, "mine3") && ent->s.origin[0] == 280 && ent->s.origin[1] == -2048 && ent->s.origin[2] == -624)
+	if (!Q_stricmp(level.mapname, "mine3") && ent->s.origin[0] == 280 && ent->s.origin[1] == -2048 && ent->s.origin[2] == -624)
 		ent->message = "You have found a secret area.";
 }
 
@@ -601,10 +601,10 @@ void t_start_fire (edict_t *ent, edict_t *other, edict_t *activator)
 		ent->fxdensity = 10;
 	if (!ent->deadticks)
 		ent->deadticks = 3;
-    ent->alphalevel = 5;
+		ent->alphalevel = 5;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->firetype = ent->fxdensity;
-    ent->lastduration = 0;
+		ent->lastduration = 0;
 	if (!ent->duration)
 		ent->duration = 5.0;
 	if (!ent->dmg)
@@ -774,7 +774,7 @@ void SP_target_changelevel (edict_t *ent)
 	}
 
 	// ugly hack because *SOMEBODY* screwed up their map
-//   if((stricmp(level.mapname, "fact1") == 0) && (stricmp(ent->map, "fact3") == 0))
+//   if((Q_stricmp(level.mapname, "fact1") == 0) && (Q_stricmp(ent->map, "fact3") == 0))
 //	   ent->map = "fact3$secret1";
 
 	ent->use = use_target_changelevel;
@@ -789,19 +789,19 @@ void SP_target_changelevel (edict_t *ent)
 Creates a particle splash effect when used.
 
 Set "sounds" to one of the following:
-  1) sparks
-  2) blue water
-  3) brown water
-  4) slime
-  5) lava
-  6) blood
-  7) fireworks	
-  8) smoke
+	1) sparks
+	2) blue water
+	3) brown water
+	4) slime
+	5) lava
+	6) blood
+	7) fireworks	
+	8) smoke
 
 FOR SMOKE
 	"alphalevel" 1 - 10 (default 4)
 	"firetype"   smoke size (5 - 32) 5 = extra small
-	   10 = small 24 = med 32 = large (default 24)
+		 10 = small 24 = med 32 = large (default 24)
 	"deadticks"  life in seconds 1 - 60 (default 6)
 	"fxdensity"  speed of rising smoke 1 - 100  (default 24)
 	"count"      puffs of smoke 1 - 10;  (default 3)

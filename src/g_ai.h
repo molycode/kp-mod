@@ -31,7 +31,7 @@
 // Player order commands
 #define ORDER_MOVE		1
 #define ORDER_HOLD		2
-#define ORDER_FOLLOWME	3	
+#define ORDER_FOLLOWME	3
 
 // Side Trace
 #define	SIDE_RANDOM		0

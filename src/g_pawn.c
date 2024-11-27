@@ -341,7 +341,7 @@ void Generic_Pawn_Think (edict_t *self)
 				{
 					if ( pawn_menu[i].item->s.frame == ones * 4)
 					{
-						qboolean animate_ones = false;
+						animate_ones = false;
 						continue;
 					}
 					else
@@ -1138,9 +1138,6 @@ void PawnGiveItem (edict_t *ent)
 	case PAWN_HEALTH: // health
 		if (pawn_item_index)
 		{
-			int     index;
-			gitem_t *item;
-
 			item = FindItem ("Large Health");
 			index = ITEM_INDEX (item);
 			ent->client->ps.stats[STAT_PICKUP_ICON] = gi.imageindex(item->icon);
@@ -1151,9 +1148,6 @@ void PawnGiveItem (edict_t *ent)
 		}
 		else 
 		{
-			int     index;
-			gitem_t *item;
-	
 			item = FindItem ("Small Health");
 			index = ITEM_INDEX (item);
 			ent->client->ps.stats[STAT_PICKUP_ICON] = gi.imageindex(item->icon);
@@ -1172,8 +1166,6 @@ void PawnGiveItem (edict_t *ent)
 	case PAWN_ARMOR:
 		{
 			int		rval;
-			int     index;
-			gitem_t *item;
 
 			rval = Check_Buy_Armor (ent, false);
 		

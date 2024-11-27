@@ -12,7 +12,7 @@ Veh_ProcessFrame
 */
 void Veh_ProcessFrame( edict_t *ent, usercmd_t *ucmd, pmove_t *pm )
 {
-	vehicle_t	*vehicle;
+	vehicle_t	*vehicle = NULL;
 
 	// find the vehicle structure
 

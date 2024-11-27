@@ -261,7 +261,7 @@ field_t fields[] = {
 field_t		levelfields[] =
 {
 	{"changemap", LLOFS(changemap), F_LSTRING},
-                   
+									 
 	{"sight_client", LLOFS(sight_client), F_EDICT},
 	{"sight_entity", LLOFS(sight_entity), F_EDICT},
 	{"sound_entity", LLOFS(sound_entity), F_EDICT},
@@ -1208,10 +1208,8 @@ void ReadLevel (char *filename)
 		// Restore rotating train absmax absmin
 		if (!strcmp(ent->classname, "func_train_rotating"))
 		{
-			float		max, v;
-			int			i;
+			float max = 0.0f, v = 0.0f;
 
-			max = 0;
 			for (i=0 ; i<3 ; i++)
 			{
 				v =fabs(ent->mins[i]);
@@ -1240,7 +1238,6 @@ void ReadLevel (char *filename)
 
 	if (changing_levels)
 	{
-		int	i;
 		edict_t	*e;
 
 		// kill any followers
@@ -1262,7 +1259,6 @@ void ReadLevel (char *filename)
 	}
 	else	// clear any following flags
 	{
-		int	i;
 		edict_t	*e;
 
 		// kill any followers

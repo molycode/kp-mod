@@ -124,7 +124,7 @@ qboolean EP_RC_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			}
 			else if (!(other->episode_flags & EP_RC_SCALPER_ASKED_MONEY) && !(self->episode_flags & EP_RC_SCALPER_GAVE_MONEY))
 			{
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 				{
 					Voice_Random (self, other, rc_scalper, 2);
 						
@@ -166,7 +166,7 @@ qboolean EP_RC_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 					mem->response = Resp_Scalper_GotTicket;
 				}
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = NULL;
 
 				other->response_ent = NULL;
@@ -178,7 +178,7 @@ qboolean EP_RC_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			{
 				Voice_Random ( self, other, rc_scalper, 2 );
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = Resp_Scalper_GotTicket;
 					
 				return true;
@@ -285,23 +285,19 @@ qboolean EP_RC_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 					Voice_Random (self, other, &rc_lola[1], 3);
 					other->episode_flags = other->client->pers.episode_flags &= ~EP_RC_LOLA_CLUE1;
 				}
-
-				return true;
 			}
 			else
 			{
 				// just do a random curse at the player
 				Voice_Random (self, other, &rc_lola[4], 3);	
-				return true;
 			}
-		
+
 			return true;
 		}
-		return false;
+
 		break;
 	}
-
-
+	
 	return false;
 }
 
@@ -460,8 +456,7 @@ qboolean ProcessRCMomo (edict_t *self, edict_t *other)
 	{
 				
 		if (other->last_response == resp_yes)
-		{	
-			edict_t	*door = NULL;
+		{
 			int	cost;
 
 			if ( mem->flags	& MEMORY_ASSHOLE)
@@ -928,7 +923,7 @@ void EP_RCFlags (edict_t *self)
 void EP_RC_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 {
 	if (ent->episode_flags & EP_RC_MOMO_ASKED_MONEY)
-	 	mem->inc++;
+		mem->inc++;
 				
 }
 
@@ -966,9 +961,7 @@ void EP_RC_ReachedDoKey (edict_t *self)
 
 void EP_RC_EndDoKey (edict_t *self)
 {
-	edict_t		*dest = NULL;
-	edict_t		*ent = NULL;
-	edict_t		*player;
+	edict_t *player;
 
 	player = &g_edicts[1];
 
@@ -1126,7 +1119,7 @@ void SP_rc_initiation_brush ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 	// set the center pos

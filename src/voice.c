@@ -280,7 +280,7 @@ void Voice_Specific( edict_t *self, edict_t *other, voice_table_t *voice_table, 
 void Voice_Player_Specific( edict_t *player, int entry )
 {
 
-	if (player->health <= 0)
+	if (player == NULL || player->health <= 0)
 		return;
 
 	// JOSEPH 2-FEB-99 
@@ -331,8 +331,6 @@ void Voice_Random_rc( edict_t *self, edict_t *other, voice_table_t *voice_table,
 			voice_table = voice_table;
 		else if (self->gender == GENDER_MALE)
 		{
-			qboolean is_rc = true;
-			
 			if (voice_table >= rc_joker && voice_table <= &rc_joker[9])
 				voice_table = voice_table;
 			else if (self->cast_group == 1)

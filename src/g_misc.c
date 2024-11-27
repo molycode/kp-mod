@@ -310,7 +310,7 @@ void ThrowClientHead (edict_t *self, int damage)
 =============
 GibEntity
 
-  Gibs an entity.. can be used for client's or AI
+	Gibs an entity.. can be used for client's or AI
 =============
 */
 void GibEntity( edict_t *self, edict_t *inflictor, float damage )
@@ -449,7 +449,7 @@ void ThrowDebris (edict_t *self, char *modelname, float speed, vec3_t origin)
 	chunk->think = Think_Debris;
 	chunk->misstime = 20;
 	chunk->nextthink = level.time + 0.1;
-    chunk->s.renderfx2 |= RF2_NOSHADOW;
+		chunk->s.renderfx2 |= RF2_NOSHADOW;
 	chunk->avelocity[1] = ((rand()&15)-8);
 	//chunk->s.angles[0] = 90;
 	gi.linkentity (chunk);
@@ -485,7 +485,7 @@ void ThrowDebris_stuff (edict_t *self, char *modelname, float speed, vec3_t orig
 	chunk->think = Think_Debris;
 	chunk->misstime = 40;
 	chunk->nextthink = level.time + 0.1;
-    chunk->s.renderfx2 |= RF2_NOSHADOW;
+		chunk->s.renderfx2 |= RF2_NOSHADOW;
 	chunk->avelocity[1] = ((rand()&15)-8);
 	chunk->lightit = 30;
 	gi.linkentity (chunk);
@@ -1189,7 +1189,7 @@ FLARE_AMBER		2
 FLARE_RED		3
 FLARE_BLUE		4
 FLARE_GREEN		5
-  
+	
 model="models\props\sconce\light.md2"
 */
 
@@ -1253,7 +1253,7 @@ void SP_light_sconce (edict_t *self)
 		self->flags |= RF_FULLBRIGHT;
 	}
 
- 	gi.linkentity (self);
+	gi.linkentity (self);
 }
 // END JOSEPH
 
@@ -1318,7 +1318,7 @@ void SP_light_bulb (edict_t *self)
 		self->flags |= RF_FULLBRIGHT;
 	}
 
- 	gi.linkentity (self);
+	gi.linkentity (self);
 }
 // END JOSEPH
 
@@ -1341,7 +1341,7 @@ FLARE_AMBER		2
 FLARE_RED		3
 FLARE_BLUE		4
 FLARE_GREEN		5
-  
+	
 model="models\props\decosconce\tris.md2"
 */
 
@@ -1385,7 +1385,7 @@ void SP_light_deco_sconce (edict_t *self)
 		self->flags |= RF_FULLBRIGHT;
 	}
 
- 	gi.linkentity (self);
+	gi.linkentity (self);
 }
 
 // JOSEPH 3-JUN-99
@@ -1407,7 +1407,7 @@ FLARE_AMBER		2
 FLARE_RED		3
 FLARE_BLUE		4
 FLARE_GREEN		5
-  
+	
 model="models\props\chandelier\tris.md2"
 */
 
@@ -1451,7 +1451,7 @@ void SP_light_chandelier (edict_t *self)
 		self->flags |= RF_FULLBRIGHT;
 	}
 
- 	gi.linkentity (self);
+	gi.linkentity (self);
 }
 // END JOSEPH
 
@@ -1473,7 +1473,7 @@ FLARE_AMBER		2
 FLARE_RED		3
 FLARE_BLUE		4
 FLARE_GREEN		5
-  
+	
 model="models\props\pendant\tris.md2"
 */
 
@@ -1517,7 +1517,7 @@ void SP_light_pendant (edict_t *self)
 		self->flags |= RF_FULLBRIGHT;
 	}
 
- 	gi.linkentity (self);
+	gi.linkentity (self);
 }
 // END JOSEPH
 
@@ -2008,10 +2008,9 @@ void SP_props_trashcanA (edict_t *self);
 void SP_misc_explobox (edict_t *self)
 {
 	// JOSEPH TEMP
-    SP_props_trashcanA (self);
-	return;
-
-// END JOSEPH	
+		SP_props_trashcanA (self);
+#if 0
+// END JOSEPH
 
 	if (deathmatch->value)
 	{	// auto-remove for deathmatch
@@ -2049,6 +2048,7 @@ void SP_misc_explobox (edict_t *self)
 	self->nextthink = level.time + 2 * FRAMETIME;
 
 	gi.linkentity (self);
+#endif
 }
 
 // JOSEPH 8-FEB-99
@@ -3191,7 +3191,7 @@ void SP_path_attractor (edict_t *self)
 	 //if (level.time > (ent->nextthink + ent->wait))
 	 // JOSEPH 7-DEC-98
 	 if (!ent->wait--)
-	   EndCutScene (ent);
+		 EndCutScene (ent);
 }
 
 void CutSceneThinkEnd (edict_t *ent)
@@ -3245,45 +3245,45 @@ void SP_misc_cut_scene (edict_t *self)
 
 Targets a misc_cutscene_camera
 
-  target - camera to target
-  debugprint - set to 1 to print out camera end position and angles	
-  duration - fade in time.	  
+	target - camera to target
+	debugprint - set to 1 to print out camera end position and angles	
+	duration - fade in time.	  
 */
 // END JOSEPH
 
 // JOSEPH 19-MAR-99-B
 /*QUAKED misc_cutscene_camera (0 0 1) (-16 -16 -16) (16 16 16)
-  
+	
 Camera to be targeted from a misc_cutscene_trigger		
 
-  targetname - camera target ID 
-  
-  cameraorigin - X Y Z camera start position
+	targetname - camera target ID 
+	
+	cameraorigin - X Y Z camera start position
 
-  cameraangle - X Y Z start angles
+	cameraangle - X Y Z start angles
 
-  rotate - X Y Z rotational velocity during cut scene
+	rotate - X Y Z rotational velocity during cut scene
 
-  cameravel - [forward] [right] [up] speed to move from initial angle.	
+	cameravel - [forward] [right] [up] speed to move from initial angle.	
 
-  cameravelrel - [forward] [right] [up] speed to move relative to current frame angle.	
+	cameravelrel - [forward] [right] [up] speed to move relative to current frame angle.	
 
-  wait - cut scene length in seconds (default 5)	
+	wait - cut scene length in seconds (default 5)	
 
-  target - next camera to target.	
+	target - next camera to target.	
 
-  target2 - [NOT WORKING!!] camera angle points to this entity (overides other angle commands)	  
+	target2 - [NOT WORKING!!] camera angle points to this entity (overides other angle commands)	  
 
-  deadticks - fov for this camera;
+	deadticks - fov for this camera;
 
-  duration - fade out time.
-  
-  reactdelay - time into camera to start fading out   
+	duration - fade out time.
+	
+	reactdelay - time into camera to start fading out   
 */
 // END JOSEPH
 void CutSceneThink (edict_t *ent)
 {
-    if (!ent->wait--)
+		if (!ent->wait--)
 	{
 		{
 			edict_t	*e;
@@ -3305,7 +3305,7 @@ void CutSceneThink (edict_t *ent)
 			
 			// Restore camera start position and angle
 			VectorCopy(ent->target_ent->save_avel, ent->target_ent->s.angles);
-	        VectorCopy(ent->target_ent->savecameraorigin, ent->target_ent->s.origin);
+					VectorCopy(ent->target_ent->savecameraorigin, ent->target_ent->s.origin);
 			
 			// No more cameras
 			if (!ent->target_ent->target)
@@ -3394,7 +3394,7 @@ void CutSceneThink (edict_t *ent)
 	{
 		// Process camera frame
 		AdjustCutSceneCamera(ent->target_ent);
-	    ent->nextthink = level.time + 0.1;
+			ent->nextthink = level.time + 0.1;
 	}	
 }
 
@@ -3548,7 +3548,7 @@ void SP_misc_cutscene_trigger (edict_t *self)
 {
 	self->solid = SOLID_TRIGGER;
 	gi.setmodel (self, self->model);
-    self->svflags |= SVF_NOCLIENT;
+		self->svflags |= SVF_NOCLIENT;
 
 	if (self->targetname)
 	{	
@@ -3568,7 +3568,7 @@ void SP_misc_cutscene_trigger (edict_t *self)
 	
 	gi.linkentity (self);
 	self->count = 1;
-    
+		
 	PrecacheCutStuff (self->name);
 }
 // END JOSEPH
@@ -3577,9 +3577,9 @@ void SP_misc_cutscene_trigger (edict_t *self)
 /*QUAKED misc_use_cutscene (.5 .5 .5) (-8 -8 -8) (8 8 8)
 This fixed size trigger targets a misc_cutscene_camera
 
-  target - camera to target
-  debugprint - set to 1 to print out camera end position and angles	
-  duration - fade in time.	  
+	target - camera to target
+	debugprint - set to 1 to print out camera end position and angles	
+	duration - fade in time.	  
 */
 void SP_misc_use_cutscene (edict_t *self)
 {
@@ -3593,7 +3593,7 @@ void SP_misc_use_cutscene (edict_t *self)
 	}	
 	
 	self->count = 1;
-    
+		
 	PrecacheCutStuff (self->name);
 }
 // END JOSEPH

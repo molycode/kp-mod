@@ -330,8 +330,6 @@ standing:
 
 		if (attack)
 		{
-			int rnd;
-
 			self->ideal_yaw = vectoyaw(vec);
 			M_ChangeYaw( self );
 
@@ -389,12 +387,10 @@ standing:
 	if (	(dist < 384)				// they're close
 		&&	(self->enemy->client)
 		&&	(self->enemy->client->pers.weapon)
-		&&	(stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
+		&&	(Q_stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
 	{
-		int		side_result;
-
 		// see if we can go backwards
-		if (side_result = AI_SideTrace( self, -64, 0, 1 ))
+		if (AI_SideTrace( self, -64, 0, 1 ) != 0)
 		{
 			self->cast_info.currentmove = &bitch_move_reverse_run_shoot;
 			return true;
@@ -448,13 +444,15 @@ standing:
 
 	}
 
+	qboolean result = false;
+
 	if (	(dist > 512)
 		&&	(rnd < 9)
 		&&	(infront(self, self->enemy)))
 	{
 		self->cast_info.currentmove = &bitch_move_walk_shoot;
 
-		return true;
+		result = true;
 	}
 	else
 	{
@@ -468,10 +466,10 @@ stand_shoot:
 		self->cast_info.currentmove = &bitch_move_shoot_stand;
 //		self->cast_info.currentmove = &bitch_move_walk_shoot;
 
-		return true;
+		result = true;
 	}
 
-	return false;
+	return result;
 }
 
 
@@ -489,7 +487,7 @@ void bitch_melee( edict_t *self )
 	float damage = 10;
 
 	if (self->cast_info.currentmove == &bitch4_move_low_melee1)
-	 	damage *= 2;		// double handed attack
+		damage *= 2;		// double handed attack
 
 
 	// yell at them?
@@ -782,7 +780,7 @@ void bitch_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage
 {
 	trace_t	tr;
 	vec3_t	end;
- 	edict_t *playthud1, *playthud2;
+	edict_t *playthud1, *playthud2;
 
 //	self->s.modelindex2 = 0;
 
@@ -1318,7 +1316,7 @@ void SP_cast_bitch(edict_t *self)
 	self->cast_info.move_jump = &bitch4_move_jump;
 
 	// Betty walks away from you since she doesn't want to start any trouble
-	if (self->name && !stricmp( self->name, "Betty"))
+	if (self->name && !Q_stricmp( self->name, "Betty"))
 		self->cast_info.move_avoid_walk = &bitch_move_evd_walk;
 	else	
 		self->cast_info.move_avoid_walk = &bitch_move_avoid_walk;

@@ -214,14 +214,11 @@ qboolean EP_Steeltown_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 				mem->flags &= ~MEMORY_ASSHOLE;
 			
 				Voice_Random (self, other, &steeltown_mathew[2], 4);
-
-				return true;
 			}
 			else
 			{
 				// just do a random curse at the player
 				Voice_Random (self, other, &steeltown_mathew[6], 3);	
-				return true;
 			}
 		
 			return true;
@@ -235,14 +232,11 @@ qboolean EP_Steeltown_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 				mem->flags &= ~MEMORY_ASSHOLE;
 			
 				Voice_Random (self, other, &steeltown_brittany[4], 3);
-
-				return true;
 			}
 			else
 			{
 				// just do a random curse at the player
 				Voice_Random (self, other, &steeltown_brittany[1], 3);	
-				return true;
 			}
 		
 			return true;
@@ -325,7 +319,7 @@ qboolean ProcessSteeltownBambi (edict_t *self, edict_t *player, cast_memory_t *m
 			{
 				int     index;
 				gitem_t *item;
-								  
+									
 				item = FindItem ("Office_Key");
 				index = ITEM_INDEX (item);
 				player->client->pers.inventory[ index ] = 1;
@@ -345,7 +339,7 @@ qboolean ProcessSteeltownBambi (edict_t *self, edict_t *player, cast_memory_t *m
 			{
 				int     index;
 				gitem_t *item;
-								  
+									
 				item = FindItem ("Office_Key");
 				index = ITEM_INDEX (item);
 				player->client->pers.inventory[ index ] = 1;
@@ -415,7 +409,7 @@ qboolean ProcessKids (edict_t *self, edict_t *player, cast_memory_t *mem)
 			edict_t	*ent = NULL;
 			int		num_choices = 0;
 			edict_t	*choice[MAXCHOICES];
-			int		rval;
+			int rval = 0.0f;
 			float	dist[MAXCHOICES];
 			
 			while(1)
@@ -628,8 +622,7 @@ qboolean ProcessSteeltownMomo (edict_t *self, edict_t *other)
 	{
 				
 		if (other->last_response == resp_yes)
-		{	
-			edict_t	*door = NULL;
+		{
 			int	cost;
 
 			if ( mem->flags	& MEMORY_ASSHOLE)
@@ -672,7 +665,7 @@ qboolean ProcessSteeltownMomo (edict_t *self, edict_t *other)
 							if (e->key == -1)
 							{
 								e->key = 0;	
-								e->targetname = NULL;							
+								e->targetname = NULL;
 							}
 						}
 					}
@@ -831,7 +824,7 @@ void EP_SteeltownFlags (edict_t *self)
 void EP_Steeltown_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 {
 	if (ent->episode_flags & EP_Steeltown_MOMO_ASKED_MONEY)
-	 	mem->inc++;
+		mem->inc++;
 				
 }
 
@@ -1100,7 +1093,7 @@ void SP_moker_notinoffice ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }

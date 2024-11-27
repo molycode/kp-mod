@@ -547,77 +547,77 @@ spawn_t	spawns[] = {
 	{"props_trashcanA", SP_props_trashcanA},
 	{"props_trashcan_fall", SP_props_trashcan_fall},
 	{"props_hydrant", SP_props_hydrant},
-    {"props_antenna1a", SP_props_antenna1a},
-    {"props_antenna1b", SP_props_antenna1b},
-    {"props_antenna1c", SP_props_antenna1c},
-    {"props_antenna2a", SP_props_antenna2a},
-    {"props_antenna2b", SP_props_antenna2b},
-    {"props_antenna2c", SP_props_antenna2c},
-    {"props_antenna3a", SP_props_antenna3a},
-    {"props_antenna3b", SP_props_antenna3b},
-    {"props_antenna3c", SP_props_antenna3c},
-    {"props_fan", SP_props_fan},
-    {"props_phone", SP_props_phone},
+		{"props_antenna1a", SP_props_antenna1a},
+		{"props_antenna1b", SP_props_antenna1b},
+		{"props_antenna1c", SP_props_antenna1c},
+		{"props_antenna2a", SP_props_antenna2a},
+		{"props_antenna2b", SP_props_antenna2b},
+		{"props_antenna2c", SP_props_antenna2c},
+		{"props_antenna3a", SP_props_antenna3a},
+		{"props_antenna3b", SP_props_antenna3b},
+		{"props_antenna3c", SP_props_antenna3c},
+		{"props_fan", SP_props_fan},
+		{"props_phone", SP_props_phone},
 	{"props_aircon", SP_props_aircon},
-    {"props_tablesetA", SP_props_tablesetA},
-    {"props_radio", SP_props_radio},
+		{"props_tablesetA", SP_props_tablesetA},
+		{"props_radio", SP_props_radio},
 	{"cast_buma", SP_cast_buma},
 	{"cast_bumb", SP_cast_bumb},
 	{"elements_raincloud", SP_elements_raincloud},
 	{"elements_snowcloud", SP_elements_snowcloud},
-    {"misc_cutscene_trigger", SP_misc_cutscene_trigger},
-    {"misc_cutscene_camera", SP_misc_cutscene_camera},
+		{"misc_cutscene_trigger", SP_misc_cutscene_trigger},
+		{"misc_cutscene_camera", SP_misc_cutscene_camera},
 	//{"props_crate", SP_props_crate},
 	//{"props_crate_32", SP_props_crate_32},
 	//{"props_crate_48", SP_props_crate_48},
 	{"trigger_unlock", SP_trigger_unlock},
-    {"props_chair", SP_props_chair},
-    {"props_extinguisherA", SP_props_extinguisherA},
-    {"props_extinguisherB", SP_props_extinguisherB},
-    {"light_sconce", SP_light_sconce},
-    {"props_motorcycle", SP_props_motorcycle},
+		{"props_chair", SP_props_chair},
+		{"props_extinguisherA", SP_props_extinguisherA},
+		{"props_extinguisherB", SP_props_extinguisherB},
+		{"light_sconce", SP_light_sconce},
+		{"props_motorcycle", SP_props_motorcycle},
 	{"props_ammocrate_bust", SP_props_ammocrate_bust},
 	{"props_shelf", SP_props_shelf},
-    {"props_mattressA", SP_props_mattressA},
-    {"props_mattressB", SP_props_mattressB},
-    {"props_mattressC", SP_props_mattressC},
+		{"props_mattressA", SP_props_mattressA},
+		{"props_mattressB", SP_props_mattressB},
+		{"props_mattressC", SP_props_mattressC},
 	{"trigger_motorcycle", SP_trigger_motorcycle},
-    {"props_tv", SP_props_tv},
-    {"props_steam_machine", SP_props_steam_machine},
+		{"props_tv", SP_props_tv},
+		{"props_steam_machine", SP_props_steam_machine},
 	{"light_bulb", SP_light_bulb},
-    {"props_trash", SP_props_trash},
-    {"props_wall_fall", SP_props_wall_fall},
-    {"props_trashbottle", SP_props_trashbottle},
-    {"props_trashwall", SP_props_trashwall},
-    {"props_trashpaper", SP_props_trashpaper},
-    {"props_trashcorner", SP_props_trashcorner},
-    {"props_trashbottle_vert", SP_props_trashbottle_vert},
-    {"props_blimp", SP_props_blimp},
-    {"misc_use_cutscene", SP_misc_use_cutscene},
-    {"props_motorcycle_runaway", SP_props_motorcycle_runaway},
-    {"trigger_hurt_fire", SP_trigger_hurt_fire},
+		{"props_trash", SP_props_trash},
+		{"props_wall_fall", SP_props_wall_fall},
+		{"props_trashbottle", SP_props_trashbottle},
+		{"props_trashwall", SP_props_trashwall},
+		{"props_trashpaper", SP_props_trashpaper},
+		{"props_trashcorner", SP_props_trashcorner},
+		{"props_trashbottle_vert", SP_props_trashbottle_vert},
+		{"props_blimp", SP_props_blimp},
+		{"misc_use_cutscene", SP_misc_use_cutscene},
+		{"props_motorcycle_runaway", SP_props_motorcycle_runaway},
+		{"trigger_hurt_fire", SP_trigger_hurt_fire},
 	{"props_shelf_fall", SP_props_shelf_fall},	
 	{"target_fire", SP_target_fire},
 	{"props_rat", SP_props_rat},
-    {"props_rat_spawner", SP_props_rat_spawner},
-    {"props_rat_spawner_node", SP_props_rat_spawner_node},
+		{"props_rat_spawner", SP_props_rat_spawner},
+		{"props_rat_spawner_node", SP_props_rat_spawner_node},
 	{"target_flamethrower", SP_target_flamethrower},
-    {"light_deco_sconce", SP_light_deco_sconce},
-    {"light_pendant", SP_light_pendant},
+		{"light_deco_sconce", SP_light_deco_sconce},
+		{"light_pendant", SP_light_pendant},
 	{"props_shelfB_fall", SP_props_shelfB_fall},
-    //{"props_crate_bust_sm", SP_props_crate_bust_sm},
+		//{"props_crate_bust_sm", SP_props_crate_bust_sm},
 	{"func_lift", SP_func_lift},
 	{"props_roof_vent", SP_props_roof_vent},
 	{"props_rat_trigger", SP_props_rat_trigger},
 	{"props2_truck_die", SP_props2_truck_die},
-    {"props_cola_machine", SP_props_cola_machine},
+		{"props_cola_machine", SP_props_cola_machine},
 	{"props_cig_machine", SP_props_cig_machine},
-    {"props2_barrels_fallA", SP_props2_barrels_fallA},
+		{"props2_barrels_fallA", SP_props2_barrels_fallA},
 	{"props2_barrels_fallB", SP_props2_barrels_fallB},
 	{"props2_clubcouch", SP_props2_clubcouch},
 	{"props2_clubchair", SP_props2_clubchair},
-    {"props2_vaseA", SP_props2_vaseA},
-    {"props2_vaseB", SP_props2_vaseB},
+		{"props2_vaseA", SP_props2_vaseA},
+		{"props2_vaseB", SP_props2_vaseB},
 	{"props2_chair_conf", SP_props2_chair_conf},
 	{"props2_shelf_metal_A_fall", SP_props2_shelf_metal_A_fall},
 	{"props2_shelf_metal_B_fall", SP_props2_shelf_metal_B_fall},
@@ -640,9 +640,9 @@ spawn_t	spawns[] = {
 	{"props2_buoy", SP_props2_buoy},
 	{"props2_buoy_side", SP_props2_buoy_side},
 	{"props2_deadguy_underwater", SP_props2_deadguy_underwater},
-    {"props2_buoy_animate", SP_props2_buoy_animate},
+		{"props2_buoy_animate", SP_props2_buoy_animate},
 	{"props2_gargoyle", SP_props2_gargoyle},
-    {"props2_clothesline", SP_props2_clothesline},
+		{"props2_clothesline", SP_props2_clothesline},
 	{"props2_plant_XL", SP_props2_plant_XL},
 	{"props2_plant_SM", SP_props2_plant_SM},
 	{"props2_boatphone", SP_props2_boatphone},
@@ -651,8 +651,8 @@ spawn_t	spawns[] = {
 	{"props2_deadgal_headless", SP_props2_deadgal_headless},
 	{"props2_plant_bush", SP_props2_plant_bush},
 	{"props2_boat_animate", SP_props2_boat_animate},
-    {"props2_helicopter_animate", SP_props2_helicopter_animate},
-    {"props2_car_animate", SP_props2_car_animate},
+		{"props2_helicopter_animate", SP_props2_helicopter_animate},
+		{"props2_car_animate", SP_props2_car_animate},
 	{"props2_car_topdown", SP_props2_car_topdown},
 	{"props2_car_topup", SP_props2_car_topup},
 	{"props2_plant_fern", SP_props2_plant_fern},
@@ -680,7 +680,7 @@ spawn_t	spawns[] = {
 	{"props3_whiskey_glass", SP_props3_whiskey_glass},	
 	{"props3_barrels_fall_nikki_A", SP_props3_barrels_fall_nikki_A},
 	{"props3_barrels_fall_nikki_B", SP_props3_barrels_fall_nikki_B},
-    {"props3_cut_run_to_car_animate", SP_props3_cut_run_to_car_animate},
+		{"props3_cut_run_to_car_animate", SP_props3_cut_run_to_car_animate},
 	{"props3_cut_final_animate", SP_props3_cut_final_animate},
 	{"props3_cash", SP_props3_cash},
 	{"props3_cut_truck_driver", SP_props3_cut_truck_driver},	
@@ -727,7 +727,7 @@ void ED_CallSpawn (edict_t *ent)
 		return;
 	}
 
-if (!stricmp( ent->classname, "weapon_barmachinegun" ))
+if (!Q_stricmp( ent->classname, "weapon_barmachinegun" ))
 {
 gi.dprintf("Hacking old BAR machine gun to grenade launcher for KPDM1-cash.bsp\n" );
 sprintf( ent->classname, "weapon_grenadelauncher" );
@@ -1114,7 +1114,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		entities = ED_ParseEdict (entities, ent);
 
 		// yet another map hack
-		if (!stricmp(level.mapname, "command") && !stricmp(ent->classname, "trigger_once") && !stricmp(ent->model, "*27"))
+		if (!Q_stricmp(level.mapname, "command") && !Q_stricmp(ent->classname, "trigger_once") && !Q_stricmp(ent->model, "*27"))
 			ent->spawnflags &= ~SPAWNFLAG_NOT_HARD;
 
 		// remove things (except the world) from different skill levels or deathmatch
@@ -1198,8 +1198,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		ED_CallSpawn( sp );
 
 	// modifications
-		sp = NULL;
-		while (sp = G_Find( sp, FOFS(classname), "info_player_deathmatch" ))
+		while ((sp = G_Find( sp, FOFS(classname), "info_player_deathmatch" )) != NULL)
 		{
 			if (VectorDistance( sp->s.origin, tv(552, -1704, 216) ) < 1)
 			{
@@ -1210,11 +1209,11 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 	}
 	if (!strcmp( level.mapname, "team_rival" ))
 	{
-		edict_t *sp;
+		// Moly: check this logic
+		edict_t *sp = NULL;
 
 	// modifications
-		sp = NULL;
-		while (sp = G_Find( sp, FOFS(classname), "info_player_deathmatch" ))
+		while ((sp = G_Find( sp, FOFS(classname), "info_player_deathmatch" )) != NULL)
 		{
 			if (VectorDistance( sp->s.origin, tv(-736, 2272, 288) ) < 1)
 			{
@@ -1837,7 +1836,7 @@ void SP_worldspawn (edict_t *ent)
 
 	// 16 REALISTIC FADE (second variety)
 	gi.configstring(CS_LIGHTS+16, "mmmmnonmmmmnmmmmmnonmmmmmnmmmmmmm");
-	 	
+		
 	// 17 SLOW STRONG STROBE (out of phase with 9)
 	gi.configstring(CS_LIGHTS+17, "zzzzzzzzaaaaaaaa");
 

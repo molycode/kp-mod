@@ -17,7 +17,6 @@ void metal_explode (edict_t *self)
 	float	 spd;
 	vec3_t	 save;
 	edict_t *breakit;
-	extern void breakittrash_sound (edict_t *self);
 	
 	VectorCopy (self->s.origin, save);
 	VectorMA (self->absmin, 0.5, self->size, self->s.origin);
@@ -154,7 +153,7 @@ void SP_props_antenna1a (edict_t *self)
 	VectorSet (self->maxs, 28, 22, 22);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/antenna/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -194,7 +193,7 @@ void SP_props_antenna2a (edict_t *self)
 	VectorSet (self->maxs, 26, 30, 22);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant2a/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -234,7 +233,7 @@ void SP_props_antenna3a (edict_t *self)
 	VectorSet (self->maxs, 14, 2, 22);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant3a/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -274,7 +273,7 @@ void SP_props_antenna1b (edict_t *self)
 	VectorSet (self->maxs, 41, 33, 32);	
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant1b/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -314,7 +313,7 @@ void SP_props_antenna2b (edict_t *self)
 	VectorSet (self->maxs, 38, 45, 32);	
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant2b/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -354,7 +353,7 @@ void SP_props_antenna3b (edict_t *self)
 	VectorSet (self->maxs, 21, 3, 33);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant3b/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -394,7 +393,7 @@ void SP_props_antenna1c (edict_t *self)
 	VectorSet (self->maxs, 55, 44, 43);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant1c/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -434,7 +433,7 @@ void SP_props_antenna2c (edict_t *self)
 	VectorSet (self->maxs, 50, 60, 43);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant2c/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -474,7 +473,7 @@ void SP_props_antenna3c (edict_t *self)
 	VectorSet (self->maxs, 28, 3, 44);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ant3c/antenna.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -639,7 +638,7 @@ void SP_props_tablesetA (edict_t *self)
 	VectorSet (self->maxs, 26, 27, 6);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/tablesets/set.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -802,7 +801,7 @@ Snow falls from this invisable cloud at random points
 center of cloud to ground trace determines the drop fall distance
 
 cloud can be any recatangle size
-  
+	
 fxdensity - total number of drops in the sky 1 - 1000 (default 400) 
 
 firetype - type of drops, 0 = rain 1 = drip
@@ -865,7 +864,7 @@ Snow falls from this invisable cloud at random points
 center of cloud to ground trace determines the flake fall distance
 
 cloud can be any recatangle size
-  
+	
 fxdensity - total number of flakes in the sky 1 - 1000 (default 400) 
 */
 
@@ -1009,7 +1008,7 @@ void trashcanA_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t
 	}
 
 	if (self->health <= 0)
-      trashcanA_explode(self);
+			trashcanA_explode(self);
 }	
 // END JOSEPH
 
@@ -1263,7 +1262,7 @@ void breakit_sound (edict_t *self)
 
 void crate_bust_final_32 (edict_t *self)
 {
-    if (self->s.frame < 19)
+		if (self->s.frame < 19)
 	{
 		if (self->item)
 		{
@@ -1316,7 +1315,7 @@ void crate_bust_die_32 (edict_t *self, edict_t *inflictor, edict_t *attacker, in
 	self->think = crate_bust_final_32;
 	self->nextthink = level.time + FRAMETIME;
 
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	
 	if (self->spawnflags & TYPE_CARDBOARD)
@@ -1428,7 +1427,7 @@ void SP_props_crate_bust_32 (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 
 	if (self->spawnflags & TYPE_METAL)
@@ -1512,7 +1511,7 @@ void SP_props_crate_bust_32 (edict_t *self)
 
 void crate_bust_final_48 (edict_t *self)
 {
-    if (self->s.frame < 28)
+		if (self->s.frame < 28)
 	{
 		if (self->item)
 		{
@@ -1565,7 +1564,7 @@ void crate_bust_die_48 (edict_t *self, edict_t *inflictor, edict_t *attacker, in
 	self->think = crate_bust_final_48;
 	self->nextthink = level.time + FRAMETIME;
 
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	
 	if (self->spawnflags & TYPE_CARDBOARD)
@@ -1678,7 +1677,7 @@ void SP_props_crate_bust_48 (edict_t *self)
 	VectorSet (self->maxs, 24.1, 24.1, 24.1);
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 
 	if (self->spawnflags & TYPE_METAL)
@@ -1718,7 +1717,7 @@ void SP_props_crate_bust_48 (edict_t *self)
 	{
 		self->pullable = 1;
 		self->nokickbackflag = 1;
-	  self->fallerflag = 1;
+		self->fallerflag = 1;
 	}
 	
 	if (!self->mass)
@@ -1761,7 +1760,7 @@ void SP_props_crate_bust_48 (edict_t *self)
 
 void crate_bust_final_64 (edict_t *self)
 {
-    if (self->s.frame < 39)
+		if (self->s.frame < 39)
 	{
 		if (self->item)
 		{
@@ -1814,7 +1813,7 @@ void crate_bust_die_64 (edict_t *self, edict_t *inflictor, edict_t *attacker, in
 	self->think = crate_bust_final_64;
 	self->nextthink = level.time + FRAMETIME;
 
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	
 	if (self->spawnflags & TYPE_CARDBOARD)
@@ -1871,7 +1870,7 @@ void SP_props_crate_bust_64 (edict_t *self)
 	VectorSet (self->maxs, 32, 32, 32);
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 
 	if (self->spawnflags & TYPE_METAL)
@@ -1950,7 +1949,7 @@ skin="models\props\crate\crate_exp.tga"
 
 void ammocrate_bust_finalA (edict_t *self)
 {
-    if (self->s.frame < 15)
+		if (self->s.frame < 15)
 	{
 		self->s.frame++;
 		
@@ -1982,7 +1981,7 @@ void ammocrate_bust_finalA (edict_t *self)
 
 void ammocrate_bust_finalB (edict_t *self)
 {
-    if (self->s.frame < 7)
+		if (self->s.frame < 7)
 	{
 			if (self->item)
 			{
@@ -2145,7 +2144,7 @@ void SP_props_trashcanA (edict_t *self)
 	VectorClear(self->s.angles);
 	
 	if (!(self->spawnflags & NON_MOVEABLE))
-	  self->fallerflag = 1;
+		self->fallerflag = 1;
 
 	self->pullable = 1;
 	// JOSEPH 24-NOV-98
@@ -2212,7 +2211,7 @@ void trashcan_fall_final (edict_t *self)
 	float	ratio;
 	vec3_t	forward;
 
-    if (self->s.frame < 14)
+		if (self->s.frame < 14)
 	{
 			if (self->item)
 			{
@@ -2392,7 +2391,7 @@ void smoke_think( edict_t *ent)
 
 void SP_light_fire_esm (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = light_fire_think;
 	ent->nextthink = level.time + 0.1;
@@ -2404,7 +2403,7 @@ void SP_light_fire_esm (edict_t *ent)
 
 void SP_light_fire_sm (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = light_fire_think;
 	ent->nextthink = level.time + 0.1;
@@ -2416,7 +2415,7 @@ void SP_light_fire_sm (edict_t *ent)
 
 void SP_light_fire_med (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = light_fire_think;
 	ent->nextthink = level.time + 0.1;
@@ -2428,7 +2427,7 @@ void SP_light_fire_med (edict_t *ent)
 
 void SP_light_fire_lg (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = light_fire_think;
 	ent->nextthink = level.time + 0.1;
@@ -2440,7 +2439,7 @@ void SP_light_fire_lg (edict_t *ent)
 
 void SP_smoke_esm (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = smoke_think;
 	ent->nextthink = level.time + 0.1;
@@ -2450,7 +2449,7 @@ void SP_smoke_esm (edict_t *ent)
 
 void SP_smoke_sm (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = smoke_think;
 	ent->nextthink = level.time + 0.1;
@@ -2460,7 +2459,7 @@ void SP_smoke_sm (edict_t *ent)
 
 void SP_smoke_med (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = smoke_think;
 	ent->nextthink = level.time + 0.1;
@@ -2470,7 +2469,7 @@ void SP_smoke_med (edict_t *ent)
 
 void SP_smoke_lg (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->think = smoke_think;
 	ent->nextthink = level.time + 0.1;
@@ -2496,13 +2495,13 @@ void think_bum1a (edict_t *self)
 	self->nextthink = level.time + FRAMETIME;
  
 	if (self->s.frame < 17)
-    {
+		{
 		self->s.frame++;
 	}
 	else
 	{
 		self->s.frame = 0;
-  
+	
 		if (((float)rand() / (float)RAND_MAX) < (float)0.1)
 		{
 			self->think = think_bum1b;
@@ -2519,7 +2518,7 @@ void think_bum1b (edict_t *self)
 	self->nextthink = level.time + FRAMETIME;
  
 	if (self->s.frame < 74)
-    {
+		{
 		self->s.frame++;
 	}
 	else
@@ -2537,13 +2536,13 @@ void think_bum2a (edict_t *self)
 	self->nextthink = level.time + FRAMETIME;
  
 	if (self->s.frame < 117)
-    {
+		{
 	self->s.frame++;
 	}
 	else
 	{
 		self->s.frame = 75;
-  
+	
 		if (((float)rand() / (float)RAND_MAX) < (float)0.1)
 		{
 			self->think = think_bum2b;
@@ -2578,7 +2577,7 @@ void SP_cast_buma (edict_t *self)
 {
 	int i;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -2694,7 +2693,7 @@ void SP_props_chair (edict_t *self)
 	VectorSet (self->maxs, 11, 13, 26);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/chair/chair.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -2796,7 +2795,7 @@ void SP_props2_chair_push (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 0);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/chair/chair.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -2969,7 +2968,7 @@ void SP_props_motorcycle (edict_t *self)
 	self->svflags |= SVF_PROP;
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/moto/moto.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -2999,7 +2998,7 @@ model="models\props\ride\moto.mdx"
 
 void think_motorcycle_run (edict_t *self)
 {
-    if (self->s.frame < 111)
+		if (self->s.frame < 111)
 	{
 		self->nextthink = level.time + 0.1;
 		self->s.frame++;
@@ -3033,7 +3032,7 @@ void SP_props_motorcycle_run (edict_t *self)
 	self->s.origin[2] = 48-16-5; 	
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/ride/head.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3082,7 +3081,7 @@ model="models\props\runaway\moto.mdx"
 
 void think_motorcycle_runaway (edict_t *self)
 {
-    if (self->s.frame < 55)
+		if (self->s.frame < 55)
 	{
 		self->s.frame++;
 
@@ -3132,7 +3131,7 @@ void SP_props_motorcycle_runaway (edict_t *self)
 	self->svflags |= SVF_PROP;
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/runaway/head.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3190,7 +3189,7 @@ void SP_props_shelf (edict_t *self)
 	self->svflags |= SVF_PROP;
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/shelf/flametank.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3379,7 +3378,7 @@ void steam_think( edict_t *ent)
 
 void SP_props_steam_machine (edict_t *ent)
 {
-    if (ent->alphalevel > 10) ent->alphalevel = 10;
+		if (ent->alphalevel > 10) ent->alphalevel = 10;
 	if ((!ent->thudsurf) || (ent->thudsurf > 10))
 		ent->thudsurf = 5;
 	if ((!ent->thudsnd) || (ent->thudsnd > 10))
@@ -3447,7 +3446,7 @@ model="models\props\wall\wall.mdx"
 */
 void wall_fall_final (edict_t *self)
 {
-    if (self->s.frame < 45)
+		if (self->s.frame < 45)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -3509,7 +3508,7 @@ void SP_props_wall_fall (edict_t *self)
 	VectorSet (self->maxs, 64, 26, 48);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/wall/wall.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3679,7 +3678,7 @@ model="models\props\shelf\shelf.mdx;models\props\shelf\top.mdx"
 
 void shelf_fall_final (edict_t *self)
 {
-    if (self->s.frame < 84)
+		if (self->s.frame < 84)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -3722,7 +3721,7 @@ void SP_props_shelf_fall (edict_t *self)
 	}
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/shelf/shelf.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3781,7 +3780,7 @@ void SP_props_shelf_fall (edict_t *self)
 	newent->svflags |= SVF_PROP;
 
 	newent->s.skinnum = newent->skin;
- 	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent->s.num_parts++;
 	newent->s.model_parts[0].modelindex = gi.modelindex("models/props/shelf/barre5.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3840,7 +3839,7 @@ model="models\props\shelftwo\shelf.mdx;models\props\shelftwo\top.mdx"
 
 void shelfB_fall_final (edict_t *self)
 {
-    if (self->s.frame < 75)
+		if (self->s.frame < 75)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -3885,7 +3884,7 @@ void SP_props_shelfB_fall (edict_t *self)
 	}
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/shelftwo/shelf.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3944,7 +3943,7 @@ void SP_props_shelfB_fall (edict_t *self)
 	newent->svflags |= SVF_PROP;
 
 	newent->s.skinnum = newent->skin;
- 	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent->s.num_parts++;
 	newent->s.model_parts[0].modelindex = gi.modelindex("models/props/shelftwo/barre6.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -3996,7 +3995,7 @@ void SP_props_shelfB_fall (edict_t *self)
 	newent2->svflags |= SVF_PROP;
 
 	newent2->s.skinnum = newent2->skin;
- 	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent2->s.num_parts++;
 	newent2->s.model_parts[0].modelindex = gi.modelindex("models/props/shelftwo/tank_sm.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -4080,7 +4079,7 @@ void rat_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, 
 		for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 		{
 			if ((e->classname) && (!strcmp(e->classname, "props_rat_spawner")) &&
-			    (e->target) && (!strcmp(e->target, self->targetname)))
+					(e->target) && (!strcmp(e->target, self->targetname)))
 			{
 				e->fxdensity++;	
 				break;	
@@ -4113,7 +4112,7 @@ int check_rat_hit_player(edict_t *ent)
 			ent->timestamp = level.time + 0.5;
 
 			ent->debugprint = 1;
-    
+		
 			//T_Damage (tr.ent, tr.ent, tr.ent, vec3_origin, tr.ent->s.origin, vec3_origin, ent->dmg, ent->dmg, 0, MOD_DOGBITE);
 
 			VectorSubtract (tr.ent->s.origin, ent->s.origin, aimdir);
@@ -4141,7 +4140,7 @@ void rat_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf
 	self->timestamp = level.time + 0.5;
 
 	self->debugprint = 1;
-    
+		
 	T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, self->dmg, self->dmg, 0, MOD_DOGBITE);	
 }
 
@@ -4265,7 +4264,7 @@ void SP_props_rat (edict_t *self)
 	VectorSet (self->maxs, 8, 8, 10);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/actors/rat/rat.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -4340,7 +4339,7 @@ void SP_props_rat_trigger (edict_t *self)
 	VectorSet (self->maxs, 8, 8, 10);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/actors/rat/rat.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -4427,7 +4426,7 @@ void rat_spawn_think (edict_t *self)
 		for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 		{
 			if ((e->classname) && (!strcmp(e->classname, "props_rat_spawner_node")) &&
-			    (e->targetname) && (self->target) && (!strcmp(e->targetname, self->target))
+					(e->targetname) && (self->target) && (!strcmp(e->targetname, self->target))
 				// Ridah, added this so they don't spawn if you can see them
 				&& (!gi.inPVS(g_edicts[1].s.origin, e->s.origin)))
 			{
@@ -4754,7 +4753,7 @@ model="models\props\truck\box.mdx;models\props\truck\tires.mdx;models\props\truc
 
 void truck_die_final (edict_t *self)
 {
-    if (self->s.frame < 59)
+		if (self->s.frame < 59)
 	{
 		self->svflags &= ~SVF_NOCLIENT;
 		self->handle2->svflags &= ~SVF_NOCLIENT;
@@ -4797,7 +4796,7 @@ void SP_props2_truck_die (edict_t *self)
 	//VectorSet (self->maxs, 148, 61, 78);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/truck/box.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -4856,7 +4855,7 @@ void SP_props2_truck_die (edict_t *self)
 	newent->svflags |= SVF_PROP;
 
 	newent->s.skinnum = newent->skin;
- 	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent->s.num_parts++;
 	newent->s.model_parts[0].modelindex = gi.modelindex("models/props/truck/v1b.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -4983,7 +4982,7 @@ model="models\props\barl1\barrels.mdx;models\props\barl1\tops.mdx"
 */
 void barrels_fallA (edict_t *self)
 {
-    if (self->s.frame < 28)
+		if (self->s.frame < 28)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -5021,7 +5020,7 @@ void SP_props2_barrels_fallA (edict_t *self)
 	VectorSet (self->maxs, 69, 33, 49);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/barl1/barrels.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5058,7 +5057,7 @@ model="models\props\barl2\barrels2.mdx;models\props\barl2\tops2.mdx"
 */
 void barrels_fallB (edict_t *self)
 {
-    if (self->s.frame < 38)
+		if (self->s.frame < 38)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -5096,7 +5095,7 @@ void SP_props2_barrels_fallB (edict_t *self)
 	VectorSet (self->maxs, 33, 81, 49);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/barl2/barrels2.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5325,7 +5324,7 @@ model="models\props\shelfmetal1\shelf1.mdx;models\props\shelfmetal1\shelf2.mdx;m
 
 void shelfA_fall_final_mb (edict_t *self)
 {
-    if (self->s.frame < 62)
+		if (self->s.frame < 62)
 	{
 		self->solid = SOLID_NOT;
 		
@@ -5372,7 +5371,7 @@ void SP_props2_shelf_metal_A_fall (edict_t *self)
 	}
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal1/shelf1.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5431,7 +5430,7 @@ void SP_props2_shelf_metal_A_fall (edict_t *self)
 	newent->svflags |= SVF_PROP;
 
 	newent->s.skinnum = newent->skin;
- 	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	//newent->s.num_parts++;
 	//newent->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal1/cartboard1.mdx");
 	//for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5483,7 +5482,7 @@ void SP_props2_shelf_metal_A_fall (edict_t *self)
 	newent2->svflags |= SVF_PROP;
 
 	newent2->s.skinnum = newent2->skin;
- 	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent2->s.num_parts++;
 	newent2->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal1/tank_sm.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5534,7 +5533,7 @@ model="models\props\shelfmetal2\shelf1.mdx;models\props\shelfmetal2\shelf2.mdx;m
 
 void shelfB_fall_final_mb (edict_t *self)
 {
-    if (self->s.frame < 76)
+		if (self->s.frame < 76)
 	{
 		self->solid = SOLID_NOT;
 		self->nextthink = level.time + 0.1;
@@ -5580,7 +5579,7 @@ void SP_props2_shelf_metal_B_fall (edict_t *self)
 	}
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal2/shelf1.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5639,7 +5638,7 @@ void SP_props2_shelf_metal_B_fall (edict_t *self)
 	newent->svflags |= SVF_PROP;
 
 	newent->s.skinnum = newent->skin;
- 	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent->s.num_parts++;
 	newent->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal2/cartboard1.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5691,7 +5690,7 @@ void SP_props2_shelf_metal_B_fall (edict_t *self)
 	newent2->svflags |= SVF_PROP;
 
 	newent2->s.skinnum = newent2->skin;
- 	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(newent2->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	newent2->s.num_parts++;
 	newent2->s.model_parts[0].modelindex = gi.modelindex("models/props/shelfmetal2/tank_sm.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5809,7 +5808,7 @@ void SP_props2_deadguy (edict_t *self)
 	}
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/deadguy/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5900,7 +5899,7 @@ void SP_props2_deadguy_underwater (edict_t *self)
 	}
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/cementguy/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -5981,7 +5980,7 @@ void SP_props2_deadgal_headless (edict_t *self)
 	}
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/dead_fem/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -6123,7 +6122,7 @@ void fish_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage,
 		for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 		{
 			if ((e->classname) && (!strcmp(e->classname, "props2_fish_spawner")) &&
-			    (e->target) && (!strcmp(e->target, self->targetname)))
+					(e->target) && (!strcmp(e->target, self->targetname)))
 			{
 				e->fxdensity++;	
 				break;	
@@ -6156,7 +6155,7 @@ int check_fish_hit_player(edict_t *ent)
 			ent->timestamp = level.time + 0.5;
 
 			ent->debugprint = 1;
-    
+		
 			//T_Damage (tr.ent, tr.ent, tr.ent, vec3_origin, tr.ent->s.origin, vec3_origin, ent->dmg, ent->dmg, 0, MOD_DOGBITE);
 
 			VectorSubtract (tr.ent->s.origin, ent->s.origin, aimdir);
@@ -6184,7 +6183,7 @@ void fish_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *sur
 	self->timestamp = level.time + 0.5;
 
 	self->debugprint = 1;
-    
+		
 	T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, self->dmg, self->dmg, 0, MOD_DOGBITE);	
 }
 
@@ -6321,7 +6320,7 @@ void SP_props2_fish (edict_t *self)
 	VectorSet (self->maxs, 8, 8, 10);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/actors/shrimp/shrimp.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -6396,7 +6395,7 @@ void SP_props2_fish_trigger (edict_t *self)
 	VectorSet (self->maxs, 8, 8, 10);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/actors/shrimp/shrimp.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -6483,7 +6482,7 @@ void fish_spawn_think (edict_t *self)
 		for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 		{
 			if ((e->classname) && (!strcmp(e->classname, "props2_fish_spawner_node")) &&
-			    (e->targetname) && (self->target) && (!strcmp(e->targetname, self->target)))
+					(e->targetname) && (self->target) && (!strcmp(e->targetname, self->target)))
 			{
 				if (node == tnode)
 				{
@@ -6644,7 +6643,7 @@ model="models\props\barl_steel\barrels.mdx;models\props\barl_steel\tops.mdx;mode
 */
 void barrels_fallST (edict_t *self)
 {
-    if (self->s.frame < 37)
+		if (self->s.frame < 37)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -6682,7 +6681,7 @@ void SP_props2_barrels_fall_ST (edict_t *self)
 	VectorSet (self->maxs, 89, 48, 56);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/barl_steel/barrels.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -6736,7 +6735,7 @@ void SP_props2_sign (edict_t *self)
 {
 	int i;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -6772,7 +6771,7 @@ void SP_props2_sign (edict_t *self)
 		self->s.model_parts[1].skinnum[i] = self->s.skinnum;
 	gi.GetObjectBounds( "models/props/sign/bar.mdx", &self->s.model_parts[1] );
 
- 	self->s.renderfx2 |= RF2_DIR_LIGHTS;
+	self->s.renderfx2 |= RF2_DIR_LIGHTS;
 	self->s.renderfx2 |= RF2_NOSHADOW;
 
 	self->surfacetype = SURF_METAL_L;
@@ -6812,7 +6811,7 @@ void SP_props2_lighthouse_beam (edict_t *self)
 {
 	int i;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -6883,7 +6882,7 @@ void SP_props2_boat (edict_t *self)
 	int i;
 	edict_t *newent = NULL;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -6975,7 +6974,7 @@ void SP_props2_buoy (edict_t *self)
 	VectorSet (self->maxs, 41, 41, 75);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/buoy/buoy.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7022,7 +7021,7 @@ void SP_props2_buoy_side (edict_t *self)
 	VectorSet (self->maxs, 81, 55, 64);	
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/buoyside/buoy.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7082,7 +7081,7 @@ void SP_props2_buoy_animate (edict_t *self)
 	VectorSet (self->maxs, 41, 41, 75);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/buoya/buoy.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7417,7 +7416,7 @@ void SP_props2_boat_animate (edict_t *self)
 	VectorSet (self->maxs, 80, 160, 38);		
 	
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/boata/boat.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7472,7 +7471,7 @@ model="models\props\helicopter\helicopter.mdx;models\props\helicopter\rotor.mdx;
 */
 void helicopter_a_final (edict_t *self)
 {
-    if (self->s.frame < 223)
+		if (self->s.frame < 223)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -7510,7 +7509,7 @@ void SP_props2_helicopter_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/helicopter/helicopter.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7566,7 +7565,7 @@ model="models\props\cars\car.mdx;models\props\cars\legs_boss.mdx;models\props\ca
 */
 void car_a_final (edict_t *self)
 {
-    if (self->s.frame < 85)
+		if (self->s.frame < 85)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -7605,7 +7604,7 @@ void SP_props2_car_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/cars/car.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -7785,7 +7784,7 @@ model="models\props\pinball\pinball_m.mdx;models\props\pinball\glass.mdx;models\
 
 void pinball_go (edict_t *self)
 {
-    if (self->s.frame < 44)
+		if (self->s.frame < 44)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -7819,7 +7818,7 @@ void SP_props2_pinball_machine (edict_t *self)
 	int i;
 	edict_t *newent = NULL;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -7954,7 +7953,7 @@ model="models\props\pv_barl6\barrel_v2.mdx;models\props\pv_barl6\top_barrel_v2.m
 
 void barrels_fallPV (edict_t *self)
 {
-    if (self->s.frame < 37)
+		if (self->s.frame < 37)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8018,7 +8017,7 @@ void barrels_fallPV (edict_t *self)
 
 void barrels_fallPV_BlackSheep (edict_t *self)
 {
-    if (self->s.frame < 47)
+		if (self->s.frame < 47)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8074,7 +8073,7 @@ void SP_props2_barrels_PV_A (edict_t *self)
 	VectorSet (self->maxs, 90, 32, 48);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	
 	//self->s.num_parts++;
 	//self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl1/barrel_v4last.mdx");
@@ -8133,7 +8132,7 @@ void SP_props2_barrels_PV_B (edict_t *self)
 	VectorSet (self->maxs, 17, 77, 49);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	
 	//self->s.num_parts++;
 	//self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl1/barrel_v4last.mdx");
@@ -8192,7 +8191,7 @@ void SP_props2_barrels_PV_C (edict_t *self)
 	VectorSet (self->maxs, 68, 50, 48);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	
 	//self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl3/barrel_v4last.mdx");
@@ -8251,7 +8250,7 @@ void SP_props2_barrels_PV_D (edict_t *self)
 	VectorSet (self->maxs, 20, 52, 48);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl4/top_barrel_v4.mdx");
@@ -8304,7 +8303,7 @@ void SP_props2_barrels_PV_E (edict_t *self)
 	VectorSet (self->maxs, 24, 64, 48);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl5/top_barrel_v4.mdx");
@@ -8357,7 +8356,7 @@ void SP_props2_barrels_PV_F (edict_t *self)
 	VectorSet (self->maxs, 20, 32, 24);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/pv_barl6/barrel_v2.mdx");
@@ -8397,7 +8396,7 @@ model="models\props\air_train\frontfront.mdx;models\props\air_train\bottom.mdx;m
 
 void air_train_go (edict_t *self)
 {
-    if (self->s.frame < 153)
+		if (self->s.frame < 153)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8435,7 +8434,7 @@ void SP_props2_air_train (edict_t *self)
 	VectorSet (self->maxs, 66, 257, 135);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/air_train/frontfront.mdx");
@@ -8523,7 +8522,7 @@ void SP_props3_dead_louie (edict_t *self)
 	VectorSet (self->maxs, 40, 48, 14);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/louie/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -8570,7 +8569,7 @@ model="models\props\player\bodyP.mdx;models\props\player\legsP.mdx;models\props\
 */
 void cutbossplayer_final (edict_t *self)
 {
-    if (self->s.frame < 137)
+		if (self->s.frame < 137)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8612,7 +8611,7 @@ void SP_props3_cut_boss_player_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/boss/body_boss.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -8684,7 +8683,7 @@ void SP_props3_deco_fixture (edict_t *self)
 	VectorSet (self->maxs, 32, 8, 58);	
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/deco_fixture/deco_fixture.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -8704,7 +8703,7 @@ model="models\props\cutbc\body_chick.mdx;models\props\cutbc\legs_chick.mdx;model
 */
 void cutbosschick_final (edict_t *self)
 {
-    if (self->s.frame < 210)
+		if (self->s.frame < 210)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8746,7 +8745,7 @@ void SP_props3_cut_boss_chick_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/cutbc/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -8807,7 +8806,7 @@ model="models\props\train_jump\bodyP.mdx;models\props\train_jump\legsP.mdx;model
 */
 void cuttrainrun_final (edict_t *self)
 {
-    if (self->s.frame < 41)
+		if (self->s.frame < 41)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8849,7 +8848,7 @@ void SP_props3_cut_train_run_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/train_jump/bodyP.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -8902,7 +8901,7 @@ model="models\props\kpcut4\body.mdx;models\props\kpcut4\legs.mdx;models\props\kp
 
 void cutA_A_final (edict_t *self)
 {
-    if (self->s.frame < 250)
+		if (self->s.frame < 250)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8921,7 +8920,7 @@ void cutA_A_final (edict_t *self)
 
 void cutB_A_final (edict_t *self)
 {
-    if (self->s.frame < 514)
+		if (self->s.frame < 514)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8940,7 +8939,7 @@ void cutB_A_final (edict_t *self)
 
 void cutC_A_final (edict_t *self)
 {
-    if (self->s.frame < 249)
+		if (self->s.frame < 249)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -8959,7 +8958,7 @@ void cutC_A_final (edict_t *self)
 
 void cutD_A_final (edict_t *self)
 {
-    if (self->s.frame < 365)
+		if (self->s.frame < 365)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9018,7 +9017,7 @@ void SP_props3_cut_A_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/kpcut1/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9065,7 +9064,7 @@ void SP_props3_cut_B_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/kpcut2/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9112,7 +9111,7 @@ void SP_props3_cut_C_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/kpcut3/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9159,7 +9158,7 @@ void SP_props3_cut_D_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/kpcut4/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9196,7 +9195,7 @@ model="models\props\bill_counter\cashstack.mdx;models\props\bill_counter\numbers
 */
 void cashcounter_final (edict_t *self)
 {
-    if (self->s.frame < 39)
+		if (self->s.frame < 39)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9229,7 +9228,7 @@ void SP_props3_cash_counter_animate (edict_t *self)
 	VectorSet (self->maxs, 18, 12, 7);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/bill_counter/cashstack.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9268,7 +9267,7 @@ void SP_props3_decanter (edict_t *self)
 	int i;
 	edict_t *newent = NULL;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -9341,7 +9340,7 @@ void SP_props3_whiskey_glass (edict_t *self)
 	int i;
 	edict_t *newent = NULL;
 
-    if (deathmatch->value)
+		if (deathmatch->value)
 	{ // auto-remove for deathmatch
 		G_FreeEdict (self);
 		return;
@@ -9410,7 +9409,7 @@ model="models\props\nikki1\barrel_v4.mdx;models\props\nikki1\top_barrel_v4.mdx"
 */
 void barrels_fall_nikki_A (edict_t *self)
 {
-    if (self->s.frame < 85)
+		if (self->s.frame < 85)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9447,7 +9446,7 @@ void SP_props3_barrels_fall_nikki_A (edict_t *self)
 	VectorSet (self->maxs, 44, 60, 49);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/nikki1/barrel_v4.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9477,7 +9476,7 @@ model="models\props\nikki2\barrel_v4.mdx;models\props\nikki2\top_barrel_v4.mdx"
 */
 void barrels_fall_nikki_B (edict_t *self)
 {
-    if (self->s.frame < 90)
+		if (self->s.frame < 90)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9514,7 +9513,7 @@ void SP_props3_barrels_fall_nikki_B (edict_t *self)
 	VectorSet (self->maxs, 24, 48, 24);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/nikki2/barrel_v4.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9545,7 +9544,7 @@ model="models\props\run_to_car\body_boss.mdx;models\props\run_to_car\legs_boss.m
 
 void cut_carrun_final (edict_t *self)
 {
-    if (self->s.frame < 44)
+		if (self->s.frame < 44)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9586,7 +9585,7 @@ void SP_props3_cut_run_to_car_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/run_to_car/body_boss.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9624,7 +9623,7 @@ model="models\props\finale\body_bossf.mdx;models\props\finale\legs_bossf.mdx;mod
 
 void cut_final_final (edict_t *self)
 {
-    if (self->s.frame < 245)
+		if (self->s.frame < 245)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9665,7 +9664,7 @@ void SP_props3_cut_final_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/finale/body_bossf.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9725,7 +9724,7 @@ void SP_props3_cash (edict_t *self)
 	VectorSet (self->maxs, 12, 11, 5);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/cash/cashstack.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9746,7 +9745,7 @@ model="models\props\driver\body_driver.mdx;models\props\driver\legs_driver.mdx;m
 
 void cut_truckdriver_final (edict_t *self)
 {
-    if (self->s.frame < 20)
+		if (self->s.frame < 20)
 	{
 		self->s.frame++;
 
@@ -9787,7 +9786,7 @@ void SP_props3_cut_truck_driver (edict_t *self)
 	VectorSet (self->maxs, 0, 17, 8);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/driver/body_driver.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
@@ -9831,7 +9830,7 @@ model="models\props\kpcut4_pinball\body.mdx;models\props\kpcut4_pinball\legs.mdx
 
 void cut_pinballguy_final (edict_t *self)
 {
-    if (self->s.frame < 365)
+		if (self->s.frame < 365)
 	{
 		self->nextthink = level.time + 0.1;
 		
@@ -9872,7 +9871,7 @@ void SP_props3_cut_pinball_guy_animate (edict_t *self)
 	VectorSet (self->maxs, 16, 16, 16);		
 
 	self->s.skinnum = self->skin;
- 	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
+	memset(&(self->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 	self->s.num_parts++;
 	self->s.model_parts[0].modelindex = gi.modelindex("models/props/kpcut4_pinball/body.mdx");
 	for (i=0; i<MAX_MODELPART_OBJECTS; i++)

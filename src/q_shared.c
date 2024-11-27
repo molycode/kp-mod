@@ -40,7 +40,7 @@ void vectoangles (vec3_t value1, vec3_t angles)
 	angles[ROLL] = 0;
 }
 
-void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, float degrees )
+void RotatePointAroundVector( vec3_t dst, vec3_t dir, const vec3_t point, float degrees )
 {
 	float	m[3][3];
 	float	im[3][3];
@@ -138,7 +138,7 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 }
 
 
-void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
+void ProjectPointOnPlane( vec3_t dst, vec3_t p, vec3_t normal )
 {
 	float d;
 	vec3_t n;
@@ -160,7 +160,7 @@ void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 /*
 ** assumes "src" is normalized
 */
-void PerpendicularVector( vec3_t dst, const vec3_t src )
+void PerpendicularVector( vec3_t dst, vec3_t src )
 {
 	int	pos;
 	int i;
@@ -321,10 +321,6 @@ float	anglemod(float a)
 	a = (360.0/65536) * ((int)(a*(65536/360.0)) & 65535);
 	return a;
 }
-
-	int		i;
-	vec3_t	corners[2];
-
 
 // this is the slow, general version
 int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
@@ -1349,7 +1345,7 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 // Ridah, portable strlwr()
 char *kp_strlwr( char *name )
 {
-	for (i=0; name[i]; i++)
+	for (int i=0; name[i]; i++)
 		if (name[i] >= 'A' && name[i] <= 'Z')
 			name[i] -= 'A' - 'a';
 
@@ -1359,7 +1355,7 @@ char *kp_strlwr( char *name )
 /*
 =====================================================================
 
-  INFO STRINGS
+	INFO STRINGS
 
 =====================================================================
 */
@@ -1474,9 +1470,8 @@ can mess up the server's parsing
 */
 qboolean Info_Validate (char *s)
 {
-	char	*skin;
-	qboolean validstr = true;
-	char	*pskin;
+	char *skin;
+	char *pskin;
 
 	if (strstr (s, "\""))
 		return false;

@@ -301,9 +301,7 @@ void ChangeWeapon (edict_t *ent)
 	if (ent->client->pers.weapon)
 		ChangeClipIndex (ent);
 	
-	{
-		int i;
-	
+	{	
 		if (!strcmp (ent->client->pers.weapon->pickup_name , "SPistol"))
 		{
 			if (ent->client->pers.pistol_mods & WEAPON_MOD_DAMAGE)
@@ -1130,7 +1128,7 @@ void Weapon_Generic (edict_t *ent, int FRAME_ACTIVATE_LAST, int FRAME_FIRE_LAST,
 
 		// JOSEPH 5-FEB-99-B
 		// Blackjack hack
-        if ((ent->client->ps.gunframe == 9) &&
+				if ((ent->client->ps.gunframe == 9) &&
 			(!((ent->client->latched_buttons|ent->client->buttons) & BUTTON_ATTACK)) &&
 			(!strcmp(ent->client->pers.weapon->pickup_name, "Pipe")))
 		{
@@ -1141,7 +1139,7 @@ void Weapon_Generic (edict_t *ent, int FRAME_ACTIVATE_LAST, int FRAME_FIRE_LAST,
 
 		// JOSEPH 19-JAN-99
 		// Crowbar hack
-        else if ((ent->client->ps.gunframe == 9) &&
+				else if ((ent->client->ps.gunframe == 9) &&
 			(!((ent->client->latched_buttons|ent->client->buttons) & BUTTON_ATTACK)) &&
 			(!strcmp(ent->client->pers.weapon->pickup_name, "Crowbar")))
 		{
@@ -1391,7 +1389,7 @@ void Eject_Shotgun_Shell (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, dropped->s.origin);
 
 	VectorScale (forward, 5 + ((rand()&15)-8), dropped->velocity);
-    VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
+		VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
 	dropped->velocity[2] = 150 + (rand()&31);
 
 	// Ridah, changed this so they don't stick in the ground so much
@@ -1463,7 +1461,7 @@ void Weapon_Blackjack_Hit (edict_t *ent)
 		damage = 8;// - (int)(skill->value-1);
 
 	Blackjack_Hit (ent, vec3_origin, damage); 
-   	ent->client->ps.gunframe++;	
+		ent->client->ps.gunframe++;	
 }
 
 void Weapon_Blackjack (edict_t *ent)
@@ -1532,7 +1530,7 @@ void Weapon_Crowbar_Hit (edict_t *ent)
 		damage = 12;// - (int)(skill->value-1);
 
 	Crowbar_Hit (ent, vec3_origin, damage); 
-   	ent->client->ps.gunframe++;	
+		ent->client->ps.gunframe++;	
 }
 
 void Weapon_Crowbar (edict_t *ent)
@@ -1596,7 +1594,7 @@ void Eject_Pistol_Shell (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, dropped->s.origin);
 
 	VectorScale (forward, 5 + ((rand()&15)-8), dropped->velocity);
-    VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
+		VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
 	dropped->velocity[2] = 150 + (rand()&31);
 
 	// Ridah, changed this so they don't stick in the ground so much
@@ -1653,7 +1651,7 @@ void Eject_Tommy_Shell (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, dropped->s.origin);
 
 	VectorScale (forward, 5 + ((rand()&15)-8), dropped->velocity);
-    VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
+		VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
 	dropped->velocity[2] = 150 + (rand()&31);
 
 	// Ridah, changed this so they don't stick in the ground so much
@@ -1691,7 +1689,7 @@ void Pistol_Fire (edict_t *ent, vec3_t vorigin, int damage)
 	VectorScale (forward, -2, ent->client->kick_origin);
 
 	ent->client->kick_angles[0] = -4;
-    
+		
 	fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_PISTOL);
 	
 	if (ent->client->pers.pistol_mods & WEAPON_MOD_DAMAGE)
@@ -1913,7 +1911,7 @@ void SPistol_Fire (edict_t *ent, vec3_t vorigin, int damage)
 	VectorScale (forward, -2, ent->client->kick_origin);
 	
 	ent->client->kick_angles[0] = -4;
-    
+		
 	fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_SILENCER);
 	
 	gi.WriteByte (svc_muzzleflash);
@@ -1933,7 +1931,7 @@ void SPistol_Fire (edict_t *ent, vec3_t vorigin, int damage)
 			}
 			NoAmmoWeaponChange (ent);
 		}
-    
+		
 	Eject_Pistol_Shell(ent);
 	ent->client->gun_noise = false;
 }
@@ -2249,7 +2247,7 @@ void Tommygun_Fire (edict_t *ent)
 	}
 
 	if (!deathmatch->value)	// uses up bandwidth
-    Eject_Tommy_Shell(ent);
+		Eject_Tommy_Shell(ent);
 
 	ent->client->gun_noise = true;
 }
@@ -2328,7 +2326,7 @@ void Weapon_Tommygun (edict_t *ent)
 /*
 ======================================================================
 
-  FLAMETHROWER
+	FLAMETHROWER
 
 ======================================================================
 */
@@ -2728,7 +2726,7 @@ void weapon_barmachinegun_fire (edict_t *ent)
 		}
 		
 	}
-    Eject_Tommy_Shell(ent);
+		Eject_Tommy_Shell(ent);
 	ent->client->gun_noise = true;
 
 }
@@ -2845,7 +2843,7 @@ void Weapon_Barmachinegun (edict_t *ent)
 	
 	Weapon_Generic (ent, 4, 42, 53, 59, pause_frames, fire_frames, barmachinegun_fire);
 
- 	// gi.dprintf ("Frame: %d\n", ent->client->ps.gunframe);
+	// gi.dprintf ("Frame: %d\n", ent->client->ps.gunframe);
 }
 
 
@@ -2896,7 +2894,7 @@ void Eject_Grenade_Shell (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, dropped->s.origin);
 
 	VectorScale (forward, 5 + ((rand()&15)-8), dropped->velocity);
-    VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
+		VectorMA (dropped->velocity, 50 + (rand()&31), right, dropped->velocity);
 	dropped->velocity[2] = 150 + (rand()&31);
 
 	// Ridah, changed this so they don't stick in the ground so much

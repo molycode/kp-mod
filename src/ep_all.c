@@ -446,26 +446,27 @@ void EP_SpawnFlags (edict_t *self)
 
 int EP_HiredGuys (edict_t *self, edict_t *other)
 {
+	int result = 0;
+
 	switch (level.episode)
 	{
 	case EP_SKIDROW:
-		return (1);
+		result = 1;
 	case EP_POISONVILLE:
-		return (EP_PV_HiredGuysFlags (self, other));
+		result = EP_PV_HiredGuysFlags (self, other);
 	case EP_STEELTOWN:
-		return (EP_Steeltown_HiredGuysFlags (self, other));
+		result = EP_Steeltown_HiredGuysFlags (self, other);
 	case EP_TRAINYARD:
-		return (EP_Trainyard_HiredGuysFlags (self, other));
+		result = EP_Trainyard_HiredGuysFlags (self, other);
 	case EP_RADIOCITY:
-		return (EP_RC_HiredGuysFlags (self, other));	
+		result = EP_RC_HiredGuysFlags (self, other);
 	case EP_SHIPYARDS:
-		return (EP_SY_HiredGuysFlags (self, other));
+		result = EP_SY_HiredGuysFlags (self, other);
 	default:
-		return (1);
+		result = 1;
 	}
 
-	// just to shut up the compiler
-	return (0);
+	return result;
 }
 
 void EP_CheckMomo (edict_t *ent, cast_memory_t	*mem)

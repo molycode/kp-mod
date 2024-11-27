@@ -435,12 +435,10 @@ standing:
 	if (	(dist < 384)				// they're close
 		&&	(self->enemy->client)
 		&&	(self->enemy->client->pers.weapon)
-		&&	(stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
+		&&	(Q_stricmp(self->enemy->client->pers.weapon->classname, "weapon_flamethrower") == 0))
 	{
-		int		side_result;
-
 		// see if we can go backwards
-		if (side_result = AI_SideTrace( self, -64, 0, 1 ))
+		if (AI_SideTrace( self, -64, 0, 1 ) != 0)
 		{
 			self->cast_info.currentmove = &runt_move_reverse_run_shoot;
 			return true;

@@ -169,6 +169,7 @@ void M_ReactToDamage (edict_t *targ, edict_t *attacker, float damage);
 static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int te_impact, int hspread, int vspread, int mod)
 {
 	trace_t		tr, mdx_tr;
+	memset(&mdx_tr, 0, sizeof(trace_t));
 	vec3_t		dir;
 	vec3_t		forward, right, up;
 	vec3_t		end;
@@ -238,7 +239,7 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 		// END JOSEPH
 		
 		// JOSEPH 9-APR-99
-        if ((tr.surface->flags & SURF_METAL) || (tr.surface->flags & SURF_METAL_L))
+				if ((tr.surface->flags & SURF_METAL) || (tr.surface->flags & SURF_METAL_L))
 		{
 			gi.WriteByte (svc_muzzleflash3);
 			gi.WriteShort (self - g_edicts);
@@ -265,9 +266,9 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 		// JOSEPH
 		// see if we hit an alpha surface
 		if (((tr.ent) && (tr.ent->s.renderfx2 & RF2_SURF_ALPHA))
-		   || ((tr.contents & MASK_ALPHA))) 
+			 || ((tr.contents & MASK_ALPHA))) 
 		{
-		    if (crandom() < .93)
+				if (crandom() < .93)
 			{
 				VectorCopy (tr.endpos, alpha_start);
 				
@@ -283,7 +284,7 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 				}
 				else
 				{
-					VectorMA (alpha_start, 4, aimdir, alpha_start);				
+					VectorMA (alpha_start, 4, aimdir, alpha_start);
 				}	
 				// re-trace after alpha surface
 				tr = gi.trace (alpha_start, NULL, NULL, end, self, MASK_SHOT);
@@ -379,7 +380,7 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 
 			// Calculate shot distance
 			VectorSubtract (tr.endpos, self->s.origin, tempvec);	
-		    len = VectorNormalize (tempvec);
+				len = VectorNormalize (tempvec);
 
 			// On smoke up close
 			if ((te_impact == TE_GUNSHOT) && (len < 96) && (lastshotgun) && (lastshotgun > level.time))
@@ -393,7 +394,7 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 			
 			if (tr.ent->takedamage)
 			{
-			    // Point blank range shot gives more damage 
+					// Point blank range shot gives more damage 
 				if (len < 64)
 				{
 					damage *= 2;
@@ -405,9 +406,6 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 				{
 					if (!conweap)
 					{
-						extern int ClipVelocity (vec3_t in, vec3_t normal, vec3_t out, float overbounce);
-						vec3_t dir;
-
 						// Ridah, spawn metallic sparks on metal surfaces
 						// JOSEPH 11-JUN-99-B
 						if ((tr.ent->svflags & SVF_PROP) && (tr.ent->surfacetype & (SURF_METAL | SURF_METAL_L)))
@@ -550,7 +548,7 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 								VectorSubtract(newstart, tr2.endpos, travelvec);
 								len = VectorNormalize(travelvec);
 								
-							    // JOSEPH 8-JUN-99
+									// JOSEPH 8-JUN-99
 								if ((len < 100.0) && (!tr2.ent->takedamage) &&
 									(!((((int)(dmflags->value)) & DF_NO_FRIENDLY_FIRE))) &&
 									((strncmp (tr2.surface->name, "sky", 3) != 0)))
@@ -615,9 +613,6 @@ bolt:
 				{
 					if (!conweap)
 					{
-						extern int ClipVelocity (vec3_t in, vec3_t normal, vec3_t out, float overbounce);
-						vec3_t dir;
-
 						// Ridah, spawn metallic sparks on metal surfaces
 						if (tr.surface->flags & (SURF_METAL | SURF_METAL_L))
 						{
@@ -1046,7 +1041,7 @@ static void Grenade_Touch (edict_t *ent, edict_t *other, cplane_t *plane, csurfa
 	{
 		// Grenade gets stuck in alpha surface
 		if (!(crandom() < .85))
-        {
+				{
 			ent->gravity = 0; 
 			VectorClear (ent->velocity);
 			VectorClear (ent->avelocity);
@@ -1985,11 +1980,11 @@ static void Trap_Think (edict_t *ent)
 				VectorMA (vec, ent->wait/2, vec, vec);
 				VectorAdd(vec, ent->s.origin, vec);
 				VectorAdd(vec, forward, best->s.origin);
-  
+	
 				best->s.origin[2] = ent->s.origin[2] + ent->wait;
 				
 				VectorCopy (ent->s.angles, best->s.angles);
-  
+	
 				best->solid = SOLID_NOT;
 				best->s.effects |= EF_GIB;
 				best->takedamage = DAMAGE_YES;
@@ -1997,7 +1992,7 @@ static void Trap_Think (edict_t *ent)
 				best->movetype = MOVETYPE_TOSS;
 				best->svflags |= SVF_MONSTER;
 				best->deadflag = DEAD_DEAD;
-		  
+			
 				VectorClear (best->mins);
 				VectorClear (best->maxs);
 
@@ -2056,7 +2051,7 @@ static void Trap_Think (edict_t *ent)
 		if (target->health <= 0)
 			continue;
 		if (!visible (ent, target))
-		 	continue;
+			continue;
 		if (!best)
 		{
 			best = target;
@@ -2074,7 +2069,7 @@ static void Trap_Think (edict_t *ent)
 	// pull the enemy in
 	if (best)
 	{
-		vec3_t	forward;
+		//vec3_t	forward;
 
 		if (best->groundentity)
 		{
@@ -2090,9 +2085,9 @@ static void Trap_Think (edict_t *ent)
 		}
 		else
 		{
-			best->ideal_yaw = vectoyaw(vec);	
+			best->ideal_yaw = vectoyaw(vec);
 			M_ChangeYaw (best);
-			AngleVectors (best->s.angles, forward, NULL, NULL);
+			AngleVectors (best->s.angles, forward, NULL, NULL); // Moly: check this logic with 'forward', fine to use the function scope one?
 			VectorScale (forward, 256, best->velocity);
 		}
 
@@ -2511,6 +2506,7 @@ skip_smoke:
 static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, float dist, int damage, int kick, int te_impact, int hspread, int vspread, int mod)
 {
 	trace_t		tr, mdx_tr;
+	memset(&mdx_tr, 0, sizeof(trace_t));
 	vec3_t		dir;
 	vec3_t		forward, right, up;
 	vec3_t		end;
@@ -2707,10 +2703,10 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 			
 			if (tr.ent->takedamage)
 			{
-			    // Point blank range shot gives more damage 
+					// Point blank range shot gives more damage 
 				/*
 				VectorSubtract (tr.endpos, self->s.origin, tempvec);	
-		        len = VectorNormalize (tempvec);		
+						len = VectorNormalize (tempvec);		
 				if (len < 64)
 				{
 					damage *= 2;
@@ -2721,9 +2717,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 				// JOSEPH 11-APR-99
 				if ((tr.ent->svflags & SVF_PROP) || (!strcmp(tr.ent->classname,"func_explosive")))
 				{
-						extern int ClipVelocity (vec3_t in, vec3_t normal, vec3_t out, float overbounce);
-						vec3_t dir;
-
 						VectorCopy( tr.plane.normal, dir );
 
 						gi.WriteByte (svc_temp_entity);
@@ -2825,7 +2818,7 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 								VectorSubtract(newstart, tr2.endpos, travelvec);
 								len = VectorNormalize(travelvec);
 								
-							    // this should be flaged not all concussion weapons will do this
+									// this should be flaged not all concussion weapons will do this
 								
 								if ((len < 100.0) && (!tr2.ent->takedamage) &&
 									((strncmp (tr2.surface->name, "sky", 3) != 0)))

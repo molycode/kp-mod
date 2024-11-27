@@ -96,7 +96,7 @@ void ai_boundary_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface
 
 			if (!AI_ForceTakeCover( other, other->enemy, true ))
 			{
-				if (mem = level.global_cast_memory[other->character_index][other->enemy->character_index])
+				if ((mem = level.global_cast_memory[other->character_index][other->enemy->character_index]) != NULL)
 				{	
 					// pretend that we haven't seen them in a while
 					mem->timestamp = level.time - 5;
@@ -375,8 +375,8 @@ void SP_ai_event_follow (edict_t *ent)
 Set a cast's "guard_target" to the "targetname" of this entity.
 That character will then guard this location.
 
-  "targetname" links to "guard_target" for the cast entity(s)
-  "guard_radius" is the max guarding radius (default = 512)
+	"targetname" links to "guard_target" for the cast entity(s)
+	"guard_radius" is the max guarding radius (default = 512)
 */
 
 void SP_ai_guard (edict_t *self)
@@ -409,9 +409,9 @@ territory. This means war if sighted.
 !!NOTE!!: Point the "angles" in the direction of the territory. This lets
 the AI know if the character is walking into or out of the territory.
 
-  "cast_group" is the group that owns this territory
-  "angles" points to the direction of the territory
-  "radius" distance from brush before the player will be attacked (default 512)
+	"cast_group" is the group that owns this territory
+	"angles" points to the direction of the territory
+	"radius" distance from brush before the player will be attacked (default 512)
 */
 
 void ai_territory_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
@@ -479,7 +479,7 @@ void SP_ai_territory ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 	// set the center pos
@@ -494,7 +494,7 @@ void SP_ai_territory ( edict_t *ent )
 Set a cast's "flee_target" to the "targetname" of this entity.
 That character will then flee to this location.
 
-  "targetname" links to "flee_target" for the cast entity(s)
+	"targetname" links to "flee_target" for the cast entity(s)
 */
 
 void SP_ai_safespot (edict_t *self)
@@ -518,7 +518,7 @@ void SP_ai_safespot (edict_t *self)
 This is a brush that will reset a cast location to his 
 startup location
 
-  FIXME: Is this implemented yet?
+	FIXME: Is this implemented yet?
 */
 void ai_reset_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
@@ -539,14 +539,14 @@ void SP_ai_reset (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
 
 /*QUAKED ai_combat_spot (.5 .5 1) (-16 -16 -24) (16 16 48)
 
-  A good place to go to get a vantage point during fighting.
+	A good place to go to get a vantage point during fighting.
 */
 
 void SP_ai_combat_spot (edict_t *self)
@@ -570,7 +570,7 @@ void SP_ai_combat_spot (edict_t *self)
 When the player touches this brush, the targetted character will start
 following it's path_corner.
 
-  "target"	link this with the "targetname" of the character to be triggered
+	"target"	link this with the "targetname" of the character to be triggered
 */
 
 void ai_trigger_character_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf);
@@ -591,18 +591,18 @@ void SP_ai_trigger_character (edict_t *ent)
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 }
 
 void ai_trigger_character_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
-	edict_t	*trav=NULL;
-
 	if (!(other->client))
 		return;
 
-	while (trav = G_Find(trav, FOFS(targetname), self->target))
+	edict_t* trav = NULL;
+
+	while ((trav = G_Find(trav, FOFS(targetname), self->target)) != NULL)
 	{
 		trav->spawnflags |= SPAWNFLAG_IMMEDIATE_FOLLOW_PATH;
 	}
@@ -614,8 +614,8 @@ If so, the character will head towards the specified path_corner_cast.
 
 Example use: guiding AI characters away from a locked door
 
-  "target"		link this with the "targetname" of the door to check
-  "pathtarget"	linked with "targetname" of path_corner_cast to head for
+	"target"		link this with the "targetname" of the door to check
+	"pathtarget"	linked with "targetname" of path_corner_cast to head for
 */
 
 void ai_locked_door_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf);
@@ -655,7 +655,7 @@ void SP_ai_locked_door (edict_t *ent)
 	ent->think = locked_door_think;
 	ent->nextthink = level.time + 0.1;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 }
 
@@ -694,15 +694,13 @@ void ai_button_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t
 
 void ai_button_think (edict_t *self)
 {
+	// disabled this, doesn't work too well, need a better approach
+	// eg. they'll activate lifts when they shouldn't
+#if 0
 	edict_t	*trav;
 	route_t	r;
 
-// disabled this, doesn't work too well, need a better approach
-// eg. they'll activate lifts when they shouldn't
-return;
-
 	// check characters to see if any are within range
-
 	while (		(self->count < level.num_characters)
 			&&	(level.characters[self->count])
 			&&	(	(level.characters[self->count]->client)
@@ -750,4 +748,5 @@ fail:
 		self->count = 0;
 
 	self->nextthink = level.time + 0.1;
+#endif
 }

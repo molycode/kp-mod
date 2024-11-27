@@ -35,7 +35,7 @@ static void SP_FixCoopSpots (edict_t *self)
 		VectorSubtract(self->s.origin, spot->s.origin, d);
 		if (VectorLength(d) < 384)
 		{
-			if ((!self->targetname) || stricmp(self->targetname, spot->targetname) != 0)
+			if ((!self->targetname) || Q_stricmp(self->targetname, spot->targetname) != 0)
 			{
 //				gi.dprintf("FixCoopSpots changed %s at %s targetname from %s to %s\n", self->classname, vtos(self->s.origin), self->targetname, spot->targetname);
 				self->targetname = spot->targetname;
@@ -53,7 +53,7 @@ static void SP_CreateCoopSpots (edict_t *self)
 {
 	edict_t	*spot;
 
-	if(stricmp(level.mapname, "security") == 0)
+	if(Q_stricmp(level.mapname, "security") == 0)
 	{
 		spot = G_Spawn();
 		spot->classname = "info_player_coop";
@@ -88,10 +88,7 @@ static void SP_CreateCoopSpots (edict_t *self)
 The normal starting point for a level.
 */
 void SP_info_player_start(edict_t *self)
-{
-
-	extern void Show_Help (void);
-	
+{	
 	if (!(deathmatch->value))
 	{
 		if (	!strcmp(level.mapname, "sr1") 
@@ -105,7 +102,7 @@ void SP_info_player_start(edict_t *self)
 	
 	if (!coop->value)
 		return;
-	if(stricmp(level.mapname, "security") == 0)
+	if(Q_stricmp(level.mapname, "security") == 0)
 	{
 		// invoke one of our gross, ugly, disgusting hacks
 		self->think = SP_CreateCoopSpots;
@@ -116,7 +113,7 @@ void SP_info_player_start(edict_t *self)
 /*QUAKED info_player_deathmatch (1 0 1) (-16 -16 -24) (16 16 48)
 potential spawning position for deathmatch games
 
-  style - team # for Teamplay (1 or 2)
+	style - team # for Teamplay (1 or 2)
 */
 void SP_info_player_deathmatch(edict_t *self)
 {
@@ -141,20 +138,20 @@ void SP_info_player_coop(edict_t *self)
 		return;
 	}
 
-  if((stricmp(level.mapname, "jail2") == 0)   ||
-	   (stricmp(level.mapname, "jail4") == 0)   ||
-	   (stricmp(level.mapname, "mine1") == 0)   ||
-	   (stricmp(level.mapname, "mine2") == 0)   ||
-	   (stricmp(level.mapname, "mine3") == 0)   ||
-	   (stricmp(level.mapname, "mine4") == 0)   ||
-	   (stricmp(level.mapname, "lab") == 0)     ||
-	   (stricmp(level.mapname, "boss1") == 0)   ||
-	   (stricmp(level.mapname, "fact3") == 0)   ||
-	   (stricmp(level.mapname, "biggun") == 0)  ||
-	   (stricmp(level.mapname, "space") == 0)   ||
-	   (stricmp(level.mapname, "command") == 0) ||
-	   (stricmp(level.mapname, "power2") == 0) ||
-	   (stricmp(level.mapname, "strike") == 0))
+	if((Q_stricmp(level.mapname, "jail2") == 0)   ||
+		 (Q_stricmp(level.mapname, "jail4") == 0)   ||
+		 (Q_stricmp(level.mapname, "mine1") == 0)   ||
+		 (Q_stricmp(level.mapname, "mine2") == 0)   ||
+		 (Q_stricmp(level.mapname, "mine3") == 0)   ||
+		 (Q_stricmp(level.mapname, "mine4") == 0)   ||
+		 (Q_stricmp(level.mapname, "lab") == 0)     ||
+		 (Q_stricmp(level.mapname, "boss1") == 0)   ||
+		 (Q_stricmp(level.mapname, "fact3") == 0)   ||
+		 (Q_stricmp(level.mapname, "biggun") == 0)  ||
+		 (Q_stricmp(level.mapname, "space") == 0)   ||
+		 (Q_stricmp(level.mapname, "command") == 0) ||
+		 (Q_stricmp(level.mapname, "power2") == 0) ||
+		 (Q_stricmp(level.mapname, "strike") == 0))
 	{
 		// invoke one of our gross, ugly, disgusting hacks
 		self->think = SP_FixCoopSpots;
@@ -275,15 +272,15 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 		case MOD_TRIGGER_HURT:
 			message = "was in the wrong place";
 			break;
-    // RAFAEL
+		// RAFAEL
 		case MOD_GEKK:
 		case MOD_BRAINTENTACLE:
 			message = "that's gotta hurt";
 			break;
-    }
+		}
 		if (attacker == self)
 		{
-      switch (mod)
+			switch (mod)
 			{
 			case MOD_HELD_GRENADE:
 				message = "tried to put the pin back in";
@@ -310,7 +307,7 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 				break;
 			// RAFAEL 03-MAY-98
 			case MOD_TRAP:
-			 	message = "sucked into his own trap";
+				message = "sucked into his own trap";
 				break;
 			default:
 				if (IsNeutral(self))
@@ -597,7 +594,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 		// drop cash if we have some
 		if (deathmatch->value && (self != attacker) && (!self->client->pers.friendly_vulnerable))
 		{
-			edict_t *cash;
+			edict_t *cash = NULL;
 
 			// always drop at least 10 bucks, to reward the killer
 			if (teamplay->value && (teamplay_mode != TM_GANGBANG) && (attacker->client) && (attacker->client->pers.team != self->client->pers.team))
@@ -610,8 +607,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 				if (self->client->pers.bagcash < MAX_BAGCASH_PLAYER)
 				{
 					// if they were killed in the enemy base, reward them with some extra cash
-					cash = NULL;
-					while (cash = G_Find( cash, FOFS(classname), "dm_safebag" ))
+					while ((cash = G_Find( cash, FOFS(classname), "dm_safebag" )) != NULL)
 					{
 						if (cash->style != self->client->pers.team)
 						{
@@ -745,7 +741,7 @@ extern void AutoLoadWeapon( gclient_t *client, gitem_t *weapon, gitem_t *ammo );
 void InitClientPersistant (gclient_t *client)
 {
 	gitem_t		*item, *ammo;
-	int		team;	// save team
+	int		team = 0;	// save team
 
 	if (deathmatch->value && teamplay->value)
 		team = client->pers.team;
@@ -852,7 +848,7 @@ void FetchClientEntData (edict_t *ent)
 /*
 =======================================================================
 
-  SelectSpawnPoint
+	SelectSpawnPoint
 
 =======================================================================
 */
@@ -1293,7 +1289,6 @@ void PutClientInServer (edict_t *ent)
 	int		index;
 	vec3_t	spawn_origin, spawn_angles;
 	gclient_t	*client;
-	int		i;
 	client_persistant_t	saved;
 	client_respawn_t	resp;
 
@@ -1424,9 +1419,7 @@ void PutClientInServer (edict_t *ent)
 
 	// RAFAEL
 	// weapon mdx
-	{
-		int i;
-	
+	{	
 		memset(&(client->ps.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 
 		client->ps.num_parts++;
@@ -1434,7 +1427,7 @@ void PutClientInServer (edict_t *ent)
 		if (client->pers.weapon)
 			client->ps.model_parts[PART_HEAD].modelindex = gi.modelindex(client->pers.weapon->view_model);
 		
-		for (i=0; i<MAX_MODELPART_OBJECTS; i++)
+		for (int i=0; i<MAX_MODELPART_OBJECTS; i++)
 			client->ps.model_parts[PART_HEAD].skinnum[i] = 0; // will we have more than one skin???
 	}
 
@@ -1551,7 +1544,7 @@ ent->bikestate = 0;
 		// converts some characters to NULL's
 		len = strlen( s );
 		did_slash = 0;
-		for (i=0; i<len; i++)
+		for (int i=0; i<len; i++)
 		{
 			if (s[i] == '/')
 			{
@@ -1612,7 +1605,7 @@ ent->bikestate = 0;
 	}
 
 	// set the delta angle
-	for (i=0 ; i<3 ; i++)
+	for (int i=0 ; i<3 ; i++)
 		client->ps.pmove.delta_angles[i] = ANGLE2SHORT(spawn_angles[i] - client->resp.cmd_angles[i]);
 
 	ent->s.angles[PITCH] = 0;
@@ -1640,7 +1633,7 @@ ClientBeginDeathmatch
 A client has just connected to the server in 
 deathmatch mode, so clear everything out before starting them.
 
-  NOTE: called every level load/change in deathmatch
+	NOTE: called every level load/change in deathmatch
 =====================
 */
 extern void Teamplay_AutoJoinTeam( edict_t *self );
@@ -1724,7 +1717,6 @@ int	num_followers = 0;
 extern int client_connected;
 
 extern qboolean	changing_levels;
-extern void Cmd_HolsterBar_f (edict_t *ent);
 
 void ClientBegin (edict_t *ent)
 {
@@ -1826,7 +1818,7 @@ void ClientBegin (edict_t *ent)
 	// Ridah, restore any following characters
 	if (num_followers > 0)
 	{
-		int j, k;
+		int j = 0;
 		follower_t	*fol;
 		edict_t		*newent, *spawnspot;
 		qboolean	killed, fakespawn;
@@ -1917,7 +1909,7 @@ void ClientBegin (edict_t *ent)
 			// add it to the characters listing
 			if (killed)
 			{
-				level.characters[j] = newent;
+				level.characters[j] = newent; // Moly: double check j usage
 			}
 			else
 			{
@@ -1939,7 +1931,7 @@ void ClientBegin (edict_t *ent)
 			// restore pain skins
 			for (j=0; j<newent->s.num_parts; j++)
 			{
-				for (k=0; k<MAX_MODELPART_OBJECTS; k++)
+				for (int k=0; k<MAX_MODELPART_OBJECTS; k++)
 				{
 					newent->s.model_parts[j].skinnum[k] += (byte)fol->skinofs[j][k];
 				}
@@ -2036,7 +2028,8 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 		// NOTE: skin order is "HEAD BODY LEGS"
 		char *skin, *body, *legs;
 		char tempstr[MAX_QPATH];
-		int i, valid, model_index;
+		int i = 0, model_index = 0;
+		qboolean valid = false;
 
 		// Hard-coded skin sets for each model
 
@@ -2060,14 +2053,11 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 			};
 
 		// make sure they are using one of the standard models
-		valid = false;
-		i = 0;
 		strcpy( tempstr, s );
 		skin = strrchr( tempstr, '/' );
 
 		if (!skin)
 		{	// invalid model, so assign a default
-			model_index = 0;
 			strcpy( tempstr, valid_models[model_index] );
 
 			// also recreate a new skin for "s"
@@ -2894,12 +2884,11 @@ chasing:
 	// Activate button is pressed
 	if (((client->latched_buttons|client->buttons) & BUTTON_ACTIVATE))
 	{
-		edict_t		*trav, *best;
+		edict_t		*trav = NULL, *best = NULL;
 		float		best_dist=9999, this_dist;
 	
 		// find the nearest pull-enabled object 
-		trav = best = NULL;
-		while (trav = findradius( trav, ent->s.origin, 48 ))
+		while ((trav = findradius( trav, ent->s.origin, 48 )) != NULL)
 		{
 			if (!trav->pullable)
 				continue;
@@ -2920,7 +2909,7 @@ chasing:
 			cplane_t plane;
 			
 			plane.type = 123;
-			best->touch (best, ent, &plane, NULL);	
+			best->touch (best, ent, &plane, NULL);
 		
 			// Slow down the player
 			// JOSEPH 24-MAY-99

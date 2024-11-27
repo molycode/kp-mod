@@ -857,7 +857,7 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 		gitem_t *itemhh = FindItem("Helmet Armor Heavy");
 		
 		if ((other->client->pers.inventory[ITEM_INDEX(itemh)] == 100) ||
-		   (other->client->pers.inventory[ITEM_INDEX(itemhh)] == 100))
+			 (other->client->pers.inventory[ITEM_INDEX(itemhh)] == 100))
 			return false;
 		
 		if (other->client->pers.inventory[ITEM_INDEX(itemhh)])
@@ -879,7 +879,7 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 		gitem_t *itemjh = FindItem("Jacket Armor Heavy");
 		
 		if ((other->client->pers.inventory[ITEM_INDEX(itemj)] == 100) ||
-		   (other->client->pers.inventory[ITEM_INDEX(itemjh)] == 100))
+			 (other->client->pers.inventory[ITEM_INDEX(itemjh)] == 100))
 			return false;
 
 		if (other->client->pers.inventory[ITEM_INDEX(itemjh)])
@@ -901,7 +901,7 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 		gitem_t *itemlh = FindItem("Legs Armor Heavy");	
 		
 		if ((other->client->pers.inventory[ITEM_INDEX(iteml)] == 100) ||
-		   (other->client->pers.inventory[ITEM_INDEX(itemlh)] == 100))
+			 (other->client->pers.inventory[ITEM_INDEX(itemlh)] == 100))
 			return false;
 
 		if (other->client->pers.inventory[ITEM_INDEX(itemlh)])
@@ -1395,7 +1395,7 @@ edict_t *Shot_Drop_Item (edict_t *ent, gitem_t *item, char* modeloverride)
 	else
 	{	
 		gi.setmodel (dropped, dropped->item->world_model);
-    }
+		}
 
 	dropped->solid = SOLID_TRIGGER;
 	dropped->movetype = MOVETYPE_TOSS;  
@@ -1423,11 +1423,11 @@ edict_t *Shot_Drop_Item (edict_t *ent, gitem_t *item, char* modeloverride)
 	
 	if ((rand()&1) == 1)
 	{
-	    VectorScale (right, 150, dropped->velocity);
+			VectorScale (right, 150, dropped->velocity);
 	}
 	else
 	{
-	    VectorScale (right, -150, dropped->velocity);
+			VectorScale (right, -150, dropped->velocity);
 	}
 
 	dropped->velocity[2] = 350;
@@ -2348,7 +2348,7 @@ model="models/pu_icon/grenade/tris.md2"
 		NULL,
 		"world/pickups/ammo.wav",
 		"models/pu_icon/grenade/tris.md2", 0,
-        NULL,
+				NULL,
 /* icon */		"/pics/h_grenade.tga",
 /* pickup */	"Grenades",
 /* width */		3,
@@ -2763,7 +2763,7 @@ model="models/pu_icon/f_light/tris.md2"
 /*QUAKED item_watch (.3 .3 1) (-16 -16 -16) (16 16 16)
 
 Watch for Lenny
-  
+	
 model="models/pu_icon/watch/tris.md2"  
 */
 	{
@@ -2793,7 +2793,7 @@ model="models/pu_icon/watch/tris.md2"
 model="models/pu_icon/whiskey/tris.md2"  
 
 Whiskey for the bum
-  
+	
 */
 	{
 		"item_whiskey",
@@ -2983,7 +2983,7 @@ model="models/pu_icon/key/key_a.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_a.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3007,7 +3007,7 @@ model="models/pu_icon/key/key_b.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_b.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3031,7 +3031,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3055,7 +3055,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3079,7 +3079,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3103,7 +3103,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3127,7 +3127,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3152,7 +3152,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_ticket.tga",
@@ -3177,7 +3177,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",
@@ -3201,7 +3201,7 @@ model="models/pu_icon/key/key_c.md2"
 		Use_Null,
 		NULL,
 		NULL,
-        "world/pickups/keys.wav",
+				"world/pickups/keys.wav",
 		"models/pu_icon/key/key_c.md2", 0,
 		NULL,
 		"/pics/h_key.tga",

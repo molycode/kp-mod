@@ -5,32 +5,32 @@
 /*
 =========================================================
 
-  PLATS
+	PLATS
 
-  movement options:
+	movement options:
 
-  linear
-  smooth start, hard stop
-  smooth start, smooth stop
+	linear
+	smooth start, hard stop
+	smooth start, smooth stop
 
-  start
-  end
-  acceleration
-  speed
-  deceleration
-  begin sound
-  end sound
-  target fired when reaching end
-  wait at end
+	start
+	end
+	acceleration
+	speed
+	deceleration
+	begin sound
+	end sound
+	target fired when reaching end
+	wait at end
 
-  object characteristics that use move segments
-  ---------------------------------------------
-  movetype_push, or movetype_stop
-  action when touched
-  action when blocked
-  action when used
+	object characteristics that use move segments
+	---------------------------------------------
+	movetype_push, or movetype_stop
+	action when touched
+	action when blocked
+	action when used
 	disabled?
-  auto trigger spawning
+	auto trigger spawning
 
 
 =========================================================
@@ -62,7 +62,7 @@ void Move_Done (edict_t *self)
 		VectorCopy(self->s.origin, self->cast_info.saved_goal);
 
 		// is there a human standing on this plat?
-		while (trav = G_Find(trav, FOFS(classname), "player"))
+		while ((trav = G_Find(trav, FOFS(classname), "player")) != NULL)
 		{
 			if (trav->groundentity == self)
 			{	// this player is standing on us, so drop a node
@@ -510,7 +510,7 @@ if (!(other->cast_info.aiflags & AI_GRUNT))
 		int		i=0;
 
 		// inform characters of the trigger
-		while (character = level.characters[i++])
+		while ((character = level.characters[i++]) != NULL)
 		{
 			if ((!character->client) && ((other == character) || (VectorDistance(character->s.origin, other->s.origin) < 512)))
 				character->target_ent = ent;
@@ -1150,8 +1150,8 @@ void func_door_sound (edict_t *ent, int doorsound)
 
 DOORS
 
-  spawn a trigger surrounding the entire team unless it is
-  already targeted by another
+	spawn a trigger surrounding the entire team unless it is
+	already targeted by another
 
 ======================================================================
 */
@@ -1271,7 +1271,7 @@ void door_go_down (edict_t *self)
 
 void door_go_up (edict_t *self, edict_t *activator)
 {
- 	if (self->moveinfo.state == STATE_UP)
+	if (self->moveinfo.state == STATE_UP)
 		return;		// already going up
 
 	if (self->moveinfo.state == STATE_TOP)
@@ -2014,7 +2014,7 @@ void SP_func_door_rotating (edict_t *ent)
 /*QUAKED func_subdoor_base (0 .5 .8) ? X REVERSE CRUSHER NOMONSTER ANIMATED TOGGLE X_AXIS Y_AXIS AUTO_OPEN
 
 The func_subdoor_handle1 will rotate 90 deg then the door will open with func_subdoor_handle2.
-  
+	
 TOGGLE causes the door to wait in both the start and end states for a trigger event.
 
 NOMONSTER	monsters will not trigger this door
@@ -2053,7 +2053,7 @@ REVERSE will cause the door to rotate in the opposite direction.
 /*QUAKED func_subdoor_handle1 (0 .5 .8) ? X REVERSE X X X X X_AXIS Y_AXIS
 
 Will rotate 90 deg with the func_subdoor_base.
-  
+	
 You need to have an origin brush in the center of this entity. The center of that brush will be
 the point around which it is rotated. It will rotate around the Z axis by default. You can
 check either the X_AXIS or Y_AXIS box to change that.
@@ -2088,14 +2088,14 @@ void door_use_subdoor (edict_t *self, edict_t *other, edict_t *activator)
 		ent = ent->handle2;
 		ent->message = NULL;
 		ent->touch = NULL;
- 		door_go_up(ent, activator);
+		door_go_up(ent, activator);
 		activator->target_ent = ent;
 	}
 };
 
 void Think_stop_handle (edict_t *self)
 {
-    if ((self->handle) && (self->handle2))
+		if ((self->handle) && (self->handle2))
 	{
 		VectorClear(self->handle->avelocity);
 		self->handle->solid = 0;
@@ -2146,7 +2146,7 @@ void Touch_DoorTrigger_subdoor (edict_t *self, edict_t *other, cplane_t *plane, 
 			else // Z_AXIS
 				Taxis = YAW;
 		
-            self->owner->handle->avelocity[Taxis] = (deg / traveltime);
+						self->owner->handle->avelocity[Taxis] = (deg / traveltime);
 			
 			if (self->owner->handle->spawnflags & DOOR_REVERSE)
 				self->owner->handle->avelocity[Taxis] = -(self->owner->handle->avelocity[Taxis]);	
@@ -2189,7 +2189,7 @@ void Think_SpawnDoorTrigger_subdoor (edict_t *ent)
 	{
 		return;
 	}
-    	
+			
 	// Set pointers to all slaves from master
 	for (chainent = ent->teammaster; chainent; chainent = chainent->teamchain)
 	{
@@ -2288,7 +2288,7 @@ void Think_SpawnDoorTrigger_subdoor (edict_t *ent)
 		VectorCopy (handle->pos2, handle->moveinfo.end_angles);
 			
 		gi.linkentity (handle);
-    	
+			
 	}
 	
 	if (ent->flags & FL_TEAMSLAVE)
@@ -2457,7 +2457,7 @@ void SP_func_subdoor_handle2 (edict_t *ent)
 	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 	ent->think = think_none;
-    ent->svflags |= SVF_NOCLIENT;
+		ent->svflags |= SVF_NOCLIENT;
 }
 
 // END JOSEPH
@@ -2959,7 +2959,7 @@ dmg		   default	2
 noise	   looping sound to play when the train is in motion
 reactdelay length of the sound in seconds
 
-  On the path corner:
+	On the path corner:
 speed    departure speed from that corner 
 rotate   angle change for X Y Z to next corner 
 duration duration for angle change (overrides speed)
@@ -2975,13 +2975,13 @@ void Move_Begin_rotating (edict_t *ent)
 {
 	float	frames;
 
-    // Stand still rotation 
+		// Stand still rotation 
 	if (ent->durationflag)
-    {
+		{
 		ent->nextthink = level.time + (ent->lastduration);
 		ent->think = Move_Final;
 		return;
-    }
+		}
 
 	if (((ent->moveinfo.speed * FRAMETIME) >= ent->moveinfo.remaining_distance))  
 	{
@@ -3004,7 +3004,7 @@ void Move_Calc_rotating (edict_t *ent, vec3_t dest, void(*func)(edict_t*))
 	VectorCopy(dest, ent->cast_info.saved_goal);
 // END:		Xatrix/Ridah/Navigator/09-apr-1998
 
-    //gi.dprintf ("MIN%s MAX%s", vtos(ent->mins), vtos(ent->maxs));
+		//gi.dprintf ("MIN%s MAX%s", vtos(ent->mins), vtos(ent->maxs));
 	
 	VectorClear (ent->velocity);
 	VectorSubtract (dest, ent->s.origin, ent->moveinfo.dir);
@@ -3178,7 +3178,7 @@ again:
 	
 	// Set speed
 	if (self->firstnode)
-    {
+		{
 		// Set rotation from saved first node
 		VectorSubtract(ent->s.origin, self->nodeorigin, dir);
 		remain = VectorNormalize (dir);		
@@ -3227,12 +3227,12 @@ again:
 		}
 
 		self->firstnode = 0;  
-    }
+		}
 	else
-    {
+		{
 		// Force proper angle
 		VectorCopy(self->angletarget, self->s.angles);
-	    
+			
 		//gi.dprintf ("CURRENT ANGLE %s\n", vtos(self->s.angles));
 		//gi.dprintf ("TARGET  ANGLE %s\n", vtos(self->angletarget));
 		//gi.dprintf ("SPEED %f\n", self->speed);
@@ -3354,7 +3354,7 @@ void train_resume_rotating (edict_t *self)
 {
 	edict_t	*ent;
 	vec3_t	dest;
-    
+		
 	ent = self->target_ent;
 
 	// JOSEPH 2-APR-99
@@ -4137,7 +4137,7 @@ void object_repair_fx (edict_t *ent)
 
 	if (ent->health <= 100)
 		ent->health++;
- 	else
+	else
 	{
 		gi.WriteByte (svc_temp_entity);
 		gi.WriteByte (TE_WELDING_SPARKS);

@@ -262,7 +262,7 @@ void ClientEndServerFrames (void)
 =================
 MapCycleNext
 
-  Uses maps.lst and teammaps.lst to cycle the maps during deathmatch
+	Uses maps.lst and teammaps.lst to cycle the maps during deathmatch
 =================
 */
 char *MapCycleNext( char *map )
@@ -270,7 +270,7 @@ char *MapCycleNext( char *map )
 	char	*basevars[] = {"basedir", "cddir", NULL};	// consol variables that point to possible file locations
 	cvar_t	*game_dir, *base_dir;
 	char	filename[MAX_QPATH], dir[MAX_QPATH];
-	FILE	*f;
+	FILE	*f = NULL;
 	static char	nextmap[MAX_QPATH];
 	char	firstmap[MAX_QPATH];
 	char	travmap[MAX_QPATH];
@@ -384,7 +384,7 @@ void EndDMLevel (void)
 		goto done;
 	}
 
-	if (nextmap = MapCycleNext( level.mapname ))
+	if ((nextmap = MapCycleNext( level.mapname )) != NULL)
 	{
 		ent = G_Spawn ();
 		ent->classname = "target_changelevel";
@@ -503,17 +503,16 @@ void ExitLevel (void)
 	level.speaktime = 0;
 	// JOSEPH 25-FEB-99
 	level.cut_scene_end_count = 0;
-    level.fadeendtime = 0;
+		level.fadeendtime = 0;
 	level.totalfade = 0;
 	// END JOSEPH
 
 	// JOSEPH 13-JUN-99
-    level.helpchange = 0;
+		level.helpchange = 0;
 	// END JOSEPH
 
 	if (level.bar_lvl)
 	{
-		extern void Cmd_HolsterBar_f (edict_t *ent);
 		edict_t *player;
 		
 		player = &g_edicts[1];
@@ -558,8 +557,8 @@ void AI_ProcessCombat (void);
 
 void G_RunFrame (void)
 {
-	int		i;
-	edict_t	*ent;
+	int i;
+	edict_t *ent;
 
 	level.framenum++;
 	level.time = level.framenum*FRAMETIME;
@@ -618,7 +617,6 @@ void G_RunFrame (void)
 			else if (ent->onfiretime > 0)
 			{
 				vec3_t	point, org, dir;
-				int		i,j;
 				float	dist;
 
 				// Deathmatch flames done on client-side
@@ -630,7 +628,7 @@ void G_RunFrame (void)
 					// Ridah, spawn flames at each body part
 					MDX_HitCheck( ent, world, world, vec3_origin, vec3_origin, vec3_origin, 0, 0, 0, 0, vec3_origin );
 
-					for (i = 0; i < bbox_cnt; i++)
+					for (int j = 0; j < bbox_cnt; j++)
 					{
 
 						// don't draw so many if the client is up close
@@ -640,11 +638,11 @@ void G_RunFrame (void)
 								continue;
 						}
 
-						VectorAdd( mdx_bbox[i]->s.origin, dir, org );
+						VectorAdd( mdx_bbox[j]->s.origin, dir, org );
 
 						if (!deathmatch->value)
 						{
-							for (j=0; j<2; j++)
+							for (int k=0; k<2; k++)
 							{
 								point[2] = (org[2] + ((rand()%18) - 6) + 6);
 								point[1] = (org[1] + ((rand()%10) - 5));
@@ -659,7 +657,7 @@ void G_RunFrame (void)
 								else
 									gi.WriteByte (0.6 * 10.0);
 
-								gi.multicast (point, MULTICAST_PVS);		
+								gi.multicast (point, MULTICAST_PVS);
 							}
 						}
 
@@ -681,10 +679,9 @@ void G_RunFrame (void)
 					}
 				}
 
-			    if (!ent->deadflag)
+				if (!ent->deadflag)
 				{
-					edict_t *trav=NULL;
-					float	damage=1;
+					float	damage=1.0f;
 
 					if (!deathmatch->value)
 						damage;// *= 3;
@@ -698,10 +695,9 @@ void G_RunFrame (void)
 					{
 						ent->cast_info.catch_fire( ent, ent->onfireent );
 					}
-
 				}
 
-				ent->onfiretime--;	
+				ent->onfiretime--;
 
 				if (ent->onfiretime <= 0)
 				{
@@ -782,36 +778,36 @@ void G_RunFrame (void)
 					&&	(ent->healtimer++ > 30))
 			// END JOSEPH
 			{
-				int i, i2, baseskin;
+				int baseskin;
 				
 				ent->healtimer = 0;
 				
 				if (!ent->healspeed)
-				  	ent->health += 1;
+						ent->health += 1;
 				else
 					ent->health += ent->healspeed;
 				
 				if (ent->health > ent->max_health)
 					ent->health = ent->max_health;
 				
-				for (i = 0; i < MAX_MODEL_PARTS; i++)
+				for (int m = 0; m < MAX_MODEL_PARTS; m++)
 				{
-					for (i2 = 0; i2 < MAX_MODELPART_OBJECTS; i2++)
+					for (int n = 0; n < MAX_MODELPART_OBJECTS; n++)
 					{
-						baseskin = ent->s.model_parts[i].baseskin;
-													
-						if (ent->s.model_parts[i].skinnum[i2] > baseskin)
+						baseskin = ent->s.model_parts[m].baseskin;
+
+						if (ent->s.model_parts[m].skinnum[n] > baseskin)
 						{	
 							if (ent->health > (ent->max_health * 0.75))
 							{
-								ent->s.model_parts[i].skinnum[i2] = baseskin;
+								ent->s.model_parts[m].skinnum[n] = baseskin;
 							}
 							else if (ent->health > (ent->max_health * 0.5))
 							{
 								if (cl_parental_lock->value && !cl_parental_override->value)
-									ent->s.model_parts[i].skinnum[i2] = baseskin;
+									ent->s.model_parts[m].skinnum[n] = baseskin;
 								else
-									ent->s.model_parts[i].skinnum[i2] = baseskin + 1;
+									ent->s.model_parts[m].skinnum[n] = baseskin + 1;
 							}
 						}
 					}
@@ -890,10 +886,8 @@ void G_RunFrame (void)
 				{
 					UpdateDirLights( ent );
 				}
-
 			}
 		}
-
 	}
 
 	// see if it is time to end a deathmatch

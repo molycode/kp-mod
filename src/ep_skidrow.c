@@ -1,7 +1,7 @@
 
 /******************************************************************************
 
-  SKIDROW - Episode specific code
+	SKIDROW - Episode specific code
 
 *******************************************************************************/
 
@@ -284,9 +284,6 @@ qboolean EP_Skidrow_CastSight ( edict_t *self, edict_t *other, cast_memory_t *me
 
 	if ( self->cast_group == GANG_RATGANG )
 	{
-		
-		cast_memory_t	*mem;
-		
 		mem = level.global_cast_memory[ self->character_index ][ other->character_index ];
 		
 		if (other->client && !(other->episode_flags & EP_SKIDROW_RATS_PISSED)) 
@@ -388,7 +385,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			}
 			else if (!(other->episode_flags & EP_SKIDROW_RUMMY_ASKED_WINE) && !(self->episode_flags & EP_SKIDROW_RUMMY_GAVE_WINE))
 			{
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 				{
 					Voice_Random (self, other, &rummy[8], 2);
 					// other->episode_flags |= EP_SKIDROW_RUMMY_ASKED_WINE;
@@ -440,7 +437,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 								if (e->key == -1)
 								{
 									e->key = 0;	
-									e->targetname = NULL;							
+									e->targetname = NULL;
 								}
 							}
 						}
@@ -454,7 +451,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 					mem->response = Resp_Rummy_GotWine;
 				}
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = NULL;
 
 				other->response_ent = NULL;
@@ -467,7 +464,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			{
 				Voice_Random ( self, other, &rummy[8], 2 );
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = Resp_Rummy_GotWine;
 
 				return true;
@@ -794,7 +791,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			if (!(other->episode_flags & EP_SKIDROW_MAGICJ_ASKED_DOLLAR))
 			{
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 				{
 					Voice_Specific( self, other, specific, 4 );
 					// other->episode_flags |= EP_SKIDROW_MAGICJ_ASKED_DOLLAR;
@@ -838,7 +835,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 					Voice_Specific( self, other, specific, 8 );
 				}
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = NULL;
 
 				other->response_ent = NULL;
@@ -852,7 +849,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 			{
 				Voice_Specific( self, other, specific, 9 );
 
-				if (mem = level.global_cast_memory[ self->character_index ][ other->character_index ])
+				if ((mem = level.global_cast_memory[ self->character_index ][ other->character_index ]) != NULL)
 					mem->response = Resp_MagicJ_GotDollar;
 
 				return true;
@@ -1183,7 +1180,7 @@ qboolean EP_Skidrow_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 		// We put it in here so it only occurs if we aren't already angry at them
 		if (self->enemy != other)
 		{
-			cast_memory_t	*mem, *premem;
+			cast_memory_t	*premem;
 
 			// get the memory of this "other" character before we record the sighting
 			premem = level.global_cast_memory[self->character_index][other->character_index];
@@ -1297,14 +1294,76 @@ if (!Q_strcasecmp( self->classname, "item_coil" ))
 #endif
 }
 
+#define SR1_INTRO 1
+#if SR1_INTRO	// out for demo
+
+void intro_player_standup(edict_t* self)
+{	// stand up
+	edict_t* trav, * other;
+
+	trav = G_Find(NULL, FOFS(targetname), "intro_player_corner1a");
+
+	other = EP_GetCharacter(NAME_INTROGUY1);
+
+	other->cast_info.currentmove = other->cast_info.move_stand_up;
+	other->s.frame = other->cast_info.currentmove->firstframe;
+	other->maxs[2] = other->cast_info.standing_max_z;
+
+	other->last_talk_time = level.time;	// make talking jesture when standing
+
+	// head for the corner in a few seconds
+	other->goal_ent = trav;
+	other->cast_info.goal_ent_pausetime = level.time + 2.5;		// pause for a bit
+
+	//			other->maxs[2] = DUCKING_MAX_Z;
+}
+
+void intro_player_turnaround(edict_t* self)
+{
+	edict_t* other = NULL;
+
+	//self->owner->cast_info.currentmove = self->owner->cast_info.move_stand_up;
+	//self->owner->maxs[2] = self->owner->cast_info.standing_max_z;
+
+	// turn to face alley
+	while ((other = G_Find(other, FOFS(targetname), "intro_corner1")) != NULL)
+	{
+		//		if (VectorDistance(self->owner->s.origin, other->s.origin) < 384)
+		{
+			self->owner->goal_ent = other;
+			//			self->owner->cast_info.goal_ent_pausetime = level.time + 0.5;
+			self->owner->goal_ent->cast_info.aiflags |= AI_GOALENT_MANUAL_CLEAR;
+			break;
+		}
+	}
+
+	G_FreeEdict(self);
+}
+
+void intro_player_pickup_pipe(edict_t* self)
+{
+	edict_t* think;
+
+	// show the pipe
+	self->s.model_parts[PART_GUN].invisible_objects = 0x0;
+
+	//	self->cast_info.currentmove = self->cast_info.move_crstand;
+	self->cast_info.currentmove = self->cast_info.move_stand_up;
+	self->maxs[2] = self->cast_info.standing_max_z;
+
+	think = G_Spawn();
+	think->nextthink = level.time + 0.7;
+	think->think = intro_player_turnaround;
+	think->owner = self;
+}
+#endif
 
 //............................................................................
 // Special event-driven scripting. Usually called when a character reaches a
 // path_corner_cast with the "scriptname" field set.
-
 void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 {
-	edict_t	*other;
+	edict_t	*other = NULL;
 
 //gi.dprintf( "Script '%s' called by %s\n", scriptname, ent->classname );
 
@@ -1365,9 +1424,6 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		}
 
 		break;
-
-
-#define SR1_INTRO 1
 
 #if SR1_INTRO	// out for demo
 	//================================================================================================
@@ -1458,18 +1514,14 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 				other->s.model_parts[PART_BODY].skinnum[0] =  other->s.model_parts[PART_BODY].baseskin + 1;
 			}
 		}
-
 		else if (!strcmp( scriptname, "intro_camera3" ))
 		{
-			void intro_player_standup( edict_t *self );
-
 			edict_t *thinker;
 
 			thinker = G_Spawn();
 			thinker->nextthink = level.time + 0.5;
 			thinker->think = intro_player_standup;
 		}
-
 		else if (!strcmp( scriptname, "intro_player_script1a" ))
 		{
 			// delete the tough guys
@@ -1479,11 +1531,9 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 			G_FreeEdict( other );
 
 		}
-
 		else if (!strcmp( scriptname, "intro_player_script2" ))
-		{	// we're at the corner, crouch down and grab the pipe
-			void intro_player_pickup_pipe( edict_t *self );
-
+		{
+			// we're at the corner, crouch down and grab the pipe
 			static mframe_t	frames[] = 
 			{
 				NULL,	  0.000, NULL,	// frame 0
@@ -1502,8 +1552,7 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 
 
 			// release the player from the camera
-			other = NULL;
-			while (other = G_Find( other, FOFS(classname), "misc_cutscene_trigger" ))
+			while ((other = G_Find( other, FOFS(classname), "misc_cutscene_trigger" )) != NULL)
 			{
 				if (other->nextthink >= level.time && other->think)
 				{
@@ -1542,7 +1591,7 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		{
 			edict_t *plyr;
 
-			if (plyr = EP_GetCharacter( NAME_BERNIE ))
+			if ((plyr = EP_GetCharacter( NAME_BERNIE )) != NULL)
 			{
 				plyr->goal_ent = plyr->start_ent = marker;
 				plyr->guard_ent = NULL;
@@ -1552,7 +1601,7 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 //			if (plyr = EP_GetCharacter( NAME_AL ))
 //				plyr->goal_ent = marker;
 
-			if (plyr = EP_GetCharacter( NAME_ARNOLD ))
+			if ((plyr = EP_GetCharacter( NAME_ARNOLD )) != NULL)
 			{
 				plyr->goal_ent = marker;
 				plyr->guard_ent = NULL;
@@ -1570,72 +1619,6 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 	}
 
 }
-
-
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#if SR1_INTRO	// out for demo
-
-void intro_player_standup( edict_t *self )
-{	// stand up
-	edict_t	 *trav, *other;
-
-	trav = G_Find( NULL, FOFS(targetname), "intro_player_corner1a" );
-
-	other = EP_GetCharacter( NAME_INTROGUY1 );
-
-	other->cast_info.currentmove = other->cast_info.move_stand_up;
-	other->s.frame = other->cast_info.currentmove->firstframe;
-	other->maxs[2] = other->cast_info.standing_max_z;
-
-	other->last_talk_time = level.time;	// make talking jesture when standing
-
-	// head for the corner in a few seconds
-	other->goal_ent = trav;
-	other->cast_info.goal_ent_pausetime = level.time + 2.5;		// pause for a bit
-
-//			other->maxs[2] = DUCKING_MAX_Z;
-}
-
-void intro_player_turnaround( edict_t *self )
-{
-	edict_t *other;
-
-	//self->owner->cast_info.currentmove = self->owner->cast_info.move_stand_up;
-	//self->owner->maxs[2] = self->owner->cast_info.standing_max_z;
-
-	// turn to face alley
-	other = NULL;
-	while (other = G_Find( other, FOFS(targetname), "intro_corner1" ))
-	{
-//		if (VectorDistance(self->owner->s.origin, other->s.origin) < 384)
-		{
-			self->owner->goal_ent = other;
-//			self->owner->cast_info.goal_ent_pausetime = level.time + 0.5;
-			self->owner->goal_ent->cast_info.aiflags |= AI_GOALENT_MANUAL_CLEAR;
-			break;
-		}
-	}
-
-	G_FreeEdict( self );
-}
-
-void intro_player_pickup_pipe( edict_t *self )
-{
-	edict_t *think;
-
-	// show the pipe
-	self->s.model_parts[PART_GUN].invisible_objects = 0x0;
-
-//	self->cast_info.currentmove = self->cast_info.move_crstand;
-	self->cast_info.currentmove = self->cast_info.move_stand_up;
-	self->maxs[2] = self->cast_info.standing_max_z;
-
-	think = G_Spawn();
-	think->nextthink = level.time + 0.7;
-	think->think = intro_player_turnaround;
-	think->owner = self;
-}
-#endif
 
 qboolean EP_Skidrow_ProcessMagicJ( edict_t *self, edict_t *other, cast_memory_t *mem )
 {
@@ -1663,15 +1646,15 @@ qboolean EP_Skidrow_ProcessMagicJ( edict_t *self, edict_t *other, cast_memory_t 
 			edict_t	*ent = NULL;
 			int		num_choices = 0;
 			edict_t	*choice[MAXCHOICES];
-			int		rval;
-			float	dist[MAXCHOICES];
+			int rval = 0;
+			float	distArray[MAXCHOICES];
 			
 			while(1)
 			{
 				ent = G_Find (ent, FOFS(classname), "misc_skidrow_afraid");
 				if (!ent)
 					break;
-				if ((dist[num_choices] = VectorDistance( ent->s.origin, self->s.origin )) > 384)
+				if ((distArray[num_choices] = VectorDistance( ent->s.origin, self->s.origin )) > 384)
 					choice[num_choices++] = ent;
 				if (num_choices == MAXCHOICES)
 					break;
@@ -1693,10 +1676,10 @@ qboolean EP_Skidrow_ProcessMagicJ( edict_t *self, edict_t *other, cast_memory_t 
 
 					for (i=0; i<num_choices; i++)
 					{
-						if (dist[i] > olddist)
+						if (distArray[i] > olddist)
 						{
 							rval = i;
-							olddist = dist[i];
+							olddist = distArray[i];
 						}
 					}
 				}
@@ -1833,9 +1816,9 @@ qboolean EP_Skidrow_ProcessMagicJ( edict_t *self, edict_t *other, cast_memory_t 
 Bernie and the guys will listen to this. After the radio has stopped,
 they'll discuss the game for some time.
 
-  "delay"	time to wait between starting to listen to the radio
-  "wait"	time spent listening to the radio each time
-  "speed"	time spent discussing the game afterwards
+	"delay"	time to wait between starting to listen to the radio
+	"wait"	time spent listening to the radio each time
+	"speed"	time spent discussing the game afterwards
 */
 
 /*QUAKED misc_skidrow_radio_repeater (.5 .5 1) (-16 -16 -24) (16 16 48)
@@ -2010,7 +1993,7 @@ void EP_skidrow_radio_on (edict_t *self)
 		repeater = G_Find ( self, FOFS(classname), "misc_skidrow_radio_repeater");
 		
 		if (repeater)
-		  Skidrow_Radio_Sound (repeater);
+			Skidrow_Radio_Sound (repeater);
 	}
 */	
 }
@@ -2025,7 +2008,7 @@ void EP_Radio_On_First_Time (edict_t *self)
 		repeater = G_Find ( self, FOFS(classname), "misc_skidrow_radio_repeater");
 		
 		if (repeater)
-		  Skidrow_Radio_Sound (repeater);
+			Skidrow_Radio_Sound (repeater);
 	}
 */	
 	EP_skidrow_radio_on (self);
@@ -2325,9 +2308,6 @@ edict_t *FindCastOrigin (edict_t *self)
 */
 void EP_Skidrow_Reset( edict_t *self, edict_t *other )
 {
-	extern void AI_CreateCharacterMemory(edict_t *src, edict_t *dest);
-	extern void AI_ReleaseCastMemory(edict_t *self, cast_memory_t *cast_memory);
-
 	edict_t *Arnold, *Bernie;
 	cast_memory_t	*mem;
 	edict_t *Cast_Origin;
@@ -2445,8 +2425,6 @@ int EP_skidrow_touch_motorcycle_that_needs_battery_to_start (edict_t *self, edic
 	// New bike
 	{
 		edict_t	*moto = NULL;
-		extern void SP_props_motorcycle_run (edict_t *self); 
-
 		moto = G_Spawn();
 	
 		if (!moto)
@@ -2567,9 +2545,8 @@ qboolean ProcessMomo (edict_t *self, edict_t *other)
 	{
 				
 		if (other->last_response == resp_yes)
-		{	
-			edict_t	*door = NULL;
-			int	cost;
+		{
+			int cost;
 
 			if ( mem->flags	& MEMORY_ASSHOLE)
 			{
@@ -2613,7 +2590,7 @@ qboolean ProcessMomo (edict_t *self, edict_t *other)
 							if (e->key == -1)
 							{
 								e->key = 0;	
-								e->targetname = NULL;							
+								e->targetname = NULL;
 							}
 						}
 					}
@@ -2804,7 +2781,7 @@ void SP_ep_skidrow_flag ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 	
 }
@@ -2918,7 +2895,7 @@ void EP_Skidrow_Register_EPFLAG (edict_t *self, int ep_flag)
 void	EP_Skidrow_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 {
 	if (ent->episode_flags & EP_SKIDROW_MOMO_ASKED_MONEY)
-	 	mem->inc++;
+		mem->inc++;
 				
 }
 

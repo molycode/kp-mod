@@ -1,6 +1,6 @@
 /******************************************************************************
 
-  SHIPYARDS - Episode specific code
+	SHIPYARDS - Episode specific code
 
 *******************************************************************************/
 
@@ -494,8 +494,7 @@ qboolean ProcessSYMomo (edict_t *self, edict_t *other)
 	{
 				
 		if (other->last_response == resp_yes)
-		{	
-			edict_t	*door = NULL;
+		{
 			int	cost;
 
 			if ( mem->flags	& MEMORY_ASSHOLE)
@@ -776,7 +775,7 @@ int	EP_SY_HiredGuysFlags (edict_t *player, edict_t *self)
 				{
 					int     index;
 					gitem_t *item;
-									  
+										
 					item = FindItem ("Warehouse_Key");
 					index = ITEM_INDEX (item);
 					player->client->pers.inventory[ index ] = 1;
@@ -971,7 +970,7 @@ void SP_sy_dykes_boundry ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
@@ -979,7 +978,7 @@ void SP_sy_dykes_boundry ( edict_t *ent )
 void	EP_SY_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 {
 	if (ent->episode_flags & EP_SY_MOMO_ASKED_MONEY)
-	 	mem->inc++;
+		mem->inc++;
 				
 }
 
@@ -998,8 +997,6 @@ void misc_sy_afraid_think (edict_t *self)
 	edict_t *Player;
 	vec3_t	vec;
 	float	dist;
-
-	extern void AI_CreateCharacterMemory(edict_t *src, edict_t *dest);
 
 	Player = &g_edicts[1];
 
@@ -1167,7 +1164,7 @@ void SP_sy_oilcan ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
@@ -1210,7 +1207,7 @@ void SP_sy_blefty ( edict_t *ent )
 
 	ent->svflags |= SVF_NOCLIENT;
 
- 	gi.setmodel (ent, ent->model);
+	gi.setmodel (ent, ent->model);
 	gi.linkentity (ent);
 
 }
