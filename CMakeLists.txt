@@ -30,7 +30,6 @@ function(ApplyCommonCompilerAndLinkerFlags target)
 		target_compile_definitions(
 				${target}
 			PRIVATE
-				MESSENGER_PLATFORM_LINUX
 				$<$<NOT:$<CONFIG:Debug>>:NDEBUG>
 		)
 	endif()
