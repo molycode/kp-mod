@@ -73,11 +73,6 @@ function(ApplyCommonCompilerAndLinkerFlags target)
 			-O0
 		)
 	
-		set(PROFILE_COMPILE_OPTIONS
-			-g
-			-O2
-		)
-	
 		set(RELEASE_COMPILE_OPTIONS
 			-g0
 			-O3
@@ -105,15 +100,10 @@ function(ApplyCommonCompilerAndLinkerFlags target)
 			-Wno-unused-parameter
 			#-v
 		)
-	
+
 		set(DEBUG_COMPILE_OPTIONS
 			-g3
 			-O0
-		)
-	
-		set(PROFILE_COMPILE_OPTIONS
-			-g
-			-O2
 		)
 	
 		set(RELEASE_COMPILE_OPTIONS
