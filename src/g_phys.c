@@ -795,9 +795,7 @@ void SV_Physics_Toss (edict_t *ent)
 	vec3_t		move;
 	float		backoff;
 	edict_t		*slave;
-	qboolean	wasinwater;
 	qboolean	isinwater;
-	vec3_t		old_origin;
 
 // regular thinking
 	SV_RunThink (ent);
@@ -843,8 +841,6 @@ void SV_Physics_Toss (edict_t *ent)
 		// END JOSEPH
 		return;
 	}
-
-	VectorCopy (ent->s.origin, old_origin);
 
 	SV_CheckVelocity (ent);
 
@@ -922,7 +918,6 @@ void SV_Physics_Toss (edict_t *ent)
 	
 	
 // check for water transition
-	wasinwater = (ent->watertype & MASK_WATER);
 	ent->watertype = gi.pointcontents (ent->s.origin);
 	isinwater = ent->watertype & MASK_WATER;
 
@@ -1002,7 +997,6 @@ void SV_AddRotationalFriction (edict_t *ent)
 void SV_Physics_Step (edict_t *ent)
 {
 	qboolean	wasonground;
-	qboolean	hitsound = false;
 	float		*vel;
 	float		speed, newspeed, control;
 	float		friction;
@@ -1045,8 +1039,6 @@ void SV_Physics_Step (edict_t *ent)
 		if (!(ent->flags & FL_FLY))
 			if (!((ent->flags & FL_SWIM) && (ent->waterlevel > 2)))
 			{
-				if (ent->velocity[2] < sv_gravity->value*-0.1)
-					hitsound = true;
 // Ridah, 1-may-99, disabled this to prevent guys getting stuck in water
 //				if (ent->waterlevel == 0)
 					SV_AddGravity (ent);

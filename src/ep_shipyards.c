@@ -32,7 +32,7 @@ qboolean EP_SY_CastSight ( edict_t *self, edict_t *other, cast_memory_t *mem )
 			// mem->flags &= ~MEMORY_LASTWARNING;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -276,12 +276,9 @@ void EP_SY_Script( edict_t *ent, char *scriptname )
 
 void Resp_SYMomo_GotMoney ( edict_t *self, edict_t *other, response_t response )
 {
-	cast_memory_t	*mem;
 		
 	if (self->episode_flags & EP_SY_MOMO_TOOK_MONEY)
 		return;
-
-	mem = level.global_cast_memory[ other->character_index ][ self->character_index ];
 
 	if (response == resp_yes)
 	{
@@ -994,11 +991,8 @@ void misc_sy_afraid_think (edict_t *self)
 	edict_t *Moe;
 	edict_t *Larry;
 	edict_t *Curly;
-	edict_t *Player;
 	vec3_t	vec;
 	float	dist;
-
-	Player = &g_edicts[1];
 
 	Moe = EP_GetCharacter (NAME_MOE);
 
@@ -1220,12 +1214,9 @@ extern int	the_log_page;
 
 void EP_SY_Player_Log (edict_t *self, int page)
 {
-	int len; 
 	int i;
 	int	cnt = 0;
 	int	select = 0;
-
-	len = 0;
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
 	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");

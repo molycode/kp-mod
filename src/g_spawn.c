@@ -883,6 +883,7 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 				((float *)(b+f->ofs))[2] = 0;
 				break;
 			case F_IGNORE:
+			default:
 				break;
 			}
 			return;
@@ -1073,7 +1074,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 	// Ridah 5-8-99, if the spawnpoint starts with "pawn_" only retain it if we have just come from a "pawn_" level
 	//	ie. not if we just died
 	if (	(strstr(game.spawnpoint, "pawn_") == game.spawnpoint)
-		&&	(!last_changelevel || strstr(last_changelevel, "pawn_") != last_changelevel))
+		&&	(!last_changelevel[0] || strstr(last_changelevel, "pawn_") != last_changelevel))
 	{	// clear it
 		game.spawnpoint[0] = '\0';
 	}
@@ -1611,7 +1612,7 @@ void SP_worldspawn (edict_t *ent)
 	if (ent->message && ent->message[0])
 	{
 		gi.configstring (CS_NAME, ent->message);
-		strncpy (level.level_name, ent->message, sizeof(level.level_name));
+		strncpy (level.level_name, ent->message, sizeof(level.level_name)-1);
 	}
 	else
 		strncpy (level.level_name, level.mapname, sizeof(level.level_name));

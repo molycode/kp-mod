@@ -143,7 +143,7 @@ void M_CheckGround (edict_t *ent)
 
 	// check steepness
 // Xatrix/Ridah, make sure we hit something
-if ( trace.fraction < 1 && !trace.allsolid )
+	if ( trace.fraction < 1 && !trace.allsolid )
 // Xatrix/Ridah, make sure we hit something
 
 	if ( trace.plane.normal[2] < 0.5 && !trace.startsolid)

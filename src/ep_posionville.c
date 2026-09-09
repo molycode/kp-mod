@@ -28,7 +28,7 @@ qboolean EP_Poisonville_CastSight ( edict_t *self, edict_t *other, cast_memory_t
 			// mem->flags &= ~MEMORY_LASTWARNING;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -582,12 +582,9 @@ qboolean ProcessPVYolanda (edict_t *self, edict_t *other)
 
 void Resp_PVMomo_GotMoney ( edict_t *self, edict_t *other, response_t response )
 {
-	cast_memory_t	*mem;
 		
 	if (self->episode_flags & EP_PV_MOMO_TOOK_MONEY)
 		return;
-
-	mem = level.global_cast_memory[ other->character_index ][ self->character_index ];
 
 	if (response == resp_yes)
 	{
@@ -958,7 +955,7 @@ void EP_PV_CheckMomo (edict_t *ent, cast_memory_t	*mem)
 
 qboolean EP_PV_DoKey (edict_t *self, edict_t *other)
 {
-	if (other->name_index == NAME_FINGERS || other->name_index == NAME_BUSTER && self->client)
+	if ((other->name_index == NAME_FINGERS || other->name_index == NAME_BUSTER) && self->client)
 		return true;
 	else
 		return false;
@@ -1514,12 +1511,9 @@ extern int	the_log_page;
 
 void EP_PV_Player_Log (edict_t *self, int page)
 {
-	int len; 
 	int i;
 	int	cnt = 0;
 	int	select = 0;
-
-	len = 0;
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
 	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");

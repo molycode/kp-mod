@@ -814,9 +814,9 @@ void think_new_first_raincloud (edict_t *self)
 	
 	// Find cloud size
 	VectorSubtract(self->mins, self->maxs, minmaxsize);
-	effectsizex = abs(minmaxsize[0])-2;
-	effectsizey = abs(minmaxsize[1])-2;
-	effectsizez = abs(minmaxsize[2])-2;
+	effectsizex = (int)fabsf(minmaxsize[0])-2;
+	effectsizey = (int)fabsf(minmaxsize[1])-2;
+	effectsizez = (int)fabsf(minmaxsize[2])-2;
 
 	// Find cloud center
 	VectorCopy(self->mins, neworigin);
@@ -875,9 +875,9 @@ void think_new_first_snowcloud (edict_t *self)
 
 	// Find cloud size
 	VectorSubtract(self->mins, self->maxs, minmaxsize);
-	effectsizex = abs(minmaxsize[0])-2;
-	effectsizey = abs(minmaxsize[1])-2;
-	effectsizez = abs(minmaxsize[2])-2;
+	effectsizex = (int)fabsf(minmaxsize[0])-2;
+	effectsizey = (int)fabsf(minmaxsize[1])-2;
+	effectsizez = (int)fabsf(minmaxsize[2])-2;
 
 	// Find cloud center
 	VectorCopy(self->mins, neworigin);
@@ -1213,6 +1213,8 @@ void crate_stuff (edict_t *self)
 	org[1] = self->s.origin[1] + crandom() * self->size[1];
 	org[2] = self->s.origin[2] + crandom() * self->size[2];
 	ThrowDebris_stuff (self, "models/props/stuff/piece2.md2", spd, org);
+
+	VectorCopy (save, self->s.origin);
 }
 
 /*QUAKED props_crate_bust_32 (0 .5 .8) (-16 -16 -16) (16 16 16) ? NON_MOVEABLE TYPE_WOOD TYPE_WOOD2 TYPE_METAL TYPE_CARDBOARD
@@ -1342,8 +1344,8 @@ void crate_bust_die_32 (edict_t *self, edict_t *inflictor, edict_t *attacker, in
 	else
 	{
 		self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/crate/crate32_1.mdx");
-	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
-		self->s.model_parts[PART_HEAD].skinnum[i] = self->s.skinnum;
+		for (i=0; i<MAX_MODELPART_OBJECTS; i++)
+			self->s.model_parts[PART_HEAD].skinnum[i] = self->s.skinnum;
 		gi.GetObjectBounds("models/props/crate/crate32_1.mdx", &self->s.model_parts[PART_HEAD]);	
 	}
 
@@ -1707,8 +1709,8 @@ void SP_props_crate_bust_48 (edict_t *self)
 	else
 	{
 		self->s.model_parts[PART_HEAD].modelindex = gi.modelindex("models/props/crate/stillcrate48_1.mdx");
-	for (i=0; i<MAX_MODELPART_OBJECTS; i++)
-		self->s.model_parts[PART_HEAD].skinnum[i] = self->s.skinnum;
+		for (i=0; i<MAX_MODELPART_OBJECTS; i++)
+			self->s.model_parts[PART_HEAD].skinnum[i] = self->s.skinnum;
 		gi.GetObjectBounds("models/props/crate/stillcrate48_1.mdx", &self->s.model_parts[PART_HEAD]);	
 		self->surfacetype = SURF_WOOD;
 	}

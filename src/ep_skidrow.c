@@ -80,7 +80,7 @@ qboolean EP_Skidrow_CastSight ( edict_t *self, edict_t *other, cast_memory_t *me
 			// mem->flags &= ~MEMORY_LASTWARNING;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -2269,13 +2269,11 @@ void Pull_Alarm_Ring (edict_t *ent)
 void Pull_Alarm_Think (edict_t *ent)
 {
 	edict_t			*Louie;
-	cast_memory_t	*mem;
 
 	Louie = EP_GetCharacter( NAME_LOUIE );
 	
 	if ( Louie && ent->owner == Louie )
 	{
-		mem = level.global_cast_memory[ Louie->character_index ][ ent->enemy->character_index ];
 		Louie->goal_ent = ent;
 		ent->cast_info.aiflags |= AI_GOAL_RUN;	
 		ent->nextthink = level.time + 0.1;
@@ -2442,12 +2440,9 @@ int EP_skidrow_touch_motorcycle_that_needs_battery_to_start (edict_t *self, edic
 
 void Resp_Momo_GotMoney ( edict_t *self, edict_t *other, response_t response )
 {
-	cast_memory_t	*mem;
 		
 	if (self->episode_flags & EP_SKIDROW_MOMO_TOOK_MONEY)
 		return;
-
-	mem = level.global_cast_memory[ other->character_index ][ self->character_index ];
 
 	if (response == resp_yes)
 	{
@@ -2814,12 +2809,9 @@ int	the_log_page = 0;
 
 void EP_Skidrow_Player_Log (edict_t *self, int page)
 {
-	int len; 
 	int i;
 	int	cnt = 0;
 	int	select = 0;
-
-	len = 0;
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
 	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");

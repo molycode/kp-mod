@@ -10,41 +10,6 @@ void SP_misc_teleporter_dest (edict_t *ent);
 // Gross, ugly, disgustuing hack section
 //
 
-// this function is an ugly as hell hack to fix some map flaws
-//
-// the coop spawn spots on some maps are SNAFU.  There are coop spots
-// with the wrong targetname as well as spots with no name at all
-//
-// we use carnal knowledge of the maps to fix the coop spot targetnames to match
-// that of the nearest named single player spot
-
-static void SP_FixCoopSpots (edict_t *self)
-{
-	edict_t	*spot;
-	vec3_t	d;
-
-	spot = NULL;
-
-	while(1)
-	{
-		spot = G_Find(spot, FOFS(classname), "info_player_start");
-		if (!spot)
-			return;
-		if (!spot->targetname)
-			continue;
-		VectorSubtract(self->s.origin, spot->s.origin, d);
-		if (VectorLength(d) < 384)
-		{
-			if ((!self->targetname) || Q_stricmp(self->targetname, spot->targetname) != 0)
-			{
-//				gi.dprintf("FixCoopSpots changed %s at %s targetname from %s to %s\n", self->classname, vtos(self->s.origin), self->targetname, spot->targetname);
-				self->targetname = spot->targetname;
-			}
-			return;
-		}
-	}
-}
-
 // now if that one wasn't ugly enough for you then try this one on for size
 // some maps don't have any coop spots at all, so we need to create them
 // where they should have been
@@ -446,7 +411,7 @@ void TossClientWeapon (edict_t *self)
 		item = NULL;
 
 //	if (!((int)(dmflags->value) & DF_QUAD_DROP))
-		quad = false;
+	quad = false;
 //	else
 //		quad = (self->client->quad_framenum > (level.framenum + 10));
 
@@ -1839,13 +1804,13 @@ void ClientBegin (edict_t *ent)
 			newent->classname = gi.TagMalloc( strlen( fol->classname ) + 1, TAG_LEVEL );
 			strcpy( newent->classname, fol->classname );
 
-			if (fol->name)
+			if (fol->name[0])
 			{
 				newent->name = gi.TagMalloc( strlen( fol->name ) + 1, TAG_LEVEL );
 				strcpy( newent->name, fol->name );
 			}
 
-			if (fol->art_skins)
+			if (fol->art_skins[0])
 			{
 				newent->art_skins = gi.TagMalloc( strlen( fol->art_skins ) + 1, TAG_LEVEL );
 				strcpy( newent->art_skins, fol->art_skins );
@@ -3124,7 +3089,7 @@ void ClientBeginServerFrame (edict_t *ent)
 	{
 		// create the nav_build_data structure, so we can begin dropping nodes
 		ent->nav_build_data = gi.TagMalloc(sizeof(nav_build_data_t), TAG_LEVEL);
-		memset(ent->nav_build_data, 0, sizeof(ent->nav_build_data));
+		memset(ent->nav_build_data, 0, sizeof(nav_build_data_t));
 
 		ent->nav_build_data->jump_ent = G_Spawn();
 		VectorCopy(ent->maxs, ent->nav_build_data->jump_ent->maxs );

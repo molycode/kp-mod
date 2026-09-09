@@ -460,7 +460,7 @@ void Cmd_Join_f (edict_t *self, char *teamcmd)
 
 	// search for the team-name
 
-	if (varteam && varteam[0])
+	if (varteam[0])
 	{
 		for (i=1; team_names[i]; i++)
 		{
@@ -523,18 +523,18 @@ void Cmd_GetTexture_f (edict_t *self)
 
 	tr = gi.trace( start, NULL, NULL, end, self, MASK_SOLID - CONTENTS_MONSTER );
 
-	if (tr.fraction < 1 && tr.surface && tr.surface->name)
+	if (tr.fraction < 1 && tr.surface && tr.surface->name[0])
 	{
 		if (tr.surface->value > ((int)(level.time*10) - 3))
 		{
 			gi.cprintf( self, PRINT_HIGH, "Saving texture: %s\n", tr.surface->name );
 
 			{
-				cvar_t	*game_dir, *base_dir;
+				cvar_t	*base_dir;
 				char	filename[MAX_QPATH], dir[MAX_QPATH];
 				FILE	*f;
 
-				game_dir = gi.cvar("game", "", 0);
+				gi.cvar("game", "", 0);
 				base_dir = gi.cvar("basedir", "", 0);
 
 				// dir, eg: .\main\maps
@@ -1558,7 +1558,7 @@ void Cmd_Order_f (edict_t *ent, edict_t *other, char *cmd)
 	if (ent->client)
 	{
 		// JOSEPH 19-FEB-99 
-		if ((flags) && (!ent->client->hud_self_talk_time == (level.time + 2.0)) &&
+		if ((flags) && (ent->client->hud_self_talk_time != (level.time + 2.0)) &&
 			(!((ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_YES) ||
 				(ent->client->ps.stats[STAT_HUD_SELF_TALK] == TT_NO))))
 		{

@@ -46,7 +46,7 @@ qboolean EP_Steeltown_CastSight ( edict_t *self, edict_t *other, cast_memory_t *
 			// mem->flags &= ~MEMORY_LASTWARNING;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -71,7 +71,7 @@ qboolean EP_Steeltown_CastSight ( edict_t *self, edict_t *other, cast_memory_t *
 			mem->flags &= ~MEMORY_AFRAID;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) )
+		if (mem->memory_type == MEMORY_TYPE_ENEMY )
 		{	
 			self->enemy = NULL;
 
@@ -88,7 +88,7 @@ qboolean EP_Steeltown_CastSight ( edict_t *self, edict_t *other, cast_memory_t *
 	if (self->name_index == NAME_KROKER && other->client)
 	{
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) )//&& !(other->episode_flags & EP_Steeltown_KROKER_BOLT) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY)//&& !(other->episode_flags & EP_Steeltown_KROKER_BOLT) /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -527,12 +527,9 @@ qboolean ProcessKroker (edict_t *self, edict_t *player, cast_memory_t *mem)
 
 void Resp_SteeltownMomo_GotMoney ( edict_t *self, edict_t *other, response_t response )
 {
-	cast_memory_t	*mem;
 		
 	if (self->episode_flags & EP_Steeltown_MOMO_TOOK_MONEY)
 		return;
-
-	mem = level.global_cast_memory[ other->character_index ][ self->character_index ];
 
 	if (response == resp_yes)
 	{
@@ -1105,12 +1102,9 @@ extern int	the_log_page;
 
 void EP_Steeltown_Player_Log (edict_t *self, int page)
 {
-	int len; 
 	int i;
 	int	cnt = 0;
 	int	select = 0;
-
-	len = 0;
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
 	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");

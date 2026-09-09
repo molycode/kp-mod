@@ -315,26 +315,23 @@ void Voice_Random_rc( edict_t *self, edict_t *other, voice_table_t *voice_table,
 
 	{
 		// voice_table conversion
-		if (self->name_index == NAME_KINGPIN)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_BLUNT)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_NICKIBLANCO)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_BUTCH)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_PATRICK)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_MOMO)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_SCALPER)
-			voice_table = voice_table;
+		if (self->name_index == NAME_KINGPIN
+			|| self->name_index == NAME_BLUNT
+			|| self->name_index == NAME_NICKIBLANCO
+			|| self->name_index == NAME_BUTCH
+			|| self->name_index == NAME_PATRICK
+			|| self->name_index == NAME_MOMO
+			|| self->name_index == NAME_SCALPER)
+		{
+			// These characters speak from their own table already.
+		}
 		else if (self->gender == GENDER_MALE)
 		{
-			if (voice_table >= rc_joker && voice_table <= &rc_joker[9])
-				voice_table = voice_table;
-			else if (self->cast_group == 1)
-				voice_table = voice_table;
+			if ((voice_table >= rc_joker && voice_table <= &rc_joker[9])
+				|| self->cast_group == 1)
+			{
+				// Already a Radio City table.
+			}
 			else if (voice_table >= neutral_talk && voice_table <= &neutral_talk[15])
 			{
 				offset = voice_table - neutral_talk;
@@ -425,7 +422,9 @@ void Voice_Random_rc( edict_t *self, edict_t *other, voice_table_t *voice_table,
 		else if (self->gender == GENDER_FEMALE)
 		{
 			if (self->name_index == NAME_LOLA)
-				voice_table = voice_table;
+			{
+				// Lola speaks from her own table already.
+			}
 			else if (voice_table >= f_neutral_talk && voice_table <= &f_neutral_talk[15])
 			{
 				offset = voice_table - f_neutral_talk;
@@ -665,26 +664,23 @@ void Voice_Specific_rc( edict_t *self, edict_t *other, voice_table_t *voice_tabl
 
 	{
 		// voice_table conversion
-		if (self->name_index == NAME_KINGPIN)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_BLUNT)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_NICKIBLANCO)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_BUTCH)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_PATRICK)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_MOMO)
-			voice_table = voice_table;
-		else if (self->name_index == NAME_SCALPER)
-			voice_table = voice_table;
+		if (self->name_index == NAME_KINGPIN
+			|| self->name_index == NAME_BLUNT
+			|| self->name_index == NAME_NICKIBLANCO
+			|| self->name_index == NAME_BUTCH
+			|| self->name_index == NAME_PATRICK
+			|| self->name_index == NAME_MOMO
+			|| self->name_index == NAME_SCALPER)
+		{
+			// These characters speak from their own table already.
+		}
 		else if (self->gender == GENDER_MALE)
 		{
-			if (voice_table == rc_joker)
-				voice_table = voice_table;
-			else if (self->cast_group == 1)
-				voice_table = voice_table;
+			if (voice_table == rc_joker
+				|| self->cast_group == 1)
+			{
+				// Already a Radio City table.
+			}
 			else if (voice_table == neutral_talk)
 				voice_table = rc_neutral_talk;
 			else if (voice_table == neutral_asshole_talk)
@@ -726,7 +722,9 @@ void Voice_Specific_rc( edict_t *self, edict_t *other, voice_table_t *voice_tabl
 		else if (self->gender == GENDER_FEMALE)
 		{
 			if (self->name_index == NAME_LOLA)
-				voice_table = voice_table;
+			{
+				// Lola speaks from her own table already.
+			}
 			else if (voice_table == f_neutral_talk)
 				voice_table = rc_f_neutral_talk;
 			else if (voice_table == f_neutral_asshole_talk)

@@ -266,9 +266,11 @@ float Q_fabs (float f)
 		return f;
 	return -f;
 #else
-	int tmp = * ( int * ) &f;
-	tmp &= 0x7FFFFFFF;
-	return * ( float * ) &tmp;
+	union { float f; int i; } tmp;
+
+	tmp.f = f;
+	tmp.i &= 0x7FFFFFFF;
+	return tmp.f;
 #endif
 }
 
@@ -1504,7 +1506,7 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 {
 	char	newi[MAX_INFO_STRING], *v;
 	int		c;
-	int		maxsize = MAX_INFO_STRING;
+	size_t	maxsize = MAX_INFO_STRING;
 
 	if (strstr (key, "\\") || strstr (value, "\\") )
 	{

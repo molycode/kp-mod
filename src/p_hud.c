@@ -174,7 +174,7 @@ void GrabDaLootScoreboardMessage (edict_t *ent, edict_t *killer)
 	int		sortedscores[MAX_CLIENTS];
 	int		score, total, real_total;
 //	int		picnum;
-	int		x, y;
+	int		x;
 	gclient_t	*cl;
 	edict_t		*cl_ent;
 	char	*tag;
@@ -257,7 +257,7 @@ void GrabDaLootScoreboardMessage (edict_t *ent, edict_t *killer)
 
 			if (strlen(team_names[team]) < 14)
 			{
-				for (k=0; k<14-strlen(team_names[team]); k++)
+				for (k=0; k<14-(int)strlen(team_names[team]); k++)
 					strcat( nfill, " " );
 			}
 
@@ -384,11 +384,6 @@ void GrabDaLootScoreboardMessage (edict_t *ent, edict_t *killer)
 			cl_ent = g_edicts + 1 + sorted[i];
 
 	//		picnum = gi.imageindex ("i_fixme");
-			y = 32 + 32 * i;
-
-			if (i < 2)
-				y -= 16;
-
 			if (cl_ent == ent)
 				tag = "990";
 			else if (cl_ent == killer)
@@ -414,7 +409,7 @@ void GrabDaLootScoreboardMessage (edict_t *ent, edict_t *killer)
 
 				if (strlen(cl->pers.netname) < 12)
 				{
-					for (k=0; k<12-strlen(cl->pers.netname); k++)
+					for (k=0; k<12-(int)strlen(cl->pers.netname); k++)
 						strcat( nfill, " " );
 				}
 
@@ -474,7 +469,6 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 	int		sortedscores[MAX_CLIENTS];
 	int		score, total, realtotal;
 //	int		picnum;
-	int		/*x,*/ y;
 	gclient_t	*cl;
 	edict_t		*cl_ent;
 	char	*tag;
@@ -597,11 +591,6 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		cl_ent = g_edicts + 1 + sorted[i];
 
 //		picnum = gi.imageindex ("i_fixme");
-		y = 32 + 32 * i;
-
-		if (i < 2)
-			y -= 16;
-
 		if (cl_ent == ent)
 			tag = "990";
 		else if (cl_ent == killer)
@@ -860,7 +849,7 @@ G_SetStats
 void G_SetStats (edict_t *ent)
 {
 	gitem_t		*item;
-	int			index, cells;
+	int			cells;
 	int			power_armor_type;
 
 	// if chasecam, show stats of player we are following
@@ -1168,7 +1157,7 @@ void G_SetStats (edict_t *ent)
 		}
 	}
 
-	index = ArmorIndex (ent);
+	ArmorIndex (ent);
 	
 	// JOSEPH 1-APR-99
 	/*if (power_armor_type && (!index || (level.framenum & 8) ) )

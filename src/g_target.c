@@ -72,7 +72,10 @@ void SP_target_speaker (edict_t *ent)
 	if (!strstr (st.noise, ".wav"))
 		Com_sprintf (buffer, sizeof(buffer), "%s.wav", st.noise);
 	else
-		strncpy (buffer, st.noise, sizeof(buffer));
+	{
+		strncpy (buffer, st.noise, sizeof(buffer) - 1);
+		buffer[sizeof(buffer) - 1] = 0;
+	}
 	ent->noise_index = gi.soundindex (buffer);
 
 	if (!ent->volume)
@@ -601,7 +604,7 @@ void t_start_fire (edict_t *ent, edict_t *other, edict_t *activator)
 		ent->fxdensity = 10;
 	if (!ent->deadticks)
 		ent->deadticks = 3;
-		ent->alphalevel = 5;
+	ent->alphalevel = 5;
 	VectorSet (ent->movedir, 0.0, 1, 0.0);
 	ent->firetype = ent->fxdensity;
 		ent->lastduration = 0;
@@ -1010,7 +1013,7 @@ void use_target_blaster (edict_t *self, edict_t *other, edict_t *activator)
 	else
 		effect = EF_BLASTER;
 
-	fire_blaster (self, self->s.origin, self->movedir, self->dmg, self->speed, EF_BLASTER, MOD_TARGET_BLASTER);
+	fire_blaster (self, self->s.origin, self->movedir, self->dmg, self->speed, effect, MOD_TARGET_BLASTER);
 	gi.sound (self, CHAN_VOICE, self->noise_index, 1, ATTN_NORM, 0);
 }
 

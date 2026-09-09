@@ -491,8 +491,6 @@ void shorty_firehmg( edict_t *self )
 	vec3_t	target;
 	vec3_t	aim;
 	vec3_t	offset;
-	int		flash_number;
-	float	dist;
 
 	if (!AI_BeginAttack( self ))
 	{
@@ -556,10 +554,8 @@ void shorty_firehmg( edict_t *self )
 		else
 			target[2] += self->enemy->viewheight - 4 - (16 * random());
 
-		flash_number = MZ2_GUNNER_MACHINEGUN_1;
-
 		VectorSubtract (target, start, aim);
-		dist = VectorNormalize (aim);
+		VectorNormalize (aim);
 	}
 
 #if 0	

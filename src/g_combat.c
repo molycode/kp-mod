@@ -477,54 +477,6 @@ dflags		these flags are used to control how T_Damage works
 ============
 */
 
-static int CheckArmor (edict_t *ent, vec3_t point, vec3_t normal, int damage, int te_sparks, int dflags)
-{
-	gclient_t	*client;
-	int			save;
-	int			index;
-	gitem_t		*armor;
-
-	if (!damage)
-		return 0;
-
-	client = ent->client;
-
-	if (!client)
-		return 0;
-/*
-{
-static int done=0;
-// if (!done)
-// gi.dprintf( "NOTE: Armour has been disabled (was preventing bullet damage)\n");
-done = 1;
-return 0;
-}
-*/
-	if (dflags & DAMAGE_NO_ARMOR)
-		return 0;
-
-	index = ArmorIndex (ent);
-	if (!index)
-		return 0;
-
-	armor = GetItemByIndex (index);
-
-	if (dflags & DAMAGE_ENERGY)
-		save = ceil(((gitem_armor_t *)armor->info)->energy_protection*damage);
-	else
-		save = ceil(((gitem_armor_t *)armor->info)->normal_protection*damage);
-	if (save >= client->pers.inventory[index])
-		save = client->pers.inventory[index];
-
-	if (!save)
-		return 0;
-
-	client->pers.inventory[index] -= save;
-	SpawnDamage (ent, te_sparks, point, normal, save);
-
-	return save;
-}
-
 void M_ReactToDamage (edict_t *targ, edict_t *attacker, float damage)
 {
 	cast_memory_t	*cast_memory;
@@ -2232,7 +2184,6 @@ void T_RadiusDamage_Fire (edict_t *inflictor, edict_t *attacker, float damage, e
 	float	points;
 	edict_t	*ent = NULL;
 	vec3_t	v;
-	vec3_t	dir;
 
 	while ((ent = findradius(ent, inflictor->s.origin, radius)) != NULL)
 	{
@@ -2252,8 +2203,6 @@ void T_RadiusDamage_Fire (edict_t *inflictor, edict_t *attacker, float damage, e
 		{
 			if (CanDamage (ent, inflictor))
 			{
-				VectorSubtract (ent->s.origin, inflictor->s.origin, dir);
-
 				if (ent->health > 0 && (ent->svflags & SVF_MONSTER || ent->client))
 				{
 					T_Damage (ent, inflictor, attacker, vec3_origin, ent->s.origin, vec3_origin, points, points, 0, MOD_FLAMETHROWER);

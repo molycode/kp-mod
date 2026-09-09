@@ -16,7 +16,7 @@ qboolean EP_RC_CastSight ( edict_t *self, edict_t *other, cast_memory_t *mem )
 			// mem->flags &= ~MEMORY_LASTWARNING;
 		}
 
-		if ((mem->memory_type == MEMORY_TYPE_ENEMY) /*&& !other->client->pers.weapon*/)
+		if (mem->memory_type == MEMORY_TYPE_ENEMY /*&& !other->client->pers.weapon*/)
 		{	// give them a chance to make friends if they holster
 			self->enemy = NULL;
 
@@ -361,12 +361,9 @@ void Resp_Scalper_GotTicket ( edict_t *self, edict_t *other, response_t response
 
 void Resp_RCMomo_GotMoney ( edict_t *self, edict_t *other, response_t response )
 {
-	cast_memory_t	*mem;
 		
 	if (self->episode_flags & EP_RC_MOMO_TOOK_MONEY)
 		return;
-
-	mem = level.global_cast_memory[ other->character_index ][ self->character_index ];
 
 	if (response == resp_yes)
 	{
@@ -952,18 +949,14 @@ void EP_RC_Check_DoKey (edict_t *self, edict_t *ent)
 void EP_RC_ReachedDoKey (edict_t *self)
 {
 	vec3_t	vec;
-	float	dist;
 
 	VectorSubtract (self->s.origin, self->goal_ent->s.origin, vec);
-	dist = VectorLength (vec);
+	VectorLength (vec);
 	
 }
 
 void EP_RC_EndDoKey (edict_t *self)
 {
-	edict_t *player;
-
-	player = &g_edicts[1];
 
 }
 
@@ -1136,12 +1129,9 @@ extern int	the_log_page;
 
 void EP_RC_Player_Log (edict_t *self, int page)
 {
-	int len; 
 	int i;
 	int	cnt = 0;
 	int	select = 0;
-
-	len = 0;
 
 	Com_sprintf (game.helpmessage1, sizeof(game.helpmessage1), "");
 	Com_sprintf (game.helpmessage2, sizeof(game.helpmessage2), "");

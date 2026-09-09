@@ -225,7 +225,7 @@ realcheck:
 	{
 		vec3_t move, forward, right, up, newvec;
 		int speed = 140;
-		int nocorner[4] = {0, 0, 0, 0};
+		int nocorner[5] = {0, 0, 0, 0, 0};
 		
 		// Stop any drag sound
 		ent->s.sound = 0;
@@ -312,7 +312,7 @@ void think_slide (edict_t *ent)
 	int		x, y;
 	float	mid, bottom, stepsize;
 	vec3_t	oldmins, oldmaxs;
-		int		nocorner[4];
+		int		nocorner[5] = { 0, 0, 0, 0, 0 };
 	int		currentcorner, fall;
 	
 	stepsize = 1;
@@ -453,7 +453,7 @@ pr_global_struct->trace_normal is set to the normal of the blocking wall
 qboolean SV_movestep (edict_t *ent, vec3_t move, qboolean relink)
 {
 	float		dz;
-	vec3_t		oldorg, neworg, end;
+	vec3_t		neworg, end;
 	trace_t		trace;
 	int			i;
 	float		stepsize;
@@ -470,7 +470,6 @@ qboolean SV_movestep (edict_t *ent, vec3_t move, qboolean relink)
 // END:		Xatrix/Ridah/Navigator/14-apr-1998
 
 // try the move	
-	VectorCopy (ent->s.origin, oldorg);
 	VectorAdd (ent->s.origin, move, neworg);
 
 // flying monsters don't step up
@@ -977,7 +976,7 @@ void SV_NewChaseDir (edict_t *actor, edict_t *enemy, float dist)
 	}
 
 // try other directions
-	if ( ((rand()&3) & 1) ||  abs(deltay)>abs(deltax))
+	if ( ((rand()&3) & 1) ||  fabsf(deltay)>fabsf(deltax))
 	{
 		tdir=d[1];
 		d[1]=d[2];

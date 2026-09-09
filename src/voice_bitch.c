@@ -504,7 +504,7 @@ voice_table_t rc_f_neutral_talk_player[] =
 	{f_neutral_talk, "um hmm",									"um hmm",									"rc/actors/skidrow/leroy/conv6.wav",	0, {0,0,0,0,0},0, 0 , TT_NEUTRAL, 0, 0},
 	{f_neutral_talk, "Yeah I heard that baby",					"Yeah I heard that baby",					"rc/actors/skidrow/leroy/conv7.wav",	0, {0,0,0,0,0},0, 0 , TT_NEUTRAL, 0, 0},
 	{f_neutral_talk, "Yeah that's cool",						"Yeah that's cool",							"rc/actors/skidrow/leroy/cool.wav",	0, {0,0,0,0,0},0, 0 , TT_NEUTRAL, 0, 0},
-/*	/*
+/*
 	{f_neutral_talk, "Hey bud",							"Hey bud",						"actors/male/neutral/play1.wav",	0, {0,0,0,0,0},0, true, TT_NONE, 0, 0},
 	{f_neutral_talk, "Yo",								"Yo",							"actors/male/neutral/play2.wav",	0, {0,0,0,0,0},0, true, TT_NONE, 0, 0},
 	{f_neutral_talk, "Whats up",						"Whats up",						"actors/male/neutral/play3.wav",	3, {9,5,11,0,0},0, 0, TT_NONE, 0, 0},

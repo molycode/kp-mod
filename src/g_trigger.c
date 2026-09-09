@@ -1122,7 +1122,7 @@ void SP_trigger_hurt_electric (edict_t *self)
 		self->use = hurt_use_electric;
 
 	//if (!self->count)
-		self->count = 5;
+	self->count = 5;
 
 	gi.linkentity (self);
 }

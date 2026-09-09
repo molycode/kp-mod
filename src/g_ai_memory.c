@@ -438,34 +438,34 @@ void AI_MakeEnemy ( edict_t *self, edict_t *other, int memory_flags )
 //if (self->name_index == NAME_LISA)
 //self = self;
 
-if (other->client)// && other->client->gun_noise)
-	// Find all members of the local team and hostilize them
-	if (self->localteam)
-	{
-		for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
+	if (other->client)// && other->client->gun_noise)
+		// Find all members of the local team and hostilize them
+		if (self->localteam)
 		{
-			if ((!e->deadflag) && (e->localteam) && (e->localteam != self->localteam) &&
-				(!strcmp(e->localteam, self->localteam)))
+			for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 			{
-							if ((!(cast_memory = level.global_cast_memory[self->character_index][other->character_index])) ||
-					 (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
+				if ((!e->deadflag) && (e->localteam) && (e->localteam != self->localteam) &&
+					(!strcmp(e->localteam, self->localteam)))
 				{
-					e->localteam = NULL;
+								if ((!(cast_memory = level.global_cast_memory[self->character_index][other->character_index])) ||
+						 (!(cast_memory->flags & MEMORY_HOSTILE_ENEMY)))
+					{
+						e->localteam = NULL;
 					
-					if (e->reactdelay)
-					{
-						AI_MakeEnemy_Timer(e, other, memory_flags, e->reactdelay);
-					}
-					else
-					{
-						AI_MakeEnemy(e, other, memory_flags);
+						if (e->reactdelay)
+						{
+							AI_MakeEnemy_Timer(e, other, memory_flags, e->reactdelay);
+						}
+						else
+						{
+							AI_MakeEnemy(e, other, memory_flags);
+						}
 					}
 				}
-			}
-		}	
+			}	
 
-		self->localteam = NULL;	
-	}
+			self->localteam = NULL;	
+		}
 	// END JOSEPH
 	
 	if ( ! (cast_memory = level.global_cast_memory[self->character_index][other->character_index] ) )

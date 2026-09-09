@@ -1170,7 +1170,7 @@ void G_SetClientFrame (edict_t *ent)
 			if (!run)
 				run = 1;
 
-			run = 2 * (int)(run/fabs(run));
+			run = 2 * (run/abs(run));
 
 			slide = 0;
 		}
@@ -1188,11 +1188,11 @@ void G_SetClientFrame (edict_t *ent)
 		goto newanim;
 
 	// check for stand/duck and stop/go transitions
-	if (duck != client->anim_duck && client->anim_priority < ANIM_DEATH)
+	if (duck != (int)client->anim_duck && client->anim_priority < ANIM_DEATH)
 		goto newanim;
-	if (run != client->anim_run && client->anim_priority <= ANIM_BASIC)
+	if (run != (int)client->anim_run && client->anim_priority <= ANIM_BASIC)
 		goto newanim;
-	if (slide != client->anim_slide && !client->anim_run && client->anim_priority <= ANIM_BASIC)
+	if (slide != (int)client->anim_slide && !client->anim_run && client->anim_priority <= ANIM_BASIC)
 		goto newanim;
 	if (!ent->groundentity && client->anim_priority <= ANIM_WAVE)
 		goto newanim;
@@ -1334,7 +1334,7 @@ newanim:
 		{
 			if (run < 0)
 			{
-				if (fabs(run) < 2)	// walking backwards
+				if (abs(run) < 2)	// walking backwards
 				{
 					client->anim_reverse = true;
 
@@ -1405,7 +1405,7 @@ newanim:
 			}
 			else
 			{
-				if (fabs(run) < 2)	// walking forwards
+				if (abs(run) < 2)	// walking forwards
 				{
 					switch (weapontype)
 					{
@@ -1472,21 +1472,21 @@ newanim:
 			}
 
 			// keep smooth transitions between firing/firing+running
-			if ((fabs(oldend - oldframe) <= fabs(ent->s.frame - client->anim_end)) && (fabs(ent->s.frame - client->anim_end) == 5))
+			if ((abs(oldend - oldframe) <= abs(ent->s.frame - client->anim_end)) && (abs(ent->s.frame - client->anim_end) == 5))
 			{
 				int	diff;
 
-				diff = fabs(ent->s.frame - client->anim_end);
+				diff = abs(ent->s.frame - client->anim_end);
 
 				if (ent->s.frame < client->anim_end)
 				{
-					ent->s.frame += (diff - fabs(oldend - oldframe)) + 1;
+					ent->s.frame += (diff - abs(oldend - oldframe)) + 1;
 					if (ent->s.frame > client->anim_end)
 						ent->s.frame = client->anim_end - diff;
 				}
 				else
 				{
-					ent->s.frame -= (diff - fabs(oldend - oldframe)) + 1;
+					ent->s.frame -= (diff - abs(oldend - oldframe)) + 1;
 					if (ent->s.frame < client->anim_end)
 						ent->s.frame = client->anim_end + diff;
 				}
@@ -1823,9 +1823,9 @@ void ClientEndServerFrame (edict_t *ent)
 
 	// detect hitting the floor
 // Ridah, Hovercars, no falling damage
-if (!(ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE)))
+	if (!(ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE)))
 // done.
-	P_FallingDamage (ent);
+		P_FallingDamage (ent);
 
 	// apply all the damage taken this frame
 // Ridah, doesn't work with new palette?
@@ -1833,18 +1833,18 @@ if (!(ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE)))
 
 	// determine the view offsets
 // Ridah, Hovercars, no view offsets
-if (ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE))
-	ent->client->ps.viewoffset[2] = ent->viewheight;
-else
+	if (ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE))
+		ent->client->ps.viewoffset[2] = ent->viewheight;
+	else
 // done.
-	SV_CalcViewOffset (ent);
+		SV_CalcViewOffset (ent);
 
 
 	// determine the gun offsets
 // Ridah, Hovercars, no gun offsets
-if (ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE))
+	if (!(ent->flags & (FL_HOVERCAR | FL_HOVERCAR_GROUND | FL_BIKE)))
 // done.
-	SV_CalcGunOffset (ent);
+		SV_CalcGunOffset (ent);
 
 	// Ridah, fade out kicks, which are used for mono's
 	if (ent->flags & (FL_BIKE))

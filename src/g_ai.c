@@ -2,6 +2,8 @@
 
 #include "g_local.h"
 #include "g_func.h"
+#include "voice_punk.h"
+#include "voice_bitch.h"
 
 qboolean AI_FindTarget (edict_t *self);
 
@@ -260,7 +262,7 @@ qboolean AI_ClearSight ( edict_t *self, edict_t *other, qboolean boxtrace )
 	int		mask;
 	trace_t tr;
 	qboolean	rval;
-	float	dist, progdist, distleft;
+	float	dist, distleft;
 
 	if (!self || !other)
 		return false;
@@ -295,7 +297,6 @@ again:
 
 	VectorSubtract( end, start, vec );
 	dist = VectorNormalize( vec );
-	progdist = 0;
 	distleft = dist;
 
 	if (fabs(vec[2]) > 0.8)	// too steep
@@ -311,7 +312,6 @@ again:
 				 || (tr.contents & CONTENTS_TRANSLUCENT && tr.contents & CONTENTS_WINDOW && self->cast_info.aiflags & AI_IMMORTAL)
 	 ))
 	{
-		progdist += tr.fraction * dist;
 		distleft -= tr.fraction * dist;
 
 		if (distleft < 14)
@@ -374,7 +374,7 @@ qboolean AI_CheckTalk( edict_t *self )
 	cast_memory_t *cast=NULL;
 	float		best_dist=500, this_dist;
 	edict_t		*best_cast=NULL;
-	int			count=1, total;
+	int			count=1;
 	int			i;
 
 	if (!self->cast_info.talk)	// can't speak
@@ -451,7 +451,7 @@ qboolean AI_CheckTalk( edict_t *self )
 		}
 
 
-		total = (int) (random() * 10);
+		(void) random();
 
 		while (cast)
 		{
@@ -526,9 +526,6 @@ AI_TalkThink
 */
 void AI_TalkThink( edict_t *self, qboolean ismale )
 {
-#include "voice_punk.h"
-#include "voice_bitch.h"
-
 	edict_t	*talk_ent;
 	cast_memory_t	*mem;
 
@@ -1366,8 +1363,6 @@ AI_EndAttack
 */
 void AI_EndAttack(edict_t *self)
 {
-	mmove_t *oldmove;
-
 	// hack to turn off the flamethrow effect
 	if (self->s.renderfx2 & RF2_FLAMETHROWER)
 		self->s.renderfx2 &= ~RF2_FLAMETHROWER;
@@ -1379,7 +1374,6 @@ void AI_EndAttack(edict_t *self)
 		return;
 	}
 
-	oldmove = self->cast_info.currentmove;
 	if (!self->enemy || !self->cast_info.checkattack(self))
 	{
 		self->cast_info.currentmove = self->cast_info.move_stand;
@@ -3457,7 +3451,7 @@ void ai_run ( edict_t *self, float dist )
 
 	route_t		route;
 	node_t		*goal_node;
-	vec3_t		vec, oldorg;
+	vec3_t		vec;
 	int			rval, reached_goal=false;
 	float		goaldist, ideal_dist;
 	qboolean	moved, avoiding=false;
@@ -4483,8 +4477,6 @@ got_goal:
 	//
 	// Perform the move towards the goal node
 
-	VectorCopy(self->s.origin, oldorg);
-	
 	// move towards the node
 	moved = AI_movetogoal(self, &tempgoal, dist);
 

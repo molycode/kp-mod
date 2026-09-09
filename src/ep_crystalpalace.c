@@ -24,9 +24,6 @@ qboolean EP_CrystalPalace_CastUse (edict_t *self, edict_t *other, edict_t *activ
 
 qboolean EP_CrystalPalace_EventSpeech (edict_t *self, edict_t *other, int saywhat)
 {
-	cast_memory_t	*mem;
-
-	mem = level.global_cast_memory[ self->character_index ][ other->character_index ];
 	
 	switch (saywhat)
 	{
@@ -161,13 +158,12 @@ used as the location mo will run to before larry and curly attack him
 void misc_cp_afraid_think (edict_t *self)
 {
 	edict_t *Kingpin;
-	edict_t *Blunt;
 	
 	vec3_t	vec;
 	float	dist;
 
 	Kingpin = EP_GetCharacter (NAME_KINGPIN);
-	Blunt = EP_GetCharacter (NAME_BLUNT);
+	EP_GetCharacter (NAME_BLUNT);
 
 	if (Kingpin)
 	{

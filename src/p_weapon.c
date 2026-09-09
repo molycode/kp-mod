@@ -2617,7 +2617,7 @@ void Weapon_Shotgun (edict_t *ent)
 		}
 	}
 	else if (!ent->client->pers.weapon_clip[ent->client->clip_index] && ent->client->weaponstate != WEAPON_DROPPING
-		&& !ent->client->buttons & BUTTON_ATTACK)
+		&& !(ent->client->buttons & BUTTON_ATTACK))
 	{
 		ent->client->reload_weapon = true;
 		ent->client->weaponstate = WEAPON_RELOAD_CYCLE;
@@ -2735,7 +2735,7 @@ void barmachinegun_fire (edict_t *ent)
 {
 
 
-	if ((ent->client->ps.gunframe == 19)/*  && !(ent->client->buttons & BUTTON_ATTACK)*/)
+	if (ent->client->ps.gunframe == 19/*  && !(ent->client->buttons & BUTTON_ATTACK)*/)
 	{
 		ent->client->ps.gunframe = 43;
 		return;

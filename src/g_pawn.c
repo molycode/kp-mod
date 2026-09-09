@@ -837,7 +837,7 @@ void SP_pawn_o_matic (edict_t *self)
 		self->count = 1;
 
 //	if (level.episode == 1)
-		SP_coil_Skidrow ();
+	SP_coil_Skidrow ();
 	
 	store_id = self->count;
 }	
@@ -851,21 +851,21 @@ struct PAWN_ITEMS
 } pawn_price[MAX_PAWN_ITEMS] = 
 	{
 		// weapons
-		{ 50, 150, 250, 750, 200, 350, 500, 0 },
+		{ { 50, 150, 250, 750, 200, 350, 500, 0 } },
 		// mods
-		{ 10, 25, 50, 25, 50, 100, 200, 0 },
+		{ { 10, 25, 50, 25, 50, 100, 200, 0 } },
 		// ammo1
-		{ 5, 25, 20, 100, 50, 25, 50, 100 },		
+		{ { 5, 25, 20, 100, 50, 25, 50, 100 } },
 		// ammo2
-		{ 100, 25, 25, 0, 0, 0, 0, 0 },		
+		{ { 100, 25, 25, 0, 0, 0, 0, 0 } },
 		// health
-		{ 25, 50, 0, 0, 0, 0, 0, 0 },
+		{ { 25, 50, 0, 0, 0, 0, 0, 0 } },
 		// armor
-		{ 100, 200, 150, 300, 100, 200, 0, 0 },
+		{ { 100, 200, 150, 300, 100, 200, 0, 0 } },
 		//
-		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ { 0, 0, 0, 0, 0, 0, 0, 0 } },
 		//
-		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+		{ { 0, 0, 0, 0, 0, 0, 0, 0 } }
 	};
 
 struct PAWN_ITEMS_NAME
@@ -874,14 +874,14 @@ struct PAWN_ITEMS_NAME
 } pawn_item_names[MAX_PAWN_ITEMS] = 
 {
 //		0			1						2						3						4							5					6					7
-	{"Pistol",		"Shotgun",				"Tommygun",				"Heavy machinegun",		"Grenade Launcher",			"Bazooka",			"FlameThrower",		""},
-	{"SPistol",		"WEAPON_MOD_ROF",		"WEAPON_MOD_DAMAGE",	"WEAPON_MOD_RELOAD",	"WEAPON_MOD_COOLING_JACKET","",					"",					""},
-	{"Bullets",		"Shells",				"308cal",				"Grenades",				"",							"",					"",					""},
-	{"Rockets",		"Gas",					"",						"",						"",							"",					"",					""},
-	{"Med Kit",		"Class 2",				"",						"",						"",							"",					"",					""},
-	{"Helmet Armor","Helmet Armor Heavy",	"Jacket Armor",			"Jacket Armor Heavy",	"Legs Armor",				"Legs Armor Heavy",	"",					""},
-	{"","","","","","","",""},
-	{"","","","","","","",""}
+	{ {"Pistol",		"Shotgun",				"Tommygun",				"Heavy machinegun",		"Grenade Launcher",			"Bazooka",			"FlameThrower",		""} },
+	{ {"SPistol",		"WEAPON_MOD_ROF",		"WEAPON_MOD_DAMAGE",	"WEAPON_MOD_RELOAD",	"WEAPON_MOD_COOLING_JACKET","",					"",					""} },
+	{ {"Bullets",		"Shells",				"308cal",				"Grenades",				"",							"",					"",					""} },
+	{ {"Rockets",		"Gas",					"",						"",						"",							"",					"",					""} },
+	{ {"Med Kit",		"Class 2",				"",						"",						"",							"",					"",					""} },
+	{ {"Helmet Armor","Helmet Armor Heavy",	"Jacket Armor",			"Jacket Armor Heavy",	"Legs Armor",				"Legs Armor Heavy",	"",					""} },
+	{ {"","","","","","","",""} },
+	{ {"","","","","","","",""} }
 }; 
 
 void PawnDisplayOnHud (gitem_t *item, int index)
@@ -1165,9 +1165,7 @@ void PawnGiveItem (edict_t *ent)
 		break;
 	case PAWN_ARMOR:
 		{
-			int		rval;
-
-			rval = Check_Buy_Armor (ent, false);
+			Check_Buy_Armor (ent, false);
 		
 			index = ITEM_INDEX (item = FindItem (pawn_item_names[current_pawn_item].name[pawn_item_index]));
 		
@@ -1610,8 +1608,8 @@ qboolean PawnItemPriceSay (int item)
 	}
 	
 	
-if (!demo_hack)
-	return false;
+	if (!demo_hack)
+		return false;
 
 	
 	if (!special_handle) // not a mod

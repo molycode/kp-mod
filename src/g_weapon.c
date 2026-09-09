@@ -1379,12 +1379,10 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 	trace_t		tr;
 	edict_t		*ignore;
 	int			mask;
-	qboolean	water;
 
 	VectorMA (start, 8192, aimdir, end);
 	VectorCopy (start, from);
 	ignore = self;
-	water = false;
 	mask = MASK_SHOT|CONTENTS_SLIME|CONTENTS_LAVA;
 	while (ignore)
 	{
@@ -1393,7 +1391,6 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 		if (tr.contents & (CONTENTS_SLIME|CONTENTS_LAVA))
 		{
 			mask &= ~(CONTENTS_SLIME|CONTENTS_LAVA);
-			water = true;
 		}
 		else
 		{
@@ -1730,7 +1727,6 @@ void heat_think (edict_t *self)
 	edict_t		*target = NULL;
 	edict_t		*aquire = NULL;
 	vec3_t		vec;
-	vec3_t		oldang;
 	int			len;
 	int			oldlen = 0;
 
@@ -1786,7 +1782,6 @@ void heat_think (edict_t *self)
 
 	if (aquire != NULL)
 	{
-		VectorCopy (self->s.angles, oldang);
 		VectorSubtract (aquire->s.origin, self->s.origin, vec);
 		
 		vectoangles (vec, self->s.angles);
@@ -2512,8 +2507,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 	vec3_t		end;
 	float		r;
 	float		u;
-	vec3_t		water_start/*, alpha_start*/;
-	qboolean	water = false;
 	// JOSEPH 10-JUN-99
 	qboolean	water2 = false;
 	// END JOSEPH
@@ -2522,7 +2515,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 	//int			NoBulletHole;
 	int			pointblank = 0;
 //	vec3_t		tempvec;
-	int			conweap = 0;
 	qboolean	is_mdx = false;
 
 	tr = gi.trace (self->s.origin, NULL, NULL, start, self, MASK_SHOT );
@@ -2540,8 +2532,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 
 		if (gi.pointcontents (start) & MASK_WATER)
 		{
-			water = true;
-			VectorCopy (start, water_start);
 			content_mask &= ~MASK_WATER;
 		}
 
@@ -2549,8 +2539,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 
 		if (mod == MOD_BLACKJACK)
 		{
-			conweap = 1; 
-
 			if (tr.ent->client)
 			{
 				if (infront( tr.ent, self ))
@@ -2563,8 +2551,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 		// JOSEPH 19-JAN-99
 		if ((mod == MOD_BLACKJACK) || (mod == MOD_CROWBAR))
 		{
-			conweap = 1; 
-
 			if (tr.ent->client)
 			{
 				if (infront( tr.ent, self ))
@@ -2579,10 +2565,6 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 		if (tr.contents & MASK_WATER)
 		{
 			int		color;
-
-			water = true;
-
-			VectorCopy (tr.endpos, water_start);
 
 			if (!VectorCompare (start, tr.endpos))
 			{

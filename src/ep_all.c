@@ -452,16 +452,22 @@ int EP_HiredGuys (edict_t *self, edict_t *other)
 	{
 	case EP_SKIDROW:
 		result = 1;
+		break;
 	case EP_POISONVILLE:
 		result = EP_PV_HiredGuysFlags (self, other);
+		break;
 	case EP_STEELTOWN:
 		result = EP_Steeltown_HiredGuysFlags (self, other);
+		break;
 	case EP_TRAINYARD:
 		result = EP_Trainyard_HiredGuysFlags (self, other);
+		break;
 	case EP_RADIOCITY:
 		result = EP_RC_HiredGuysFlags (self, other);
+		break;
 	case EP_SHIPYARDS:
 		result = EP_SY_HiredGuysFlags (self, other);
+		break;
 	default:
 		result = 1;
 	}

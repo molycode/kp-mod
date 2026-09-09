@@ -683,11 +683,6 @@ void G_RunFrame (void)
 				{
 					float	damage=1.0f;
 
-					if (!deathmatch->value)
-						damage;// *= 3;
-					else
-						damage;// *= 2;
-
 					T_Damage( ent, ent->onfireent, ent->onfireent, vec3_origin, ent->s.origin, vec3_origin, damage, 0, DAMAGE_NO_KNOCKBACK, MOD_FLAMETHROWER );
 
 					// make sure they are in the "catch_fire" motion

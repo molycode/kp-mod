@@ -1793,7 +1793,7 @@ void Use_Null (edict_t *ent, gitem_t *item)
 gitem_t	itemlist[] = 
 {
 	{
-		NULL
+		0
 	},	// leave index 0 alone
 
 	//
@@ -3703,7 +3703,7 @@ tank commander's head
 	},
 
 	// end of list marker
-	{NULL}
+	{0}
 };
 // END JOSEPH
 

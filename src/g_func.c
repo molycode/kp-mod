@@ -78,9 +78,9 @@ void Move_Done (edict_t *self)
 				if (!top_node)
 					goto drop_node;
 
-					// temporarily move the platform to the bottom position
-					VectorCopy(self->cast_info.last_sighting, self->s.origin);
-					gi.linkentity(self);
+				// temporarily move the platform to the bottom position
+				VectorCopy(self->cast_info.last_sighting, self->s.origin);
+				gi.linkentity(self);
 
 				VectorSubtract( trav->s.origin, move_vec, trav->s.origin );
 				gi.linkentity(trav);

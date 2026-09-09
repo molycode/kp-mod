@@ -90,7 +90,7 @@ vehicle_define_t	vehicle_defines[] =
 	},
 
 	{
-		NULL
+		0
 	}
 
 };
