@@ -1464,37 +1464,37 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		if (!strcmp( scriptname, "intro_player_script1" ))
 		{	// go into death frame
 			static mframe_t	frames[] = {
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
-				NULL, 0, NULL,
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
+				{ NULL, 0, NULL },
 			};
 			static mmove_t	move = {725, 755, frames, NULL};
 
@@ -1536,10 +1536,10 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 			// we're at the corner, crouch down and grab the pipe
 			static mframe_t	frames[] = 
 			{
-				NULL,	  0.000, NULL,	// frame 0
-				NULL,	  0.000, NULL,	// frame 1
-				NULL,	  0.000, NULL,	// frame 2
-				NULL,	  0.000, NULL,	// frame 3
+				{ NULL, 0.000, NULL }, // frame 0
+				{ NULL, 0.000, NULL }, // frame 1
+				{ NULL, 0.000, NULL }, // frame 2
+				{ NULL, 0.000, NULL }, // frame 3
 			};
 			static mmove_t	move = {570, 573, frames, intro_player_pickup_pipe};
 

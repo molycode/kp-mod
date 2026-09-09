@@ -3,148 +3,148 @@
 
 voice_table_t pawnomatic_sold[] = 
 {
-	{NULL, "It's all yours",					"It's all yours",						"world/pawnomatic/sold1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Here ya go",						"Here ya go",							"world/pawnomatic/sold2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Sold",								"Sold",									"world/pawnomatic/sold3.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "It's all yours",					"It's all yours",						"world/pawnomatic/sold1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Here ya go",						"Here ya go",							"world/pawnomatic/sold2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Sold",								"Sold",									"world/pawnomatic/sold3.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 											
-	{NULL, "Nah?  How bout somethin else?",		"Nah?  How bout somethin else?",		"world/pawnomatic/nothanks1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Okay, find somethin else you like",	"Okay, find somethin else you like",	"world/pawnomatic/nothanks2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Nah?",								"Nah?",									"world/pawnomatic/nothanks3.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "Nah?  How bout somethin else?",		"Nah?  How bout somethin else?",		"world/pawnomatic/nothanks1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Okay, find somethin else you like",	"Okay, find somethin else you like",	"world/pawnomatic/nothanks2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Nah?",								"Nah?",									"world/pawnomatic/nothanks3.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 };
 
 // 17
 voice_table_t pawnomatic_ammo_specific[] =
 {
-	{NULL, "a box of acid shells",																			"a box of acid shells",																	"world/pawnomatic/ammo_acid1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "acid shells, nasty...  You want a box?",														"acid shells, nasty...  You want a box?",												"world/pawnomatic/ammo_acid2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "alright, you wanna buy one box of bullets",														"alright, you wanna buy one box of bullets",											"world/pawnomatic/ammo_bullets1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "you wanna purchase one box of bullets... that it?",												"you wanna purchase one box of bullets... that it?",									"world/pawnomatic/ammo_bullets2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "concussion grenades, very nasty, sold 5 to a group",											"concussion grenades, very nasty, sold 5 to a group",									"world/pawnomatic/ammo_concus1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "oooh concussion grenades,  sold in nice groups of 5",											"oooh concussion grenades,  sold in nice groups of 5",									"world/pawnomatic/ammo_concus2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "fragmentation grenades.  very nasty and sold in groups of 5. you wanna buy em?",				"fragmentation grenades.  very nasty and sold in groups of 5. you wanna buy em?",		"world/pawnomatic/ammo_frag1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "group of 5 fragmentation grenades... you want em?",												"group of 5 fragmentation grenades... you want em?",									"world/pawnomatic/ammo_frag2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "high velocity ammo for sniper rifles.  very nasty... you want some?",							"high velocity ammo for sniper rifles.  very nasty... you want some?",					"world/pawnomatic/ammo_hv1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "you wanna buy some hv ammo for a sniper rifle...",												"you wanna buy some hv ammo for a sniper rifle...",										"world/pawnomatic/ammo_hv2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "napalm grenades, very nasty. 5 to a lot... you want some?",										"napalm grenades, very nasty. 5 to a lot... you want some?",							"world/pawnomatic/ammo_napalm1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "napalm grenades... very firey if you know what I mean.  5 to a lot... you want some?",			"napalm grenades... very firey if you know what I mean.  5 to a lot... you want some?",	"world/pawnomatic/ammo_napalm2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "you wanna buy a box of shells eh?",																"you wanna buy a box of shells eh?",													"world/pawnomatic/ammo_shotgun1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "shotgun shells... one box",																		"shotgun shells... one box",															"world/pawnomatic/ammo_shotgun2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "tracer bullets... you wanna buy em?",															"tracer bullets... you wanna buy em?",													"world/pawnomatic/ammo_tracer1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "so you wanna buy tracer bullets...",															"so you wanna buy tracer bullets...",													"world/pawnomatic/ammo_tracer2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE},
-	{NULL, "rockets, 5 to a clip... what you expected an army?",											"rockets, 5 to a clip... what you expected an army?",									"world/pawnomatic/ammo_rockets1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 16
-	{NULL, "oooh rockets... very nasty",																	"oooh rockets... very nasty",															"world/pawnomatic/ammo_rockets2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 16
-	{NULL, "heh, you need gas?  I got gas",																	"heh, you need gas?  I got gas",														"world/pawnomatic/ammo_gas1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 17
-	{NULL, "gonna do a little touch up work eh?  gas canisters",											"gonna do a little touch up work eh?  gas canisters",									"world/pawnomatic/ammo_gas2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 17
-	{NULL, "308 ammo for that heavy machine gun... very deadly",											"308 ammo for that heavy machine gun... very deadly",									"world/pawnomatic/ammo_3081.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 18
-	{NULL, "with that 308 ammo you could stop an elephant",													"with that 308 ammo you could stop an elephant",										"world/pawnomatic/ammo_3082.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 18
+	{NULL, "a box of acid shells",																			"a box of acid shells",																	"world/pawnomatic/ammo_acid1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "acid shells, nasty...  You want a box?",														"acid shells, nasty...  You want a box?",												"world/pawnomatic/ammo_acid2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "alright, you wanna buy one box of bullets",														"alright, you wanna buy one box of bullets",											"world/pawnomatic/ammo_bullets1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "you wanna purchase one box of bullets... that it?",												"you wanna purchase one box of bullets... that it?",									"world/pawnomatic/ammo_bullets2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "concussion grenades, very nasty, sold 5 to a group",											"concussion grenades, very nasty, sold 5 to a group",									"world/pawnomatic/ammo_concus1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "oooh concussion grenades,  sold in nice groups of 5",											"oooh concussion grenades,  sold in nice groups of 5",									"world/pawnomatic/ammo_concus2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "fragmentation grenades.  very nasty and sold in groups of 5. you wanna buy em?",				"fragmentation grenades.  very nasty and sold in groups of 5. you wanna buy em?",		"world/pawnomatic/ammo_frag1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "group of 5 fragmentation grenades... you want em?",												"group of 5 fragmentation grenades... you want em?",									"world/pawnomatic/ammo_frag2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "high velocity ammo for sniper rifles.  very nasty... you want some?",							"high velocity ammo for sniper rifles.  very nasty... you want some?",					"world/pawnomatic/ammo_hv1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "you wanna buy some hv ammo for a sniper rifle...",												"you wanna buy some hv ammo for a sniper rifle...",										"world/pawnomatic/ammo_hv2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "napalm grenades, very nasty. 5 to a lot... you want some?",										"napalm grenades, very nasty. 5 to a lot... you want some?",							"world/pawnomatic/ammo_napalm1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "napalm grenades... very firey if you know what I mean.  5 to a lot... you want some?",			"napalm grenades... very firey if you know what I mean.  5 to a lot... you want some?",	"world/pawnomatic/ammo_napalm2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "you wanna buy a box of shells eh?",																"you wanna buy a box of shells eh?",													"world/pawnomatic/ammo_shotgun1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "shotgun shells... one box",																		"shotgun shells... one box",															"world/pawnomatic/ammo_shotgun2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "tracer bullets... you wanna buy em?",															"tracer bullets... you wanna buy em?",													"world/pawnomatic/ammo_tracer1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "so you wanna buy tracer bullets...",															"so you wanna buy tracer bullets...",													"world/pawnomatic/ammo_tracer2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "rockets, 5 to a clip... what you expected an army?",											"rockets, 5 to a clip... what you expected an army?",									"world/pawnomatic/ammo_rockets1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 16
+	{NULL, "oooh rockets... very nasty",																	"oooh rockets... very nasty",															"world/pawnomatic/ammo_rockets2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 16
+	{NULL, "heh, you need gas?  I got gas",																	"heh, you need gas?  I got gas",														"world/pawnomatic/ammo_gas1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 17
+	{NULL, "gonna do a little touch up work eh?  gas canisters",											"gonna do a little touch up work eh?  gas canisters",									"world/pawnomatic/ammo_gas2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 17
+	{NULL, "308 ammo for that heavy machine gun... very deadly",											"308 ammo for that heavy machine gun... very deadly",									"world/pawnomatic/ammo_3081.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 18
+	{NULL, "with that 308 ammo you could stop an elephant",													"with that 308 ammo you could stop an elephant",										"world/pawnomatic/ammo_3082.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 18
 
 };
 
 // 19
 voice_table_t pawnomatic_specific[] = 
 {
-	{NULL, "welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",	"welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",									"world/pawnomatic/coil1.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE},
-	{NULL, "welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",	"welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",									"world/pawnomatic/coil2.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "what, you didn't bring me the coil?",															"what, you didn't bring me the coil?",														"world/pawnomatic/coilno1.wav",			0, {0,0,0,0,0},0, 0, TT_QUESTION}, 
-	{NULL, "Hey, you come back with no coil...",															"Hey, you come back with no coil...",														"world/pawnomatic/coilno2.wav",			0, {0,0,0,0,0},0, 0, TT_QUESTION}, 
-	{NULL, "Alright, you brought me the coil!  here ya go, one pistol and a clip... have fun killer",		"Alright, you brought me the coil!  here ya go, one pistol and a clip... have fun killer",	"world/pawnomatic/coilyes1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Hey hey hey, da coil!  one pistol and one clip... thank you very much",							"Hey hey hey, da coil!  one pistol and one clip... thank you very much",					"world/pawnomatic/coilyes2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "come back anytime... thanks for shopping pawn-o-matic",											"come back anytime... thanks for shopping pawn-o-matic",									"world/pawnomatic/leave1.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey, Very nice to do business with you",														"hey, Very nice to do business with you",													"world/pawnomatic/leave2.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",	"welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",									"world/pawnomatic/coil1.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",	"welcome to pawn-o-matic.  I see you ain't got any heat.  there's a condenser coil in the wearhouse around the corner... bring it to me and I'll give ya a pistol.",									"world/pawnomatic/coil2.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "what, you didn't bring me the coil?",															"what, you didn't bring me the coil?",														"world/pawnomatic/coilno1.wav",			0, {0,0,0,0,0},0, 0, TT_QUESTION, 0, 0},
+	{NULL, "Hey, you come back with no coil...",															"Hey, you come back with no coil...",														"world/pawnomatic/coilno2.wav",			0, {0,0,0,0,0},0, 0, TT_QUESTION, 0, 0},
+	{NULL, "Alright, you brought me the coil!  here ya go, one pistol and a clip... have fun killer",		"Alright, you brought me the coil!  here ya go, one pistol and a clip... have fun killer",	"world/pawnomatic/coilyes1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Hey hey hey, da coil!  one pistol and one clip... thank you very much",							"Hey hey hey, da coil!  one pistol and one clip... thank you very much",					"world/pawnomatic/coilyes2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "come back anytime... thanks for shopping pawn-o-matic",											"come back anytime... thanks for shopping pawn-o-matic",									"world/pawnomatic/leave1.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey, Very nice to do business with you",														"hey, Very nice to do business with you",													"world/pawnomatic/leave2.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 																											
 //8
-	{NULL, "you can't use that kinda ammo...",																"you can't use that kinda ammo...",															"world/pawnomatic/stock_cantuse1.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "that kinda ammo ain't gonna work for you right now",											"that kinda ammo ain't gonna work for you right now",										"world/pawnomatic/stock_cantuse2.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "hey, you don't have enough cash...",															"hey, you don't have enough cash...",														"world/pawnomatic/stock_cash1.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "you ain't got enough money",																	"you ain't got enough money",																"world/pawnomatic/stock_cash2.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "I'm outta that",																				"I'm outta that",																			"world/pawnomatic/stock_out1.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "sorry, we ain't got any",																		"sorry, we ain't got any",																	"world/pawnomatic/stock_out2.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "you already got that",																			"you already got that",																		"world/pawnomatic/alreadyhave1.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, 
-	{NULL, "hey, you don't need two... you already got one",												"hey, you don't need two... you already got one",											"world/pawnomatic/alreadyhave2.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE},
+	{NULL, "you can't use that kinda ammo...",																"you can't use that kinda ammo...",															"world/pawnomatic/stock_cantuse1.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "that kinda ammo ain't gonna work for you right now",											"that kinda ammo ain't gonna work for you right now",										"world/pawnomatic/stock_cantuse2.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "hey, you don't have enough cash...",															"hey, you don't have enough cash...",														"world/pawnomatic/stock_cash1.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "you ain't got enough money",																	"you ain't got enough money",																"world/pawnomatic/stock_cash2.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "I'm outta that",																				"I'm outta that",																			"world/pawnomatic/stock_out1.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "sorry, we ain't got any",																		"sorry, we ain't got any",																	"world/pawnomatic/stock_out2.wav",		0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "you already got that",																			"you already got that",																		"world/pawnomatic/alreadyhave1.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
+	{NULL, "hey, you don't need two... you already got one",												"hey, you don't need two... you already got one",											"world/pawnomatic/alreadyhave2.wav",	0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0},
 																											
 //16
-	{NULL, "you're all full up... you can't hold any more",													"you're all full up... you can't hold any more",											"world/pawnomatic/fullup1.wav",			0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, // 16  
-	{NULL, "you don't need any more health... you're full up",												"you don't need any more health... you're full up",											"world/pawnomatic/fullup2.wav",			0, {0,0,0,0,0},0, 0, TT_NEGATIVE}, // 17	
+	{NULL, "you're all full up... you can't hold any more",													"you're all full up... you can't hold any more",											"world/pawnomatic/fullup1.wav",			0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0}, // 16  
+	{NULL, "you don't need any more health... you're full up",												"you don't need any more health... you're full up",											"world/pawnomatic/fullup2.wav",			0, {0,0,0,0,0},0, 0, TT_NEGATIVE, 0, 0}, // 17	
 																											
-	{NULL, "whoa! a coil. tell you what... I'll trade you a pistol for it",									"whoa! a coil. tell you what... I'll trade you a pistol for it",							"world/pawnomatic/coil3.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 18	
+	{NULL, "whoa! a coil. tell you what... I'll trade you a pistol for it",									"whoa! a coil. tell you what... I'll trade you a pistol for it",							"world/pawnomatic/coil3.wav",			0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 18	
 																											
 	// sound todo pv specific																				
-	{NULL, "welcome to pawn-o-matic... Louie the warehouse boss is waitin to talk to ya",					"welcome to pawn-o-matic... Louie the warehouse boss is waitin to talk to ya",				"world/pawnomatic/louie1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 19	
-	{NULL, "so... you get the job from Louie in the warehouse?",											"so... you get the job from Louie in the warehouse?",										"world/pawnomatic/louie2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 19	
+	{NULL, "welcome to pawn-o-matic... Louie the warehouse boss is waitin to talk to ya",					"welcome to pawn-o-matic... Louie the warehouse boss is waitin to talk to ya",				"world/pawnomatic/louie1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 19	
+	{NULL, "so... you get the job from Louie in the warehouse?",											"so... you get the job from Louie in the warehouse?",										"world/pawnomatic/louie2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 19	
 
-	{NULL, "Welcome to pawn-o-matic",											"",																							"world/pawnomatic/welcome.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, // 19	
+	{NULL, "Welcome to pawn-o-matic",											"",																							"world/pawnomatic/welcome.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}, // 19	
 };																											
 																											
 // 2																										
 voice_table_t pawnomatic_health_specific[] =																
 {																											
-	{NULL, "those medkits'll get you through some scrapes...",												"those medkits'll get you through some scrapes...",				"world/pawnomatic/medkit1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "if you're really hurtin, that thing'll do you some good...",									"if you're really hurtin, that thing'll do you some good...",	"world/pawnomatic/medkit2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "those medkits'll get you through some scrapes...",												"those medkits'll get you through some scrapes...",				"world/pawnomatic/medkit1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "if you're really hurtin, that thing'll do you some good...",									"if you're really hurtin, that thing'll do you some good...",	"world/pawnomatic/medkit2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 };
 
 // 16
 voice_table_t pawnomatic_mods_specific[] = 
 {
-	{NULL, "Whoo, the mini launcher mod... 4 rockets at a crack",											"Whoo, the mini launcher mod... 4 rockets at a crack",									"world/pawnomatic/mod_launcher1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "the mini launcher mod.  Very nice.  4 rockets all comin out at once... Boom!",					"the mini launcher mod.  Very nice.  4 rockets all comin out at once... Boom!",			"world/pawnomatic/mod_launcher2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "magnum mod, one of my favorites",																"magnum mod, one of my favorites",														"world/pawnomatic/mod_magnum1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "magnum mod, very good choice... great stoppin power",											"magnum mod, very good choice... great stoppin power",									"world/pawnomatic/mod_magnum2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "that mod ain't gonna do you any good unless you've got the gun to go with it",					"that mod ain't gonna do you any good unless you've got the gun to go with it",			"world/pawnomatic/mod_nowork1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "you gotta have the right piece for that thing... otherwise it's worthless",						"you gotta have the right piece for that thing... otherwise it's worthless",			"world/pawnomatic/mod_nowork2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "pistol reload mod, very good choice... none of that fumblin around with a clip",				"pistol reload mod, very good choice... none of that fumblin around with a clip",		"world/pawnomatic/mod_reload1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "the pistol reload mod... that would decrease your reloading time",								"the pistol reload mod... that would decrease your reloading time",						"world/pawnomatic/mod_reload2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "the ROF, very nice mod... increase your rate of fire",											"the ROF, very nice mod... increase your rate of fire",									"world/pawnomatic/mod_rof1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "that that ROF, you can Spit bullets out",														"that that ROF, you can Spit bullets out",												"world/pawnomatic/mod_rof2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "oh very good mod, that'll let your shotgun accept the acid rounds",								"oh very good mod, that'll let your shotgun accept the acid rounds",					"world/pawnomatic/mod_shotgun1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "this mod'll let you fire the acid rounds from your shotgun",									"this mod'll let you fire the acid rounds from your shotgun",							"world/pawnomatic/mod_shotgun2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "ahh silencer... very good when you're sneaking up on somebody",									"ahh silencer... very good when you're sneaking up on somebody",						"world/pawnomatic/mod_silence1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "that'll quiet your pistol down a little bit",													"that'll quiet your pistol down a little bit",											"world/pawnomatic/mod_silence2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "the tommy gun tracer mod... very nice, very nice",												"the tommy gun tracer mod... very nice, very nice",										"world/pawnomatic/mod_tracer1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "the tommy gun tracer mod... very nice.  increases your firepower and lets you see where those bullets are goin",				"the tommy gun tracer mod... very nice.  increases your firepower and lets you see where those bullets are goin",		"world/pawnomatic/mod_tracer2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "Whoo, the mini launcher mod... 4 rockets at a crack",											"Whoo, the mini launcher mod... 4 rockets at a crack",									"world/pawnomatic/mod_launcher1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "the mini launcher mod.  Very nice.  4 rockets all comin out at once... Boom!",					"the mini launcher mod.  Very nice.  4 rockets all comin out at once... Boom!",			"world/pawnomatic/mod_launcher2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "magnum mod, one of my favorites",																"magnum mod, one of my favorites",														"world/pawnomatic/mod_magnum1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "magnum mod, very good choice... great stoppin power",											"magnum mod, very good choice... great stoppin power",									"world/pawnomatic/mod_magnum2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "that mod ain't gonna do you any good unless you've got the gun to go with it",					"that mod ain't gonna do you any good unless you've got the gun to go with it",			"world/pawnomatic/mod_nowork1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "you gotta have the right piece for that thing... otherwise it's worthless",						"you gotta have the right piece for that thing... otherwise it's worthless",			"world/pawnomatic/mod_nowork2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "pistol reload mod, very good choice... none of that fumblin around with a clip",				"pistol reload mod, very good choice... none of that fumblin around with a clip",		"world/pawnomatic/mod_reload1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "the pistol reload mod... that would decrease your reloading time",								"the pistol reload mod... that would decrease your reloading time",						"world/pawnomatic/mod_reload2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "the ROF, very nice mod... increase your rate of fire",											"the ROF, very nice mod... increase your rate of fire",									"world/pawnomatic/mod_rof1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "that that ROF, you can Spit bullets out",														"that that ROF, you can Spit bullets out",												"world/pawnomatic/mod_rof2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "oh very good mod, that'll let your shotgun accept the acid rounds",								"oh very good mod, that'll let your shotgun accept the acid rounds",					"world/pawnomatic/mod_shotgun1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "this mod'll let you fire the acid rounds from your shotgun",									"this mod'll let you fire the acid rounds from your shotgun",							"world/pawnomatic/mod_shotgun2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "ahh silencer... very good when you're sneaking up on somebody",									"ahh silencer... very good when you're sneaking up on somebody",						"world/pawnomatic/mod_silence1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "that'll quiet your pistol down a little bit",													"that'll quiet your pistol down a little bit",											"world/pawnomatic/mod_silence2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "the tommy gun tracer mod... very nice, very nice",												"the tommy gun tracer mod... very nice, very nice",										"world/pawnomatic/mod_tracer1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "the tommy gun tracer mod... very nice.  increases your firepower and lets you see where those bullets are goin",				"the tommy gun tracer mod... very nice.  increases your firepower and lets you see where those bullets are goin",		"world/pawnomatic/mod_tracer2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 
-	{NULL, "Ooo hmg cooling mod very good option Boom Boom Boom",				"Ooo hmg cooling mod very good option Boom Boom Boom",		"world/pawnomatic/mod_hmg1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Ooo hmg cooling mod now thats a very nice number turn that baby nearly automatic for ya",				"Ooo hmg cooling mod now thats a very nice number turn that baby nearly automatic for ya",		"world/pawnomatic/mod_hmg2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "Ooo hmg cooling mod very good option Boom Boom Boom",				"Ooo hmg cooling mod very good option Boom Boom Boom",		"world/pawnomatic/mod_hmg1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Ooo hmg cooling mod now thats a very nice number turn that baby nearly automatic for ya",				"Ooo hmg cooling mod now thats a very nice number turn that baby nearly automatic for ya",		"world/pawnomatic/mod_hmg2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 };
 
 voice_table_t pawnomatic_weapons_random [] = 
 {
-	{NULL, "very good choice",							"very good choice",						"world/pawnomatic/weapon1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "heh, my personal favorite",					"heh, my personal favorite",			"world/pawnomatic/weapon2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "oh I like that one a lot",					"oh I like that one a lot",				"world/pawnomatic/weapon3.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "very good choice",							"very good choice",						"world/pawnomatic/weapon4.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "nice selection",							"nice selection",						"world/pawnomatic/weapon5.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "that'll work",								"that'll work",							"world/pawnomatic/weapon6.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "Boom!  heh heh heh",						"Boom!  heh heh heh",					"world/pawnomatic/weapon7.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "so you're gonna take this one...",			"so you're gonna take this one...",		"world/pawnomatic/weapon8.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "awright",									"awright",								"world/pawnomatic/weapon9.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "very good choice",							"very good choice",						"world/pawnomatic/weapon1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "heh, my personal favorite",					"heh, my personal favorite",			"world/pawnomatic/weapon2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "oh I like that one a lot",					"oh I like that one a lot",				"world/pawnomatic/weapon3.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "very good choice",							"very good choice",						"world/pawnomatic/weapon4.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "nice selection",							"nice selection",						"world/pawnomatic/weapon5.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "that'll work",								"that'll work",							"world/pawnomatic/weapon6.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "Boom!  heh heh heh",						"Boom!  heh heh heh",					"world/pawnomatic/weapon7.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "so you're gonna take this one...",			"so you're gonna take this one...",		"world/pawnomatic/weapon8.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "awright",									"awright",								"world/pawnomatic/weapon9.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 };
 
 voice_table_t pawnomatic_funny [] =
 {
-	{NULL, "hey you're bleedin all over my floor",		"hey you're bleedin all over my floor",	"world/pawnomatic/funny1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey we sell weapons, not body bags",		"hey we sell weapons, not body bags",	"world/pawnomatic/funny2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "man, who beat the shit outta you?",			"man, who beat the (blip) outta you?",	"world/pawnomatic/funny3.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey sorry we don't sell coffins",			"hey sorry we don't sell coffins",		"world/pawnomatic/funny4.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey, welcome to pawn-o-matic",				"hey, welcome to pawn-o-matic",			"world/pawnomatic/funny5.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE} 
+	{NULL, "hey you're bleedin all over my floor",		"hey you're bleedin all over my floor",	"world/pawnomatic/funny1.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey we sell weapons, not body bags",		"hey we sell weapons, not body bags",	"world/pawnomatic/funny2.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "man, who beat the shit outta you?",			"man, who beat the (blip) outta you?",	"world/pawnomatic/funny3.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey sorry we don't sell coffins",			"hey sorry we don't sell coffins",		"world/pawnomatic/funny4.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey, welcome to pawn-o-matic",				"hey, welcome to pawn-o-matic",			"world/pawnomatic/funny5.wav", 0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0}
 
 };
 
 voice_table_t pawnomatic_armor_specific[] = 
 {
-	{NULL, "head armor.  very good idea... protect the old noggin eh?",							"head armor.  very good idea... protect the old noggin eh?",						"world/pawnomatic/armor_head1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "head armor.  very good for keeping your brain Inside your skull",					"head armor.  very good for keeping your brain Inside your skull",					"world/pawnomatic/armor_head2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "oooh, heavy head armor...  expensive, but worth the price",							"oooh, heavy head armor...  expensive, but worth the price",						"world/pawnomatic/armor_headh1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "heavy head armor...  expensive, but worth every penny",								"heavy head armor...  expensive, but worth every penny",							"world/pawnomatic/armor_headh2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "head armor.  very good idea... protect the old noggin eh?",							"head armor.  very good idea... protect the old noggin eh?",						"world/pawnomatic/armor_head1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "head armor.  very good for keeping your brain Inside your skull",					"head armor.  very good for keeping your brain Inside your skull",					"world/pawnomatic/armor_head2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "oooh, heavy head armor...  expensive, but worth the price",							"oooh, heavy head armor...  expensive, but worth the price",						"world/pawnomatic/armor_headh1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "heavy head armor...  expensive, but worth every penny",								"heavy head armor...  expensive, but worth every penny",							"world/pawnomatic/armor_headh2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 																																													
-	{NULL, "body armor.  form fitting... very stylish",											"body armor.  form fitting... very stylish",										"world/pawnomatic/armor_body1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "body armor... very stylish",														"body armor... very stylish",														"world/pawnomatic/armor_body2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey, heavy body armor.  maximum stopping power",									"hey, heavy body armor.  maximum stopping power",									"world/pawnomatic/armor_bodyh1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "heavy body armor... that'll offer you maximum protection",							"heavy body armor... that'll offer you maximum protection",							"world/pawnomatic/armor_bodyh2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "body armor.  form fitting... very stylish",											"body armor.  form fitting... very stylish",										"world/pawnomatic/armor_body1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "body armor... very stylish",														"body armor... very stylish",														"world/pawnomatic/armor_body2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey, heavy body armor.  maximum stopping power",									"hey, heavy body armor.  maximum stopping power",									"world/pawnomatic/armor_bodyh1.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "heavy body armor... that'll offer you maximum protection",							"heavy body armor... that'll offer you maximum protection",							"world/pawnomatic/armor_bodyh2.wav",	0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 																																													
-	{NULL, "lower body armor.  very good for protecting the legs eh?",							"lower body armor.  very good for protecting the legs eh?",							"world/pawnomatic/armor_leg1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "hey you wanna keep your kneecaps from gettin wacked... leg armor'll do the trick",	"hey you wanna keep your kneecaps from gettin wacked... leg armor'll do the trick",	"world/pawnomatic/armor_leg2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "oh, heavy lower body armor.  very tight fitting, but it'll protect those schnuts",	"oh, heavy lower body armor.  very tight fitting, but it'll protect those schnuts",	"world/pawnomatic/armor_legh1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
-	{NULL, "heavy lower body armor... very stylish",											"heavy lower body armor... very stylish",											"world/pawnomatic/armor_legh2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE}, 
+	{NULL, "lower body armor.  very good for protecting the legs eh?",							"lower body armor.  very good for protecting the legs eh?",							"world/pawnomatic/armor_leg1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "hey you wanna keep your kneecaps from gettin wacked... leg armor'll do the trick",	"hey you wanna keep your kneecaps from gettin wacked... leg armor'll do the trick",	"world/pawnomatic/armor_leg2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "oh, heavy lower body armor.  very tight fitting, but it'll protect those schnuts",	"oh, heavy lower body armor.  very tight fitting, but it'll protect those schnuts",	"world/pawnomatic/armor_legh1.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
+	{NULL, "heavy lower body armor... very stylish",											"heavy lower body armor... very stylish",											"world/pawnomatic/armor_legh2.wav",		0, {0,0,0,0,0},0, 0, TT_POSITIVE, 0, 0},
 };
 
 

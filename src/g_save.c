@@ -6,155 +6,155 @@
 mmove_t mmove_reloc;
 
 field_t fields[] = {
-	{"classname", FOFS(classname), F_LSTRING},
-	{"model", FOFS(model), F_LSTRING},
-	{"spawnflags", FOFS(spawnflags), F_INT},
-	{"speed", FOFS(speed), F_FLOAT},
-	{"accel", FOFS(accel), F_FLOAT},
-	{"decel", FOFS(decel), F_FLOAT},
-	{"target", FOFS(target), F_LSTRING},
-	{"targetname", FOFS(targetname), F_LSTRING},
-	{"pathtarget", FOFS(pathtarget), F_LSTRING},
-	{"deathtarget", FOFS(deathtarget), F_LSTRING},
-	{"killtarget", FOFS(killtarget), F_LSTRING},
-	{"combattarget", FOFS(combattarget), F_LSTRING},
-	{"message", FOFS(message), F_LSTRING},
-	{"team", FOFS(team), F_LSTRING},
-	{"wait", FOFS(wait), F_FLOAT},
-	{"delay", FOFS(delay), F_FLOAT},
-	{"random", FOFS(random), F_FLOAT},
-	{"move_origin", FOFS(move_origin), F_VECTOR},
-	{"move_angles", FOFS(move_angles), F_VECTOR},
-	{"style", FOFS(style), F_INT},
-	{"count", FOFS(count), F_INT},
-	{"health", FOFS(health), F_INT},
-	{"sounds", FOFS(sounds), F_INT},
+	{"classname", FOFS(classname), F_LSTRING, 0},
+	{"model", FOFS(model), F_LSTRING, 0},
+	{"spawnflags", FOFS(spawnflags), F_INT, 0},
+	{"speed", FOFS(speed), F_FLOAT, 0},
+	{"accel", FOFS(accel), F_FLOAT, 0},
+	{"decel", FOFS(decel), F_FLOAT, 0},
+	{"target", FOFS(target), F_LSTRING, 0},
+	{"targetname", FOFS(targetname), F_LSTRING, 0},
+	{"pathtarget", FOFS(pathtarget), F_LSTRING, 0},
+	{"deathtarget", FOFS(deathtarget), F_LSTRING, 0},
+	{"killtarget", FOFS(killtarget), F_LSTRING, 0},
+	{"combattarget", FOFS(combattarget), F_LSTRING, 0},
+	{"message", FOFS(message), F_LSTRING, 0},
+	{"team", FOFS(team), F_LSTRING, 0},
+	{"wait", FOFS(wait), F_FLOAT, 0},
+	{"delay", FOFS(delay), F_FLOAT, 0},
+	{"random", FOFS(random), F_FLOAT, 0},
+	{"move_origin", FOFS(move_origin), F_VECTOR, 0},
+	{"move_angles", FOFS(move_angles), F_VECTOR, 0},
+	{"style", FOFS(style), F_INT, 0},
+	{"count", FOFS(count), F_INT, 0},
+	{"health", FOFS(health), F_INT, 0},
+	{"sounds", FOFS(sounds), F_INT, 0},
 
-	{"light", FOFS(light_level), F_INT},	// Ridah, used by model lighting code
-	{"_color", FOFS(rotate), F_VECTOR},		// Ridah, used by model lighting code
-	{"radius", FOFS(dmg_radius), F_VECTOR},		// Ridah, used by model lighting code
+	{"light", FOFS(light_level), F_INT, 0}, // Ridah, used by model lighting code
+	{"_color", FOFS(rotate), F_VECTOR, 0}, // Ridah, used by model lighting code
+	{"radius", FOFS(dmg_radius), F_VECTOR, 0}, // Ridah, used by model lighting code
 
-	{"dmg", FOFS(dmg), F_INT},
-	{"mass", FOFS(mass), F_INT},
-	{"volume", FOFS(volume), F_FLOAT},
-	{"attenuation", FOFS(attenuation), F_FLOAT},
-	{"map", FOFS(map), F_LSTRING},
-	{"origin", FOFS(s.origin), F_VECTOR},
-	{"angles", FOFS(s.angles), F_VECTOR},
-	{"angle", FOFS(s.angles), F_ANGLEHACK},
+	{"dmg", FOFS(dmg), F_INT, 0},
+	{"mass", FOFS(mass), F_INT, 0},
+	{"volume", FOFS(volume), F_FLOAT, 0},
+	{"attenuation", FOFS(attenuation), F_FLOAT, 0},
+	{"map", FOFS(map), F_LSTRING, 0},
+	{"origin", FOFS(s.origin), F_VECTOR, 0},
+	{"angles", FOFS(s.angles), F_VECTOR, 0},
+	{"angle", FOFS(s.angles), F_ANGLEHACK, 0},
 
-	{"objectbounds_filename1", FOFS(s.model_parts[0].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename2", FOFS(s.model_parts[1].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename3", FOFS(s.model_parts[2].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename4", FOFS(s.model_parts[3].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename5", FOFS(s.model_parts[4].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename6", FOFS(s.model_parts[5].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename7", FOFS(s.model_parts[6].objectbounds_filename), F_LSTRING},
-	{"objectbounds_filename8", FOFS(s.model_parts[7].objectbounds_filename), F_LSTRING},
+	{"objectbounds_filename1", FOFS(s.model_parts[0].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename2", FOFS(s.model_parts[1].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename3", FOFS(s.model_parts[2].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename4", FOFS(s.model_parts[3].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename5", FOFS(s.model_parts[4].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename6", FOFS(s.model_parts[5].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename7", FOFS(s.model_parts[6].objectbounds_filename), F_LSTRING, 0},
+	{"objectbounds_filename8", FOFS(s.model_parts[7].objectbounds_filename), F_LSTRING, 0},
 
 // JOSEPH 19-MAR-99
-	{"rotate", FOFS(rotate), F_VECTOR},
-	{"duration", FOFS(duration), F_FLOAT},
-	{"alphalevel", FOFS(alphalevel), F_INT},
-	{"fxdensity", FOFS(fxdensity), F_INT},
-	{"healspeed", FOFS(healspeed), F_INT}, 
-	{"deadticks", FOFS(deadticks), F_INT}, 
-	{"missteam", FOFS(missteam), F_INT}, 
-	{"misstime", FOFS(misstime), F_INT}, 
-	{"cameraangle", FOFS(cameraangle), F_VECTOR}, 
-	{"cameraorigin", FOFS(cameraorigin), F_VECTOR}, 
-	{"cameravel", FOFS(cameravel), F_VECTOR},
-	{"cameravelrel", FOFS(cameravelrel), F_VECTOR},
-	{"debugprint", FOFS(debugprint), F_INT},
-	{"target2", FOFS(target2), F_LSTRING},
-	{"localteam", FOFS(localteam), F_LSTRING},
-	{"reactdelay", FOFS(reactdelay), F_FLOAT}, 
-	{"currentcash", FOFS(currentcash), F_INT},
-	{"type", FOFS(type), F_LSTRING},
-	{"head", FOFS(head), F_INT},
-	{"key", FOFS(key), F_INT},
-	{"target2_ent", FOFS(target2_ent), F_EDICT},
-	{"missent", FOFS(missent), F_EDICT},
-	{"handle", FOFS(handle), F_EDICT},
-	{"handle2", FOFS(handle2), F_EDICT},
-	{"save_self", FOFS(save_self), F_EDICT},
-	{"save_other", FOFS(save_other), F_EDICT},
-	{"deadticks", FOFS(deadticks), F_INT},
-	{"thudsnd", FOFS(thudsnd), F_INT},
-	{"head", FOFS(head), F_INT},
-	{"firetype", FOFS(firetype), F_INT},
-	{"thudsurf", FOFS(thudsurf), F_INT},
-	{"lightit", FOFS(lightit), F_INT},
-	{"option", FOFS(option), F_INT},
-	{"noshadow", FOFS(noshadow), F_INT},
+	{"rotate", FOFS(rotate), F_VECTOR, 0},
+	{"duration", FOFS(duration), F_FLOAT, 0},
+	{"alphalevel", FOFS(alphalevel), F_INT, 0},
+	{"fxdensity", FOFS(fxdensity), F_INT, 0},
+	{"healspeed", FOFS(healspeed), F_INT, 0},
+	{"deadticks", FOFS(deadticks), F_INT, 0},
+	{"missteam", FOFS(missteam), F_INT, 0},
+	{"misstime", FOFS(misstime), F_INT, 0},
+	{"cameraangle", FOFS(cameraangle), F_VECTOR, 0},
+	{"cameraorigin", FOFS(cameraorigin), F_VECTOR, 0},
+	{"cameravel", FOFS(cameravel), F_VECTOR, 0},
+	{"cameravelrel", FOFS(cameravelrel), F_VECTOR, 0},
+	{"debugprint", FOFS(debugprint), F_INT, 0},
+	{"target2", FOFS(target2), F_LSTRING, 0},
+	{"localteam", FOFS(localteam), F_LSTRING, 0},
+	{"reactdelay", FOFS(reactdelay), F_FLOAT, 0},
+	{"currentcash", FOFS(currentcash), F_INT, 0},
+	{"type", FOFS(type), F_LSTRING, 0},
+	{"head", FOFS(head), F_INT, 0},
+	{"key", FOFS(key), F_INT, 0},
+	{"target2_ent", FOFS(target2_ent), F_EDICT, 0},
+	{"missent", FOFS(missent), F_EDICT, 0},
+	{"handle", FOFS(handle), F_EDICT, 0},
+	{"handle2", FOFS(handle2), F_EDICT, 0},
+	{"save_self", FOFS(save_self), F_EDICT, 0},
+	{"save_other", FOFS(save_other), F_EDICT, 0},
+	{"deadticks", FOFS(deadticks), F_INT, 0},
+	{"thudsnd", FOFS(thudsnd), F_INT, 0},
+	{"head", FOFS(head), F_INT, 0},
+	{"firetype", FOFS(firetype), F_INT, 0},
+	{"thudsurf", FOFS(thudsurf), F_INT, 0},
+	{"lightit", FOFS(lightit), F_INT, 0},
+	{"option", FOFS(option), F_INT, 0},
+	{"noshadow", FOFS(noshadow), F_INT, 0},
 // END JOSEPH
 
-	{"acc", FOFS (acc), F_INT},
-	{"cal", FOFS (cal), F_INT},
+	{"acc", FOFS (acc), F_INT, 0},
+	{"cal", FOFS (cal), F_INT, 0},
 
 	// Ridah, new stuff
 
-	{"cast_group", FOFS(cast_group), F_INT},
-	{"skin", FOFS(skin), F_INT},
-	{"moral", FOFS(moral), F_INT},
-	{"guard_radius", FOFS(guard_radius), F_INT},
-	{"guard_target", FOFS(guard_target), F_LSTRING},
-	{"name", FOFS(name), F_LSTRING},
-	{"episode", FOFS(count), F_INT},				// used by worldspawn
-	{"scriptname", FOFS(scriptname), F_LSTRING},
+	{"cast_group", FOFS(cast_group), F_INT, 0},
+	{"skin", FOFS(skin), F_INT, 0},
+	{"moral", FOFS(moral), F_INT, 0},
+	{"guard_radius", FOFS(guard_radius), F_INT, 0},
+	{"guard_target", FOFS(guard_target), F_LSTRING, 0},
+	{"name", FOFS(name), F_LSTRING, 0},
+	{"episode", FOFS(count), F_INT, 0}, // used by worldspawn
+	{"scriptname", FOFS(scriptname), F_LSTRING, 0},
 
-	{"onfireent", FOFS(onfireent), F_EDICT},
-	{"leader", FOFS(leader), F_EDICT},
-	{"leader_target", FOFS(leader_target), F_LSTRING},
-	{"last_goal", FOFS(last_goal), F_EDICT},
+	{"onfireent", FOFS(onfireent), F_EDICT, 0},
+	{"leader", FOFS(leader), F_EDICT, 0},
+	{"leader_target", FOFS(leader_target), F_LSTRING, 0},
+	{"last_goal", FOFS(last_goal), F_EDICT, 0},
 
-	{"order", FOFS(order), F_INT},
-	{"order_timestamp", FOFS(order_timestamp), F_FLOAT},
-	{"moveout_ent", FOFS(moveout_ent), F_EDICT},
-	{"character_index", FOFS(character_index), F_INT},
-	{"last_talk_time", FOFS(last_talk_time), F_FLOAT},
-	{"profanity_level", FOFS(profanity_level), F_INT},
-	{"guard_ent", FOFS(guard_ent), F_EDICT},
-	{"sight_target", FOFS(sight_target), F_LSTRING},
-	{"goal_ent", FOFS(goal_ent), F_EDICT},
-	{"combat_goalent", FOFS(combat_goalent), F_EDICT},
-	{"cover_ent", FOFS(cover_ent), F_EDICT},
+	{"order", FOFS(order), F_INT, 0},
+	{"order_timestamp", FOFS(order_timestamp), F_FLOAT, 0},
+	{"moveout_ent", FOFS(moveout_ent), F_EDICT, 0},
+	{"character_index", FOFS(character_index), F_INT, 0},
+	{"last_talk_time", FOFS(last_talk_time), F_FLOAT, 0},
+	{"profanity_level", FOFS(profanity_level), F_INT, 0},
+	{"guard_ent", FOFS(guard_ent), F_EDICT, 0},
+	{"sight_target", FOFS(sight_target), F_LSTRING, 0},
+	{"goal_ent", FOFS(goal_ent), F_EDICT, 0},
+	{"combat_goalent", FOFS(combat_goalent), F_EDICT, 0},
+	{"cover_ent", FOFS(cover_ent), F_EDICT, 0},
 	
-	{"episode_flags", FOFS(episode_flags), F_INT},
+	{"episode_flags", FOFS(episode_flags), F_INT, 0},
 
-	{"name_index", FOFS(name_index), F_INT},
-	{"last_territory_touched", FOFS(last_territory_touched), F_EDICT},
-	{"response_ent", FOFS(response_ent), F_EDICT},
-	{"last_response_time", FOFS(last_response_time), F_FLOAT},
-	{"last_response", FOFS(last_response), F_INT},
+	{"name_index", FOFS(name_index), F_INT, 0},
+	{"last_territory_touched", FOFS(last_territory_touched), F_EDICT, 0},
+	{"response_ent", FOFS(response_ent), F_EDICT, 0},
+	{"last_response_time", FOFS(last_response_time), F_FLOAT, 0},
+	{"last_response", FOFS(last_response), F_INT, 0},
 
-	{"start_ent", FOFS(start_ent), F_EDICT},
-	{"holdpos_ent", FOFS(holdpos_ent), F_EDICT},
+	{"start_ent", FOFS(start_ent), F_EDICT, 0},
+	{"holdpos_ent", FOFS(holdpos_ent), F_EDICT, 0},
 
-	{"next_combattarget", FOFS(next_combattarget), F_LSTRING},
+	{"next_combattarget", FOFS(next_combattarget), F_LSTRING, 0},
 
-	{"activate_flags", FOFS(activate_flags), F_INT},
-	{"biketime", FOFS(biketime), F_FLOAT},
-	{"bikestate", FOFS(bikestate), F_INT},
+	{"activate_flags", FOFS(activate_flags), F_INT, 0},
+	{"biketime", FOFS(biketime), F_FLOAT, 0},
+	{"bikestate", FOFS(bikestate), F_INT, 0},
 
-	{"vehicle_index", FOFS(vehicle_index), F_INT},
+	{"vehicle_index", FOFS(vehicle_index), F_INT, 0},
 
-	{"art_skins", FOFS(art_skins), F_LSTRING},
+	{"art_skins", FOFS(art_skins), F_LSTRING, 0},
 
-	{"aiflags", FOFS(cast_info.aiflags), F_INT},
+	{"aiflags", FOFS(cast_info.aiflags), F_INT, 0},
 
-	{"gun_noise_delay", FOFS(gun_noise_delay), F_FLOAT},
+	{"gun_noise_delay", FOFS(gun_noise_delay), F_FLOAT, 0},
 
-	{"scale", FOFS(cast_info.scale), F_FLOAT},
+	{"scale", FOFS(cast_info.scale), F_FLOAT, 0},
 
-	{"voice_pitch", FOFS(voice_pitch), F_FLOAT},
+	{"voice_pitch", FOFS(voice_pitch), F_FLOAT, 0},
 
-	{"health_threshold", FOFS(health_threshold), F_INT},
-	{"health_target", FOFS(health_target), F_LSTRING},
-	{"health_threshold2", FOFS(health_threshold2), F_INT},
-	{"health_target2", FOFS(health_target2), F_LSTRING},
-	{"health_threshold3", FOFS(health_threshold3), F_INT},
-	{"health_target3", FOFS(health_target3), F_LSTRING},
+	{"health_threshold", FOFS(health_threshold), F_INT, 0},
+	{"health_target", FOFS(health_target), F_LSTRING, 0},
+	{"health_threshold2", FOFS(health_threshold2), F_INT, 0},
+	{"health_target2", FOFS(health_target2), F_LSTRING, 0},
+	{"health_threshold3", FOFS(health_threshold3), F_INT, 0},
+	{"health_target3", FOFS(health_target3), F_LSTRING, 0},
 	// Ridah, done.
 
 	
@@ -238,7 +238,7 @@ field_t fields[] = {
 	{"item", STOFS(item), F_LSTRING, FFL_SPAWNTEMP},
 
 //need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
-	{"item", FOFS(item), F_ITEM},
+	{"item", FOFS(item), F_ITEM, 0},
 
 	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
 	{"sky", STOFS(sky), F_LSTRING, FFL_SPAWNTEMP},
@@ -260,34 +260,34 @@ field_t fields[] = {
 
 field_t		levelfields[] =
 {
-	{"changemap", LLOFS(changemap), F_LSTRING},
+	{"changemap", LLOFS(changemap), F_LSTRING, 0},
 									 
-	{"sight_client", LLOFS(sight_client), F_EDICT},
-	{"sight_entity", LLOFS(sight_entity), F_EDICT},
-	{"sound_entity", LLOFS(sound_entity), F_EDICT},
-	{"sound2_entity", LLOFS(sound2_entity), F_EDICT},
+	{"sight_client", LLOFS(sight_client), F_EDICT, 0},
+	{"sight_entity", LLOFS(sight_entity), F_EDICT, 0},
+	{"sound_entity", LLOFS(sound_entity), F_EDICT, 0},
+	{"sound2_entity", LLOFS(sound2_entity), F_EDICT, 0},
 
-	{"characters", LLOFS(characters), F_IGNORE},
+	{"characters", LLOFS(characters), F_IGNORE, 0},
 
-	{NULL, 0, F_INT}
+	{NULL, 0, F_INT, 0}
 };
 
 field_t		clientfields[] =
 {
-	{"pers.weapon", CLOFS(pers.weapon), F_ITEM},
-	{"pers.holsteredweapon", CLOFS(pers.holsteredweapon), F_ITEM},
-	{"pers.lastweapon", CLOFS(pers.lastweapon), F_ITEM},
-	{"newweapon", CLOFS(newweapon), F_ITEM},
-	{NULL, 0, F_INT}
+	{"pers.weapon", CLOFS(pers.weapon), F_ITEM, 0},
+	{"pers.holsteredweapon", CLOFS(pers.holsteredweapon), F_ITEM, 0},
+	{"pers.lastweapon", CLOFS(pers.lastweapon), F_ITEM, 0},
+	{"newweapon", CLOFS(newweapon), F_ITEM, 0},
+	{NULL, 0, F_INT, 0}
 };
 
 field_t		castmemoryfields[] =
 {
-	{"response", CMOFS(response), F_FUNCTION},
-	{"next", CMOFS(next), F_CAST_MEMORY},
-	{"prev", CMOFS(prev), F_CAST_MEMORY},
+	{"response", CMOFS(response), F_FUNCTION, 0},
+	{"next", CMOFS(next), F_CAST_MEMORY, 0},
+	{"prev", CMOFS(prev), F_CAST_MEMORY, 0},
 
-	{NULL, 0, F_INT}
+	{NULL, 0, F_INT, 0}
 };
 
 /*
