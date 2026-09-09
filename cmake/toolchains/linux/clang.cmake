@@ -23,7 +23,9 @@ elseif(NOT DEFINED CMAKE_C_COMPILER)
 endif()
 
 # The retail engine that dlopens this library is i386; a 64-bit build cannot be loaded.
-set(CMAKE_C_FLAGS_INIT "-m32")
+# -mstackrealign: the 1999 engine calls in on a 4-byte-aligned stack, but the compiler assumes
+# the modern 16-byte ABI, so an aligned SSE spill (movapd) faults. Costs a prologue, not optional.
+set(CMAKE_C_FLAGS_INIT "-m32 -mstackrealign")
 set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-m32")
 
