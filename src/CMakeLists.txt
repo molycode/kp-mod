@@ -23,6 +23,8 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	target_link_libraries(${KP_TARGET_NAME} PRIVATE m)
 	# game.map is the Linux counterpart of game.def: the engine dlsym()s GetGameAPI and nothing else.
 	target_link_options(${KP_TARGET_NAME} PRIVATE "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/game.map")
+	# Savegames are stamped with the build id, so it must be present even if the linker defaults it off.
+	target_link_options(${KP_TARGET_NAME} PRIVATE "-Wl,--build-id=sha1")
 else()
 	message(FATAL_ERROR "Unsupported platform '${CMAKE_SYSTEM_NAME}'. Add it to src/CMakeLists.txt.")
 endif()

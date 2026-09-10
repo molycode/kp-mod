@@ -1,5 +1,13 @@
 
+#ifndef _WIN32
+#define _GNU_SOURCE		// dl_iterate_phdr
+#endif // !_WIN32
+
 #include "g_local.h"
+
+#ifndef _WIN32
+#include <link.h>
+#endif // !_WIN32
 
 #define Function(f) {#f, f}
 
@@ -659,6 +667,99 @@ void ReadClient (FILE *f, gclient_t *client)
 	}
 }
 
+#ifndef _WIN32
+typedef struct
+{
+	byte const	*id;
+	int			len;
+} buildid_t;
+
+static byte const *G_ScanNotes (ElfW(Addr) base, ElfW(Phdr) const *seg, int *len)
+{
+	byte const	*p = (byte const *)(base + seg->p_vaddr);
+	byte const	*end = p + seg->p_filesz;
+	byte const	*id = NULL;
+
+	while (id == NULL && (size_t)(end - p) >= sizeof(ElfW(Nhdr)))
+	{
+		ElfW(Nhdr) const	*note = (ElfW(Nhdr) const *)p;
+		byte const			*name = p + sizeof(*note);
+		byte const			*desc = name + ((note->n_namesz + 3) & ~3u);
+
+		if (note->n_type == NT_GNU_BUILD_ID && note->n_namesz == 4 && memcmp (name, "GNU", 4) == 0)
+		{
+			id = desc;
+			*len = (int)note->n_descsz;
+		}
+		else
+			p = desc + ((note->n_descsz + 3) & ~3u);
+	}
+
+	return id;
+}
+
+static int G_FindBuildId (struct dl_phdr_info *info, size_t size, void *data)
+{
+	buildid_t	*out = (buildid_t *)data;
+	ElfW(Addr)	self = (ElfW(Addr))(size_t)InitGame;
+	qboolean	isSelf = false;
+	int			i;
+
+	for (i = 0; i < (int)info->dlpi_phnum; i++)
+	{
+		ElfW(Phdr) const	*seg = &info->dlpi_phdr[i];
+		ElfW(Addr)			start = info->dlpi_addr + seg->p_vaddr;
+
+		if (seg->p_type == PT_LOAD && self >= start && self < start + seg->p_memsz)
+			isSelf = true;
+	}
+
+	for (i = 0; isSelf && out->id == NULL && i < (int)info->dlpi_phnum; i++)
+	{
+		ElfW(Phdr) const	*seg = &info->dlpi_phdr[i];
+
+		if (seg->p_type == PT_NOTE)
+			out->id = G_ScanNotes (info->dlpi_addr, seg, &out->len);
+	}
+
+	return isSelf;
+}
+#endif // !_WIN32
+
+/*
+============
+G_SaveStamp
+
+Function pointers are saved as offsets from InitGame, so a save is readable only by the exact
+binary that wrote it. __DATE__ cannot separate two builds, as it freezes at whenever this one
+file was last compiled.
+============
+*/
+static char const *G_SaveStamp (void)
+{
+	static char	stamp[16];
+
+	if (stamp[0] == 0)
+	{
+#ifdef _WIN32
+		strcpy (stamp, __DATE__);
+#else
+		buildid_t	build = { NULL, 0 };
+		int			i;
+
+		dl_iterate_phdr (G_FindBuildId, &build);
+
+		if (build.id == NULL)
+			gi.error ("G_SaveStamp: this game library was linked without a GNU build id");
+
+		for (i = 0; i < build.len && (i * 2) + 2 < (int)sizeof(stamp); i++)
+			sprintf (stamp + (i * 2), "%02x", build.id[i]);
+#endif // _WIN32
+	}
+
+	return stamp;
+}
+
 /*
 ============
 WriteGame
@@ -687,7 +788,7 @@ void WriteGame (char *filename, qboolean autosave)
 		gi.error ("Couldn't open %s", filename);
 
 	memset (str, 0, sizeof(str));
-	strcpy (str, __DATE__);
+	strcpy (str, G_SaveStamp());
 	fwrite (str, sizeof(str), 1, f);
 
 	game.autosaved = autosave;
@@ -713,10 +814,10 @@ void ReadGame (char *filename)
 		gi.error ("Couldn't open %s", filename);
 
 	fread (str, sizeof(str), 1, f);
-	if (strcmp (str, __DATE__))
+	if (strcmp (str, G_SaveStamp()))
 	{
 		fclose (f);
-		gi.error ("Savegame from an older version.\n");
+		gi.error ("Savegame was written by a different build of the game library.\n");
 	}
 
 	g_edicts =  gi.TagMalloc (game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
