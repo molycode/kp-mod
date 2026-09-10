@@ -1972,32 +1972,29 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 	s = Info_ValueForKey (userinfo, "name");
 	strncpy (ent->client->pers.netname, s, sizeof(ent->client->pers.netname)-1);
 
-	// check maxrate
+	// check rate limits
 	s = Info_ValueForKey (userinfo, "rate");
-	if (s)
+	rate = atoi(s);
+
+	if (rate > (int)maxrate->value)
 	{
-		rate = atoi(s);
+		edict_t *thinker;
 
-		if (rate > (int)maxrate->value)
-		{
-			edict_t *thinker;
+		thinker = G_Spawn();
+		thinker->think = maxrate_think;
+		thinker->nextthink = level.time + 2 + random()*2;
+		thinker->owner = ent;
+		Info_SetValueForKey( userinfo, "rate", va("%i", (int)maxrate->value) );
+	}
+	else if (rate < (int)minrate->value)
+	{
+		edict_t *thinker;
 
-			thinker = G_Spawn();
-			thinker->think = maxrate_think;
-			thinker->nextthink = level.time + 2 + random()*2;
-			thinker->owner = ent;
-			Info_SetValueForKey( userinfo, "rate", va("%i", (int)maxrate->value) );
-		}
-		else if (rate < (int)minrate->value)
-		{
-			edict_t *thinker;
-
-			thinker = G_Spawn();
-			thinker->think = minrate_think;
-			thinker->nextthink = level.time + 2 + random()*2;
-			thinker->owner = ent;
-			Info_SetValueForKey( userinfo, "rate", va("%i", (int)minrate->value) );
-		}
+		thinker = G_Spawn();
+		thinker->think = minrate_think;
+		thinker->nextthink = level.time + 2 + random()*2;
+		thinker->owner = ent;
+		Info_SetValueForKey( userinfo, "rate", va("%i", (int)minrate->value) );
 	}
 
 	// set skin
