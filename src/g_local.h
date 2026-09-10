@@ -687,6 +687,7 @@ extern	cvar_t	*maxentities;
 extern	cvar_t	*deathmatch;
 
 extern	cvar_t	*maxrate;
+extern	cvar_t	*minrate;
 
 extern	cvar_t	*coop;
 extern	cvar_t	*dmflags;

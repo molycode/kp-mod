@@ -365,6 +365,8 @@ void InitGame (void)
 	developer = gi.cvar ("developer", "0", 0);
 
 	maxrate = gi.cvar ("maxrate", "25000", CVAR_SERVERINFO);
+	// The engine clamps rate at 15000, so this floor just disables its snapshot throttle.
+	minrate = gi.cvar ("minrate", "15000", CVAR_SERVERINFO);
 
 	ai_debug_memory = gi.cvar ("ai_debug_memory", "0", 0);
 

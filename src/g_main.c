@@ -42,6 +42,7 @@ cvar_t	*g_select_empty;
 cvar_t	*dedicated;
 
 cvar_t	*maxrate;
+cvar_t	*minrate;
 
 cvar_t	*filterban;
 
