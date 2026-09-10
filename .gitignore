@@ -52,6 +52,7 @@ Thumbs.db
 .cache/
 
 # Claude Code — commands are shared through the repo; the personal layer is not
+CLAUDE.md
 CLAUDE.local.md
 .mcp.json
 .claude/*.json
