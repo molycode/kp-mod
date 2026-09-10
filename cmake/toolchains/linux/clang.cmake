@@ -22,10 +22,22 @@ elseif(NOT DEFINED CMAKE_C_COMPILER)
 	set(CMAKE_C_COMPILER "clang")
 endif()
 
+# The project is C-only, but an IDE's preset probe generates a project that enables CXX by default,
+# so the toolchain has to describe a working C++ compiler too or that probe fails and the presets
+# never appear.
+if(KP_CLANG_PATH)
+	set(CMAKE_CXX_COMPILER "${KP_CLANG_PATH}/bin/clang++" CACHE FILEPATH "" FORCE)
+elseif(NOT DEFINED CMAKE_CXX_COMPILER)
+	set(CMAKE_CXX_COMPILER "clang++")
+endif()
+
 # The retail engine that dlopens this library is i386; a 64-bit build cannot be loaded.
 # -mstackrealign: the 1999 engine calls in on a 4-byte-aligned stack, but the compiler assumes
 # the modern 16-byte ABI, so an aligned SSE spill (movapd) faults. Costs a prologue, not optional.
 set(CMAKE_C_FLAGS_INIT "-m32 -mstackrealign")
+# The linker flags below are language-agnostic, so C++ must be built 32-bit as well or it produces
+# a 64-bit object against a 32-bit link.
+set(CMAKE_CXX_FLAGS_INIT "-m32 -mstackrealign")
 set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-m32")
 
@@ -47,3 +59,4 @@ else()
 endif()
 
 message(STATUS "CMAKE_C_COMPILER = ${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_CXX_COMPILER = ${CMAKE_CXX_COMPILER}")
