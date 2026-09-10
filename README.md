@@ -5,16 +5,22 @@ The game library for *Kingpin: Life of Crime*, built from Xatrix's released SDK.
 - **Windows** — `gamex86.dll`, via `create-solution-vs2022-win32.bat` (requires CMake on `PATH`).
 - **Linux** — `gamei386.so`, loaded by the retail `kingpin.x86`.
 
+> The `windows-msvc-*` presets are **not** a substitute for that batch file: they build 64-bit,
+> which the i386 engine cannot load. See `todo.md`.
+
 ## Building on Linux
 
 ```bash
-cmake --preset linux-gcc_16-debug
-cmake --build --preset linux-gcc_16-debug
+cmake --preset linux-gcc-debug
+cmake --build --preset linux-gcc-debug
 ```
 
-Presets: `linux-gcc_16-{debug,release}`, `linux-clang_22-{debug,release}`. Compiler roots come from
-`KP_GCC_PATH` / `KP_CLANG_PATH`, set in the gitignored `CMakeUserPresets.json`. CMake 4.3.2 or newer
-is required.
+Presets: `linux-gcc-{debug,release}` and `linux-clang-{debug,release}`, which use whichever GCC or
+Clang is on `PATH`. CMake 4.3.2 or newer is required.
+
+To build against a toolchain that is not on `PATH`, point `KP_GCC_PATH` or `KP_CLANG_PATH` at its
+installation root and add your own presets inheriting the ones above, in `CMakeUserPresets.json`
+(gitignored).
 
 > Changing anything in `cmake/toolchains/` requires deleting `build/` first. `CMAKE_C_FLAGS_INIT`
 > only seeds the cache on a build tree's **first** configure, so an existing tree silently keeps the
