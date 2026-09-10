@@ -2,7 +2,6 @@ set(KP_TARGET_NAME "KpGame")
 
 file(GLOB KP_HEADER_FILES CONFIGURE_DEPENDS "*.h")
 file(GLOB KP_SOURCE_FILES CONFIGURE_DEPENDS "*.c")
-file(GLOB KP_NAVLIB_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/external/navlib/*.c")
 
 source_group("Header" FILES ${KP_HEADER_FILES})
 source_group("Source" FILES ${KP_SOURCE_FILES})
@@ -14,15 +13,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	target_link_libraries(${KP_TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/navlib/navlib.lib" "winmm.lib")
 	target_link_options(${KP_TARGET_NAME} PRIVATE "/NODEFAULTLIB:libc.lib" "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/game.def")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	# navlib.lib is MSVC-only, so Linux builds the reconstruction in external/ instead. It is its own
-	# target so the IDE lists it apart from our sources and the warning suppression applies to it
-	# alone; an OBJECT library rather than a static one, so every member is linked in unconditionally.
-	add_library(KpNavLib OBJECT ${KP_NAVLIB_FILES})
-	set_target_properties(KpNavLib PROPERTIES POSITION_INDEPENDENT_CODE ON)
-	target_include_directories(KpNavLib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-	KpApplyCompileFlags(KpNavLib)
-	KpSuppressExternalWarnings(KpNavLib)
-
 	add_library(${KP_TARGET_NAME} SHARED ${KP_HEADER_FILES} ${KP_SOURCE_FILES})
 	set_target_properties(${KP_TARGET_NAME} PROPERTIES OUTPUT_NAME "gamei386" PREFIX "")
 	target_include_directories(${KP_TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -50,11 +40,7 @@ endif()
 
 KpApplyCompileFlags(${KP_TARGET_NAME})
 
-# The SDK headers define globals without extern; GCC 10 flipped this default. navlib includes those
-# headers too, so it needs the same treatment.
+# The SDK headers define globals without extern; GCC 10 flipped this default.
 if(NOT MSVC)
 	target_compile_options(${KP_TARGET_NAME} PRIVATE -fcommon)
-	if(TARGET KpNavLib)
-		target_compile_options(KpNavLib PRIVATE -fcommon)
-	endif()
 endif()
