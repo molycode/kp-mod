@@ -916,7 +916,6 @@ void cast_fire_rocket (edict_t *self, vec3_t start, vec3_t dir, int damage, int 
 void cast_fire_railgun (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int flashtype);
 void cast_fire_bfg (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int speed, int kick, float damage_radius, int flashtype);
 void think_checkedges (edict_t *ent);
-void think_slide (edict_t *ent);
 void fire_fire (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int speed, int effect, qboolean hyper);
 qboolean DeathByGib( edict_t *self, edict_t *inflictor, edict_t *attacker, float damage );
 
