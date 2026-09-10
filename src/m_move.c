@@ -108,7 +108,7 @@ void think_checkedges (edict_t *ent)
 	int		x, y;
 	float	mid, bottom, stepsize;
 	vec3_t	oldmins, oldmaxs;
-	int		currentcorner, fall;
+	int		fall;
 	
 	stepsize = 8;
 	fall = 0;
@@ -218,7 +218,7 @@ realcheck:
 	{
 		vec3_t move, forward, right, up, newvec;
 		int speed = 140;
-		int nocorner[5] = {0, 0, 0, 0, 0};
+		int nocorner[4] = {0, 0, 0, 0};
 		
 		// Stop any drag sound
 		ent->s.sound = 0;
@@ -234,14 +234,10 @@ realcheck:
 		VectorAdd (ent->s.origin, oldmins, mins);
 		VectorAdd (ent->s.origin, oldmaxs, maxs);
 		
-		currentcorner = 0;
-		
 		for	(x=0 ; x<=1 ; x++)
 		{
 			for	(y=0 ; y<=1 ; y++)
 			{
-				currentcorner++;
-				
 				start[0] = stop[0] = x ? maxs[0] : mins[0];
 				start[1] = stop[1] = y ? maxs[1] : mins[1];
 				
@@ -251,29 +247,29 @@ realcheck:
 					bottom = trace.endpos[2];
 				if (trace.fraction == 1.0 || mid - trace.endpos[2] > stepsize)
 				{
-					nocorner[currentcorner] = 1;
+					nocorner[(x << 1) | y] = 1;
 				}
 			}
 		}
 		
 		VectorClear(move);
 		
-		if (nocorner[1])
+		if (nocorner[0])
 		{
 			VectorSet(newvec, -1.0, -1, 0);
 			VectorAdd(move, newvec ,move);
 		}
-		if (nocorner[2])
+		if (nocorner[1])
 		{
 			VectorSet(newvec, -1, 1, 0);
 			VectorAdd(move, newvec ,move);
 		}
-		if (nocorner[3])
+		if (nocorner[2])
 		{
 			VectorSet(newvec, 1, -1.0, 0);
 			VectorAdd(move, newvec ,move);
 		}
-		if (nocorner[0])
+		if (nocorner[3])
 		{
 			VectorSet(newvec, 1, 1, 0);
 			VectorAdd(move, newvec ,move);
