@@ -6,12 +6,14 @@ endfunction()
 
 # External sources compiled into a Kingpin target. They are loose .c files rather than their own
 # build, so the suppression is per source file instead of per target.
-function(KpSuppressExternalWarnings)
-	if(MSVC)
-		set(suppress "/w")
-	else()
-		set(suppress "-w")
+function(KpSuppressExternalWarnings target_name)
+	if(NOT TARGET ${target_name})
+		message(FATAL_ERROR "KpSuppressExternalWarnings: '${target_name}' is not a target")
 	endif()
 
-	set_source_files_properties(${ARGN} PROPERTIES COMPILE_OPTIONS "${suppress}")
+	if(MSVC)
+		target_compile_options(${target_name} PRIVATE /w)
+	else()
+		target_compile_options(${target_name} PRIVATE -w)
+	endif()
 endfunction()
