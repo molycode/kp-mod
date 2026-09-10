@@ -25,6 +25,19 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	target_link_options(${KP_TARGET_NAME} PRIVATE "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/game.map")
 	# Savegames are stamped with the build id, so it must be present even if the linker defaults it off.
 	target_link_options(${KP_TARGET_NAME} PRIVATE "-Wl,--build-id=sha1")
+
+	# Only GCC produces a ship/ artifact: a Clang build is a diagnostic second opinion, never the
+	# released library. The stripped copy keeps the built one's build id, so a crash in the shipped
+	# library symbolises against the symbols left beside it.
+	if(CMAKE_BUILD_TYPE STREQUAL "Release" AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+		set(KP_SHIP_DIR "$<TARGET_FILE_DIR:${KP_TARGET_NAME}>/ship")
+		add_custom_command(TARGET ${KP_TARGET_NAME} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory "${KP_SHIP_DIR}"
+			COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${KP_TARGET_NAME}>" "${KP_SHIP_DIR}/$<TARGET_FILE_NAME:${KP_TARGET_NAME}>"
+			COMMAND ${CMAKE_STRIP} --strip-all "${KP_SHIP_DIR}/$<TARGET_FILE_NAME:${KP_TARGET_NAME}>"
+			COMMENT "Stripping the shipping library into ship/"
+			VERBATIM)
+	endif()
 else()
 	message(FATAL_ERROR "Unsupported platform '${CMAKE_SYSTEM_NAME}'. Add it to src/CMakeLists.txt.")
 endif()

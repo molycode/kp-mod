@@ -43,6 +43,23 @@ Clang still earns its place: it reports diagnostics GCC does not, and has alread
 defects here (including an operator-precedence bug in the auto-reload condition). Build both, fix
 what either reports, and ship the GCC artifact.
 
+### The shipping artifact
+
+A GCC **Release** build also writes a stripped copy to `build/<preset>/src/ship/gamei386.so`. That
+is the file to ship; the unstripped library beside it is the one to keep.
+
+| | bytes |
+|---|---|
+| built (`-g`, full symbols) | 3,407,788 |
+| shipped (`ship/`, stripped) | 1,358,452 |
+
+Debug info is 54% of the built file, and stripping removes no code — only `GetGameAPI` is exported
+either way. Both carry the **same GNU build id**, which is what makes the pair useful: a crash in a
+shipped library symbolises against the unstripped copy, and savegames written by one load in the
+other, since the savegame stamp is that build id (see `G_SaveStamp` in `g_save.c`).
+
+Clang Release deliberately produces no `ship/` directory.
+
 ## Why `-mstackrealign` is mandatory
 
 `kingpin.x86` is a 1999 binary that calls into this library on a **4-byte-aligned** stack. Modern
