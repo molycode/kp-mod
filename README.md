@@ -2,7 +2,7 @@
 
 The game library for *Kingpin: Life of Crime*, built from Xatrix's released SDK.
 
-- **Windows** — `gamex86.dll`, via the `create-solution-vs20XX-win32.bat` scripts (requires CMake on `PATH`).
+- **Windows** — `gamex86.dll`, via `create-solution-vs2022-win32.bat` (requires CMake on `PATH`).
 - **Linux** — `gamei386.so`, loaded by the retail `kingpin.x86`.
 
 ## Building on Linux

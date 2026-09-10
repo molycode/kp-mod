@@ -3,6 +3,29 @@
 Work that is understood but parked, because it cannot be finished or verified in the environment
 it was found in. Each item states what is known, what is only predicted, and what would settle it.
 
+## Windows: the MSVC presets build the wrong architecture
+
+The library is loaded by a 1999 i386 engine, so it must be 32-bit. `create-solution-vs2022-win32.bat`
+gets this right by passing `-A Win32` to the Visual Studio generator. The `windows-msvc-debug` and
+`windows-msvc-release` presets do not: they use the Ninja generator, where the target architecture
+comes from whichever developer prompt the build runs in, and their own `description` says to use the
+**x64** Native Tools prompt. Following them produces a 64-bit `gamex86.dll` that the engine cannot
+load.
+
+`CMAKE_SYSTEM_PROCESSOR x86` in `cmake/toolchains/windows/msvc.cmake` does not help — with Ninja it
+is informational and selects nothing.
+
+Two ways to fix it, untested either way because Windows is not currently built:
+
+- switch the presets to the Visual Studio generator and set `"architecture": { "value": "Win32" }`,
+  matching what the `.bat` does; or
+- keep Ninja and correct the description to the **x86** Native Tools prompt, accepting that the
+  preset is then only as right as the shell it is run from.
+
+The first is the safer of the two: it does not depend on the operator picking the right prompt.
+Until one of them is done, the `.bat` script is the only correct Windows entry point, which is why
+it is still in the tree.
+
 ## Windows: savegame build identity
 
 The Linux half of this landed in `4a79272`. The Windows half is untouched, and Windows is not
