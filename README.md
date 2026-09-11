@@ -85,5 +85,8 @@ and it buys nothing on 1999 game logic while restricting the library to AVX2 CPU
 MIT-licensed reconstruction of the original `navlib`, vendored as a git subtree. It replaces the
 MSVC-only `navlib.lib` on Linux and is compiled with warnings suppressed, as external code.
 
-*Kingpin: Life of Crime and related intellectual property remain the property of their respective
-owners.*
+## Licensing
+
+Four layers with different owners: the 1999 SDK (Xatrix/Interplay), id Software's Quake II, the
+MIT NavLib reconstruction, and this repository's own changes. Only the last is licensed here.
+Read [`LICENSE`](LICENSE) before redistributing anything built from this tree.

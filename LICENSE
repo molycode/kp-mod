@@ -1,0 +1,134 @@
+Kingpin: Life of Crime game library — licensing
+===============================================
+
+This repository contains code from four sources with different owners and
+different terms. Read this before copying, redistributing, or shipping anything
+built from it.
+
+Nothing in this repository grants you rights to Xatrix's or Interplay's code.
+The repository owner has no authority to grant them and does not purport to.
+Only section 4 is an actual licence grant, and it covers a small part of the
+tree: the repository owner's own contributions, not the SDK code they were made
+to.
+
+
+1. The Kingpin SDK — Xatrix Entertainment / Interplay Productions
+-----------------------------------------------------------------
+
+Copyright (c) 1999 Xatrix Entertainment, Inc. and Interplay Productions.
+All rights reserved.
+
+Almost everything in src/ originates in the Kingpin: Life of Crime game-source
+SDK, released by Xatrix in September 1999 as kpsdk.zip. That archive shipped one
+terms document, sdk/readme.txt, which is the retail game's end-user licence with
+a single phrase changed ("This copy of Kingpin: Life of Crime" became "This SDK
+for Kingpin: Life of Crime"). Its operative clause reads, verbatim:
+
+    This SDK for Kingpin: Life of Crime (the "Software") is intended solely for
+    your personal noncommercial home entertainment use. You may not decompile,
+    reverse engineer, or disassemble the Software, except as permitted by law.
+    Interplay Productions, Xatrix, and Id Software retain[s] all right, title
+    and interest in the Software including all intellectual property rights
+    embodied therein and derivatives thereof.  The Software, including, without
+    limitation, all code, data structures, characters, images, sounds, text,
+    screens, game play, derivative works and all other elements of the Software
+    may not be copied, resold, rented, leased, distributed (electronically or
+    otherwise), used on pay-per-play, coin-op or other for-charge basis, or for
+    any commercial purpose. Any permissions granted herein are provided on a
+    temporary basis and can be withdrawn by Interplay Productions at any time.
+    All rights not expressly granted are reserved.
+
+The same file opens by describing the SDK as "a bare-bones compilation of the
+tools necessary to create user modifications to Kingpin", and Xatrix promoted it
+at release as being for exactly that. Those two statements have never been
+reconciled by the rights holders, and no permission to redistribute modified SDK
+source or compiled game libraries has ever been granted in writing. None is
+claimed here.
+
+The gamesrc/ subtree of kpsdk.zip, which is what this repository was seeded
+from, does not itself contain that readme — it sits one directory above.
+
+
+2. id Software Quake II — attribution restored
+-----------------------------------------------
+
+Copyright (C) 1997-2001 Id Software, Inc.
+
+Kingpin is built on Quake II, and much of the SDK is id's game source with
+Kingpin code layered on top. Measured at commit 008a609 (2026-09-11) against
+id's released Quake II game/ directory: 26 files here have an id counterpart,
+and 13,498 lines — 16.1% of the source at that commit — are line-identical to
+id's code.
+
+None of those files carries id's copyright notice. Xatrix removed the notices in
+1999, when they held a commercial engine licence from id and no obligation to
+keep them. This section restores the attribution.
+
+On 2001-12-21, after Kingpin shipped, id released the Quake II source including
+the game/ directory under the GNU General Public License version 2. That release
+is the place to obtain id's code under free terms:
+
+    https://github.com/id-Software/Quake-2
+
+It does not place this repository, or Xatrix's Kingpin code, under the GPL. The
+id-derived lines here arrived via Xatrix's 1999 SDK under section 1's terms, not
+via id's 2001 GPL release.
+
+
+3. NavLib reconstruction — MIT
+-------------------------------
+
+Copyright (c) 2026 FREDZ
+
+external/navlib/ is a clean reconstruction of the SDK's binary-only NavLib.lib,
+licensed MIT. Its full licence text is at external/navlib/LICENSE and must be
+retained. Upstream: https://github.com/drFredz/Kingpin_NavLib
+
+
+4. Modifications and build system — MIT
+----------------------------------------
+
+Copyright (c) 2026 moly
+
+This section covers only the parts of this repository that are the repository
+owner's own work, namely:
+
+  - the build system and documentation — everything in this repository that is
+    not SDK source or vendored third-party code
+  - the changes made to the SDK sources in src/, as recorded in this
+    repository's git history
+
+It does not, and cannot, cover the SDK code those changes were made to.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+In practice
+-----------
+
+You need a legitimate copy of Kingpin: Life of Crime to use anything built here;
+the game library is useless without the retail engine and game data.
+
+Building this for your own use is what the SDK was published for. Redistributing
+it — the source or a compiled gamei386.so / gamex86.dll — is not covered by any
+permission the rights holders have given, however common the practice has been
+since 1999.
+
+If you are a rights holder and want something here changed or removed, open an
+issue and it will be dealt with.
