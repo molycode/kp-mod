@@ -757,7 +757,7 @@ if (!deathmatch->value)
 
 			num_followers++;
 
-			if (num_followers > MAX_FOLLOWERS)
+			if (num_followers >= MAX_FOLLOWERS)
 				break;
 		}
 	}
