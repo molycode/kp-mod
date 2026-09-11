@@ -576,6 +576,22 @@ extern edict_t	*mdx_bbox[];
 
 void AI_ProcessCombat (void);
 
+/*
+=================
+AnyClientsConnected
+=================
+*/
+static qboolean AnyClientsConnected (void)
+{
+	int			i;
+	qboolean	connected = false;
+
+	for (i=0 ; i<maxclients->value && !connected ; i++)
+		connected = game.clients[i].pers.connected;
+
+	return connected;
+}
+
 void G_RunFrame (void)
 {
 	int i;
@@ -585,6 +601,10 @@ void G_RunFrame (void)
 	level.time = level.framenum*FRAMETIME;
 
 	// exit intermissions
+
+	// Nothing will press a button on an empty server, so the map cycle would stall here.
+	if (level.intermissiontime && !AnyClientsConnected ())
+		level.exitintermission = true;
 
 	if (level.exitintermission)
 	{
