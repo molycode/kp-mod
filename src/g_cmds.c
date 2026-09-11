@@ -456,7 +456,8 @@ void Cmd_Join_f (edict_t *self, char *teamcmd)
 		return;
 	}
 
-	strcpy( varteam, teamcmd );
+	strncpy( varteam, teamcmd, sizeof(varteam)-1 );
+	varteam[sizeof(varteam)-1] = 0;
 
 	// search for the team-name
 
