@@ -1618,6 +1618,8 @@ void SP_worldspawn (edict_t *ent)
 	else
 		strncpy (level.level_name, level.mapname, sizeof(level.level_name));
 
+	level.level_name[sizeof(level.level_name)-1] = 0;
+
 	gi.configstring (CS_DENSITY, va("%f", st.fogdensity));
 	gi.configstring (CS_FOGVAL, va("%f %f %f", st.fogval[0], st.fogval[1], st.fogval[2]));
 
