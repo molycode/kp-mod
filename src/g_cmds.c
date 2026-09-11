@@ -269,7 +269,8 @@ void Vote_Ban( edict_t *ent, char *name )
 		return;
 	}
 
-	strcpy( ban_ip, ip );
+	strncpy( ban_ip, ip, sizeof(ban_ip)-1 );
+	ban_ip[sizeof(ban_ip)-1] = 0;
 
 	ent->client->resp.ban_id = ++ban_id;
 	ent->client->resp.last_ban = level.time;
