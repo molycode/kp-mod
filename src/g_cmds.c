@@ -841,7 +841,7 @@ void Cmd_Spawn_f (edict_t *ent)
 	spawn = G_Spawn();
 
 	name = gi.args ();
-	spawn->classname = gi.TagMalloc(sizeof(name)+1, TAG_LEVEL);
+	spawn->classname = gi.TagMalloc(strlen(name)+1, TAG_LEVEL);
 	strcpy( spawn->classname, name );
 
 	AngleVectors( ent->s.angles, forward, NULL, NULL);
