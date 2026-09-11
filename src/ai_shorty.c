@@ -1344,7 +1344,7 @@ void SP_cast_shorty(edict_t *self)
 
 	if (!self->art_skins)
 	{	// use default skins
-		self->art_skins = "001 001 001";
+		self->art_skins = G_CopyString("001 001 001");
 	}
 
 	if (self->art_skins)
