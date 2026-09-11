@@ -730,7 +730,8 @@ void ED_CallSpawn (edict_t *ent)
 if (!Q_stricmp( ent->classname, "weapon_barmachinegun" ))
 {
 gi.dprintf("Hacking old BAR machine gun to grenade launcher for KPDM1-cash.bsp\n" );
-sprintf( ent->classname, "weapon_grenadelauncher" );
+ent->classname = gi.TagMalloc(sizeof("weapon_grenadelauncher"), TAG_LEVEL);
+strcpy( ent->classname, "weapon_grenadelauncher" );
 }
 
 
