@@ -101,3 +101,45 @@ around `save` and `load`, which kept the playable install untouched. The two cas
 
 - a save written by a different build must be refused with a message and no crash,
 - a save written by the same build must still load.
+
+## Windows: navlib is built from source but has never been compiled there
+
+`src/navlib/navlib.lib` is gone. Both platforms now compile the reconstruction in `external/navlib`
+and link it as `KpNavLib`. **Linux is verified byte-identical across this change** — `.text` is
+unchanged and the stripped library differs only in its build id — but **no part of the Windows path
+has been built**, because Windows is not currently built or played.
+
+### Why the blob went
+
+It was the SDK's binary-only NavLib: Xatrix never released its source, which is why
+[drFredz/Kingpin_NavLib](https://github.com/drFredz/Kingpin_NavLib) exists. Keeping it meant the two
+platforms ran different navigation code, and it was the only piece of Xatrix object code in the
+tree.
+
+`/NODEFAULTLIB:libc.lib` was removed with it. That flag existed solely to suppress the blob's VC6
+CRT reference — the archive carries `-defaultlib:LIBC -defaultlib:OLDNAMES` — and nothing else in
+the tree pulls `libc.lib`.
+
+### Predicted, not verified — confirm in this order
+
+1. **MSVC compiles `external/navlib`.** Likely: `g_nav_io.c` already guards `<direct.h>` behind
+   `#ifdef _WIN32`, `external/CMakeLists.txt` already guards `-fcommon` behind `if(NOT MSVC)`, and
+   upstream ships a Code::Blocks project claiming Visual C++ 6.0 compatible settings. None of that
+   has been run through a compiler.
+2. **The link resolves.** On Linux it does — `KpNavLib` is an OBJECT library, so nothing is dropped
+   lazily and every symbol `src/` references is satisfied. MSVC should behave the same, but the
+   1999 blob may have exported symbols the reconstruction does not.
+3. **`/NODEFAULTLIB:libc.lib` really is dead.** If the link fails looking for `libc.lib`, something
+   else is dragging it in and the flag goes back.
+4. **Navigation behaves.** Loading a `.nav` file and watching monsters path is the real test; a
+   clean link proves only that the symbols exist.
+
+Build via `create-solution-vs2022-win32.bat`, not the `windows-msvc-*` presets — see the
+architecture item above.
+
+### If it cannot be made to work
+
+The blob is recoverable from this repository's history (`git show 3c8a724^:src/navlib/navlib.lib`)
+or from `kpsdk.zip`. Restoring it means restoring `/NODEFAULTLIB:libc.lib` and re-guarding
+`add_subdirectory(external)` to Linux — but prefer fixing the reconstruction, so that both platforms
+run the same navigation code.

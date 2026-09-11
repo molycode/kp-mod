@@ -83,7 +83,8 @@ and it buys nothing on 1999 game logic while restricting the library to AVX2 CPU
 
 `external/navlib` is [drFredz/Kingpin_NavLib](https://github.com/drFredz/Kingpin_NavLib), an
 MIT-licensed reconstruction of the original `navlib`, vendored as a git subtree. It replaces the
-MSVC-only `navlib.lib` on Linux and is compiled with warnings suppressed, as external code.
+SDK's binary-only `navlib.lib` on both platforms and is compiled with warnings suppressed, as
+external code.
 
 ## Licensing
 

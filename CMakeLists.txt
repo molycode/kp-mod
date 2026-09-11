@@ -17,9 +17,6 @@ if(NOT TARGET KpCompileFlags)
 	include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compile_flags.cmake)
 endif()
 
-# navlib.lib is MSVC-only, so only Linux builds the reconstruction in external/.
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	add_subdirectory(external)
-endif()
+add_subdirectory(external)
 
 add_subdirectory(src)
