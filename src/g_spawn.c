@@ -1606,7 +1606,10 @@ void SP_worldspawn (edict_t *ent)
 	SetItemNames ();
 
 	if (st.nextmap)
-		strcpy (level.nextmap, st.nextmap);
+	{
+		strncpy (level.nextmap, st.nextmap, sizeof(level.nextmap)-1);
+		level.nextmap[sizeof(level.nextmap)-1] = 0;
+	}
 
 	// make some data visible to the server
 
