@@ -2031,7 +2031,8 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 			};
 
 		// make sure they are using one of the standard models
-		strcpy( tempstr, s );
+		strncpy( tempstr, s, sizeof(tempstr)-1 );
+		tempstr[sizeof(tempstr)-1] = 0;
 		skin = strrchr( tempstr, '/' );
 
 		if (!skin)
