@@ -1321,6 +1321,12 @@ void SP_cast_whore(edict_t *self)
 	VectorSet (self->mins, -16, -16, -24);
 	VectorSet (self->maxs,  16,  16,  48);
 
+	if (self->art_skins && strlen(self->art_skins) != 11)
+	{	// the three skin numbers are read at fixed offsets, so a short one would be read past
+		gi.dprintf ("SP_cast_whore: art_skins \"%s\" is not 11 characters, ignored\n", self->art_skins);
+		self->art_skins = NULL;
+	}
+
 	if (!self->art_skins)
 	{	// use default skins
 		self->art_skins = G_CopyString("001 001 001");

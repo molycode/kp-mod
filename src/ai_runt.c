@@ -1267,6 +1267,12 @@ void SP_cast_runt (edict_t *self)
 
 	self->s.skinnum = (self->skin-1) * 3;
 
+	if (self->art_skins && strlen(self->art_skins) != 11)
+	{	// the three skin numbers are read at fixed offsets, so a short one would be read past
+		gi.dprintf ("SP_cast_runt: art_skins \"%s\" is not 11 characters, ignored\n", self->art_skins);
+		self->art_skins = NULL;
+	}
+
 	if (!self->art_skins)
 	{	// use default skins
 		self->art_skins = G_CopyString("001 001 001");
