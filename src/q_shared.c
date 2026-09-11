@@ -1451,7 +1451,8 @@ void Info_RemoveKey (char *s, char *key)
 
 		if (!strcmp (key, pkey) )
 		{
-			strcpy (start, s);	// remove this part
+			// Source and destination overlap; strcpy is UB and modern glibc corrupts it.
+			memmove (start, s, strlen(s) + 1);
 			return;
 		}
 
