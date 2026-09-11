@@ -1197,6 +1197,11 @@ void SP_cast_bitch(edict_t *self)
 		self->art_skins = NULL;
 	}
 
+	if (!self->art_skins)
+	{	// use default skins
+		self->art_skins = G_CopyString("001 001 001");
+	}
+
 	if (self->art_skins)
 	{
 		// convert spaces to NULL's
