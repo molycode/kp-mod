@@ -279,6 +279,7 @@ char *MapCycleNext( char *map )
 	int		i;
 	char	ch;
 	qboolean eof = false;
+	char	fmt[16];
 
 	game_dir = gi.cvar("game", "", 0);
 
@@ -316,8 +317,22 @@ char *MapCycleNext( char *map )
 	if (!f)	// no valid file found
 		return NULL;
 
+	// A field width is what keeps an over-long name inside the buffer; derive it from the
+	// buffer so the two cannot drift apart.
+	Com_sprintf( fmt, sizeof(fmt), "%%%ds", (int)sizeof(firstmap) - 1 );
+
 	// read in the first map
-	fscanf( f, "%s", firstmap );
+	if (fscanf( f, fmt, firstmap ) != 1)
+	{
+		gi.dprintf ("MapCycleNext: %s holds no map names\n", filename);
+		fclose (f);
+		return NULL;
+	}
+
+	if (strlen(firstmap) == sizeof(firstmap) - 1)
+		gi.dprintf ("MapCycleNext: a map name in %s reached the %i character limit and was truncated\n",
+			filename, (int)sizeof(firstmap) - 1);
+
 	strcpy( travmap, firstmap );
 	ch = 0;
 	while (ch!='\n' && !feof(f))
@@ -334,7 +349,12 @@ char *MapCycleNext( char *map )
 
 		if (!eof)
 		{
-			fscanf( f, "%s", travmap );
+			fscanf( f, fmt, travmap );
+
+			if (strlen(travmap) == sizeof(travmap) - 1)
+				gi.dprintf ("MapCycleNext: a map name in %s reached the %i character limit and was truncated\n",
+					filename, (int)sizeof(travmap) - 1);
+
 			ch = 0;
 			while (ch!='\n' && !feof(f))
 				fscanf(f, "%c", &ch);
