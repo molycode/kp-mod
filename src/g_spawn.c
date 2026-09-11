@@ -1607,6 +1607,10 @@ void SP_worldspawn (edict_t *ent)
 
 	if (st.nextmap)
 	{
+		if (strlen(st.nextmap) >= sizeof(level.nextmap))
+			gi.dprintf ("SP_worldspawn: nextmap is longer than %i characters, truncated to \"%.*s\"\n",
+				(int)sizeof(level.nextmap)-1, (int)sizeof(level.nextmap)-1, st.nextmap);
+
 		strncpy (level.nextmap, st.nextmap, sizeof(level.nextmap)-1);
 		level.nextmap[sizeof(level.nextmap)-1] = 0;
 	}
@@ -1616,6 +1620,11 @@ void SP_worldspawn (edict_t *ent)
 	if (ent->message && ent->message[0])
 	{
 		gi.configstring (CS_NAME, ent->message);
+
+		if (strlen(ent->message) >= sizeof(level.level_name))
+			gi.dprintf ("SP_worldspawn: level name is longer than %i characters, truncated\n",
+				(int)sizeof(level.level_name)-1);
+
 		strncpy (level.level_name, ent->message, sizeof(level.level_name)-1);
 	}
 	else

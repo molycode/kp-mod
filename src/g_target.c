@@ -725,6 +725,12 @@ if (!deathmatch->value)
 			if (VectorDistance( e->s.origin, activator->s.origin ) > 512)
 				continue;
 
+			if (num_followers >= MAX_FOLLOWERS)
+			{
+				gi.dprintf ("use_target_changelevel: more than %i followers qualify, the rest are left behind\n", MAX_FOLLOWERS);
+				break;
+			}
+
 			// mark them as followers
 			e->flags |= FL_FOLLOWING;
 
@@ -756,9 +762,6 @@ if (!deathmatch->value)
 			}
 
 			num_followers++;
-
-			if (num_followers >= MAX_FOLLOWERS)
-				break;
 		}
 	}
 	
