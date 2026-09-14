@@ -749,7 +749,7 @@ void CheckStillHiding( edict_t *self )
 		return;
 	}
 
-	if ((self->owner->cover_ent != self->owner->enemy) && (self->owner->cover_ent->noise_time < (level.time - 5)))
+	if (self->owner->cover_ent && (self->owner->cover_ent != self->owner->enemy) && (self->owner->cover_ent->noise_time < (level.time - 5)))
 	{	// stop hiding
 		self->owner->combat_goalent = NULL;
 		self->owner->cast_info.aiflags &= ~AI_TAKE_COVER;
