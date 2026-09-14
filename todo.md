@@ -178,11 +178,6 @@ shipped behaviour and someone comparing against a 1999 build will notice:
 
 ## Open: flagged while triaging, each a separate change
 
-- **`src/g_local.h:1577` / `src/g_save.c:82`** -- `char head;` is declared `F_INT` in the spawn table,
-  and `ED_ParseField` stores through `*(int *)`. A 4-byte write into a 1-byte member, harmless only
-  because `head` sits between a float and a 4-aligned int so the spare bytes land on padding. The
-  duplicate `{"head", ...}` entry at `g_save.c:92` is also dead. Fixing means widening the member,
-  which changes `edict_t` layout and so touches the savegame build-ABI guard.
 - **`src/g_pawn.c:349`** -- `animate_tens = true;` in the ones-digit branch looks like a copy-paste of
   the tens branch; cosmetic, masked by the `||` gate at :299.
 - **`src/g_cmds.c:2901`** -- `switch (target->key)` covers 1..11 with no default, so a map setting
