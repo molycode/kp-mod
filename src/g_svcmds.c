@@ -57,6 +57,7 @@ StringToFilter
 static qboolean StringToFilter (char *s, ipfilter_t *f)
 {
 	char	num[128];
+	int		octet;
 	int		i, j;
 	byte	b[4];
 	byte	m[4];
@@ -87,7 +88,14 @@ static qboolean StringToFilter (char *s, ipfilter_t *f)
 			num[j++] = *s++;
 		}
 		num[j] = 0;
-		b[i] = atoi(num);
+		octet = atoi(num);
+		if (octet > 255)
+		{
+			gi.cprintf(NULL, PRINT_HIGH, "Bad filter address: %s\n", s);
+			return false;
+		}
+
+		b[i] = (byte)octet;
 		if (b[i] != 0)
 			m[i] = 255;
 
