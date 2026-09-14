@@ -1315,20 +1315,21 @@ void ReadLevel (char *filename)
 		if (!strcmp(ent->classname, "func_train_rotating"))
 		{
 			float max = 0.0f, v = 0.0f;
+			int   axis;
 
-			for (i=0 ; i<3 ; i++)
+			for (axis=0 ; axis<3 ; axis++)
 			{
-				v =fabs(ent->mins[i]);
+				v =fabs(ent->mins[axis]);
 				if (v > max)
 					max = v;
-				v =fabs(ent->maxs[i]);
+				v =fabs(ent->maxs[axis]);
 				if (v > max)
 					max = v;
 			}
-			for (i=0 ; i<3 ; i++)
+			for (axis=0 ; axis<3 ; axis++)
 			{
-				ent->absmin[i] = ent->s.origin[i] - max;
-				ent->absmax[i] = ent->s.origin[i] + max;
+				ent->absmin[axis] = ent->s.origin[axis] - max;
+				ent->absmax[axis] = ent->s.origin[axis] + max;
 			}
 		}
 		// END JOSEPH		
