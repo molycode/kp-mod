@@ -893,7 +893,7 @@ void cast_triggered_spawn_use (edict_t *self, edict_t *other, edict_t *activator
 	}
 // Ridah, done.
 
-	if (activator->client && (self->spawnflags & 1))
+	if (activator && activator->client && (self->spawnflags & 1))
 		AI_MakeEnemy (self, activator, 0);
 
 	self->use = cast_use;
