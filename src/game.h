@@ -81,6 +81,15 @@ struct edict_s
 //
 // functions provided by the main engine
 //
+// gi.error never returns -- it is PF_error, which longjmps out through Com_Error. Saying so lets
+// the analyzer see that an error guard ends the path. Trailing position only, so MSVC (which
+// needs __declspec first) simply goes without.
+#if defined(__GNUC__) || defined(__clang__)
+	#define KP_NORETURN_PTR __attribute__((noreturn))
+#else
+	#define KP_NORETURN_PTR
+#endif // __GNUC__ || __clang__
+
 typedef struct
 {
 	// special messages
@@ -97,7 +106,7 @@ typedef struct
 	// they connect, and changes are sent to all connected clients.
 	void	(*configstring) (int num, char *string);
 
-	void	(*error) (char *fmt, ...);
+	void	(*error) (char *fmt, ...) KP_NORETURN_PTR;
 
 	// the *index functions create configstrings and some internal server state
 	int		(*modelindex) (char *name);
