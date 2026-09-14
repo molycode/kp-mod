@@ -534,6 +534,82 @@ void WriteField2 (FILE *f, field_t *field, byte *base)
 	}
 }
 
+#ifndef _WIN32
+typedef struct
+{
+	byte const	*lo;
+	byte const	*hi;
+} modspan_t;
+
+static int G_FindSpan (struct dl_phdr_info *info, size_t size, void *data)
+{
+	modspan_t	*out = (modspan_t *)data;
+	ElfW(Addr)	self = (ElfW(Addr))(size_t)InitGame;
+	qboolean	isSelf = false;
+	int			i;
+
+	for (i = 0; i < (int)info->dlpi_phnum; i++)
+	{
+		ElfW(Phdr) const	*seg = &info->dlpi_phdr[i];
+		ElfW(Addr)			start = info->dlpi_addr + seg->p_vaddr;
+
+		if (seg->p_type == PT_LOAD && self >= start && self < start + seg->p_memsz)
+			isSelf = true;
+	}
+
+	for (i = 0; isSelf && i < (int)info->dlpi_phnum; i++)
+	{
+		ElfW(Phdr) const	*seg = &info->dlpi_phdr[i];
+		byte const			*start = (byte const *)(size_t)(info->dlpi_addr + seg->p_vaddr);
+
+		if (seg->p_type == PT_LOAD)
+		{
+			if (out->lo == NULL || start < out->lo)
+				out->lo = start;
+
+			if (out->hi == NULL || start + seg->p_memsz > out->hi)
+				out->hi = start + seg->p_memsz;
+		}
+	}
+
+	return isSelf;
+}
+#endif // !_WIN32
+
+/*
+==============
+G_OffsetInModule
+
+Function and mmove fields are stored as offsets from this library's own symbols and are later called
+or dereferenced, so a corrupt one is a jump to an arbitrary address. Without a symbol table the most
+that can be established is that the result still lands inside our own mapping.
+==============
+*/
+static qboolean G_OffsetInModule (byte const *from, int index)
+{
+#ifndef _WIN32
+	static modspan_t	span;
+	size_t				p;
+
+	if (span.lo == NULL)
+	{
+		dl_iterate_phdr (G_FindSpan, &span);
+
+		if (span.lo == NULL)
+			gi.error ("G_OffsetInModule: could not locate this library's mapping");
+	}
+
+	// Done in integer space: forming the pointer first is already undefined for a wild offset,
+	// and size_t arithmetic wraps the way a negative offset needs.
+	p = (size_t)from + (size_t)index;
+
+	return (p >= (size_t)span.lo && p < (size_t)span.hi);
+#else
+	// Windows checks the function base for equality above, which settles the same question.
+	return true;
+#endif // !_WIN32
+}
+
 /*
 ==============
 G_FRead
@@ -643,7 +719,15 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		if ( index == 0 )
 			*(byte **)p = NULL;
 		else
+		{
+			if (!G_OffsetInModule ((byte *)InitGame, index))
+			{
+				fclose (f);
+				gi.error ("Savegame function offset %i leaves this library", index);
+			}
+
 			*(byte **)p = ((byte *)InitGame) + index;
+		}
 		break;
 
 	//relative to data segment
@@ -652,7 +736,15 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		if (index == 0)
 			*(byte **)p = NULL;
 		else
+		{
+			if (!G_OffsetInModule ((byte *)&mmove_reloc, index))
+			{
+				fclose (f);
+				gi.error ("Savegame mmove offset %i leaves this library", index);
+			}
+
 			*(byte **)p = (byte *)&mmove_reloc + index;
+		}
 		break;
 
 	default:
