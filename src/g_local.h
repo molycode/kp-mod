@@ -674,11 +674,13 @@ extern	edict_t			*g_edicts;
 extern	cast_memory_t	*g_cast_memory;
 extern	cast_group_t	*g_cast_groups;
 
+// NOLINTBEGIN(bugprone-macro-parentheses) -- x is a member name here, so "->(x)" would not compile.
 #define	FOFS(x) (int)&(((edict_t *)0)->x)
 #define	STOFS(x) (int)&(((spawn_temp_t *)0)->x)
 #define	LLOFS(x) (int)&(((level_locals_t *)0)->x)
 #define	CLOFS(x) (int)&(((gclient_t *)0)->x)
 #define	CMOFS(x) (int)&(((cast_memory_t *)0)->x)
+// NOLINTEND(bugprone-macro-parentheses)
 
 #define random()	((rand () & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))

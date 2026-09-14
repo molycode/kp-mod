@@ -36,7 +36,7 @@
 // Side Trace
 #define	SIDE_RANDOM		0
 #define	SIDE_RIGHT		1
-#define	SIDE_LEFT		-1
+#define	SIDE_LEFT		(-1)
 
 // General movement stuff
 #define AI_TOO_CLOSE_DIST	48.0

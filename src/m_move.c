@@ -791,7 +791,7 @@ SV_NewChaseDir
 
 ================
 */
-#define	DI_NODIR	-1
+#define	DI_NODIR	(-1)
 void SV_NewChaseDir (edict_t *actor, edict_t *enemy, float dist)
 {
 	float	deltax,deltay;

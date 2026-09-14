@@ -67,7 +67,7 @@
 #define		NBD_SHOWPATH			4
 
 //NAV_GetHidePos parameters
-#define		HIDEPOS_FURTHER			-1
+#define		HIDEPOS_FURTHER			(-1)
 #define		HIDEPOS_ANY				0
 #define		HIDEPOS_CLOSER			1
 

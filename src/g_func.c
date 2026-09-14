@@ -283,7 +283,7 @@ The team has completed a frame of movement, so
 change the speed for the next frame
 ==============
 */
-#define AccelerationDistance(target, rate)	(target * ((target / rate) + 1) / 2)
+#define AccelerationDistance(target, rate)	((target) * (((target) / (rate)) + 1) / 2)
 
 void plat_CalcAcceleratedMove(moveinfo_t *moveinfo)
 {
