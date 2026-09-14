@@ -150,8 +150,11 @@ run the same navigation code.
 shaped by measurement, not taste: every exclusion in it is a check that fired in the dozens or
 hundreds on code that is correct as written, and each carries its reason in the file.
 
-`bugprone-macro-parentheses` is DONE and the check is clean; the rest is untriaged. A tree-wide run
-is 452 unique findings over 26 checks. What it faces:
+`bugprone-macro-parentheses` is DONE and the check is clean. **The memory-safety class is DONE too**
+(2026-09-14): 68 findings triaged, 6 real defects fixed in their own commits -- the Voice_Specific
+listener, target_changelevel's activator, cover_ent, the byte corpse counter, goal_index, and
+func_door_secret's teammaster. A tree-wide run is now **388 unique findings over 24 checks**, none
+of them in the analyzer memory-safety group. What is left:
 
 - `clang-analyzer-core.NullDereference`, 4. **These are the reason to do the pass at all.** One of
   them, `g_cmds.c:252`, dereferences `target->client` on what looks like a path where the
@@ -182,3 +185,25 @@ several-fold.
 Treat it like the -Wsign-compare pass in kpded2: triage every finding into real or false, fix the real
 ones in their own commits, and disable a check only once its findings are shown to be false - with the
 reason written into `.clang-tidy`.
+
+## PARKED: the savegame trust boundary in g_save.c
+
+Deliberately parked by Thomas, 2026-09-14. The loader takes indices straight from the file with no
+upper bound, so a crafted or corrupt `.sav` is an arbitrary write:
+- `ReadCastMemories` reads an index, checks only `i < 0`, then writes `g_cast_memory[i]`; the array
+  is `MAX_CHARACTERS * MAX_CHARACTERS` (4096). A short read also leaves `i` unchanged, so the loop
+  never terminates.
+- `ReadLevel` bounds `entnum` against `globals.num_edicts` -- which it grows itself -- but never
+  against `game.maxentities`, the actual allocation.
+- `level.characters[ent->character_index]` is checked `> 0` and never against `MAX_CHARACTERS` (64).
+- `ReadField`'s `F_FUNCTION` builds a function pointer from a file-supplied int and it is later
+  called.
+- No `fread` return in the file is checked except the one at the `entnum` read, and `gi.TagMalloc`
+  does not zero, so truncation yields genuine garbage rather than zeros.
+
+**The loop-counter bug in `ReadLevel` was NOT part of this and is fixed** (`d407cb7`) -- it was a
+hang on legitimate data, not a trust-boundary issue.
+
+**What would settle it:** decide whether a savegame is a trust boundary at all. It is a local file,
+but level-transition `.sav` files are written during play, and the game dir is shared with downloaded
+content.
