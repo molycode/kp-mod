@@ -346,7 +346,7 @@ void Generic_Pawn_Think (edict_t *self)
 					}
 					else
 					{
-						animate_tens = true;
+						animate_ones = true;
 						// pawn_menu[i].item->s.frame++;
 						pawn_menu[i].item->s.frame = ones * 4;
 						if (pawn_menu[i].item->s.frame > pawn_menu[i].num_frames)
