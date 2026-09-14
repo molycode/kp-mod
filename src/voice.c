@@ -240,14 +240,14 @@ void Voice_Specific( edict_t *self, edict_t *other, voice_table_t *voice_table, 
 				{
 					if (self->client)
 						gi.dprintf ("player : %s\n", voice_table[entry].text2);
-					else if (other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
+					else if (other && other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
 						gi.dprintf ("%s : %s\n", self->name ? self->name : stranger_str, voice_table[entry].text2);
 				}
 				else
 				{
 					if (self->client)
 						gi.dprintf ("player : %s\n", voice_table[entry].text);
-					else if (other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
+					else if (other && other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
 						gi.dprintf ("%s : %s\n", self->name ? self->name : stranger_str, voice_table[entry].text);
 				}
 			}
@@ -788,14 +788,14 @@ void Voice_Specific_rc( edict_t *self, edict_t *other, voice_table_t *voice_tabl
 				{
 					if (self->client)
 						gi.dprintf ("player : %s\n", voice_table[entry].text2);
-					else if (other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
+					else if (other && other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
 						gi.dprintf ("%s : %s\n", self->name ? self->name : stranger_str, voice_table[entry].text2);
 				}
 				else
 				{
 					if (self->client)
 						gi.dprintf ("player : %s\n", voice_table[entry].text);
-					else if (other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
+					else if (other && other->client)		// Ridah, 5-8-99, had to do this otherwise too much text comes up, and you can't see which of it's yours
 						gi.dprintf ("%s : %s\n", self->name ? self->name : stranger_str, voice_table[entry].text);
 				}
 			}
