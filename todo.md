@@ -150,23 +150,49 @@ run the same navigation code.
 shaped by measurement, not taste: every exclusion in it is a check that fired in the dozens or
 hundreds on code that is correct as written, and each carries its reason in the file.
 
-`bugprone-macro-parentheses` is DONE and the check is clean. **The memory-safety class is DONE too**
-(2026-09-14): 68 findings triaged, 6 real defects fixed in their own commits -- the Voice_Specific
-listener, target_changelevel's activator, cover_ent, the byte corpse counter, goal_index, and
-func_door_secret's teammaster. A tree-wide run is now **388 unique findings over 24 checks**, none
-of them in the analyzer memory-safety group. What is left:
+**THE CLANG-TIDY TRIAGE IS COMPLETE, 2026-09-14.** Every check was triaged; the exclusions in
+`.clang-tidy` each carry the reason they were measured to be noise. A tree-wide run is now **120
+findings over 15 checks**, all of them individually examined and recorded false -- chiefly the
+`gi.error`-is-noreturn and trace-contract artifacts described below. Do not re-triage them without a
+reason; do re-run after any substantial change.
 
-- `clang-analyzer-core.NullDereference`, 4. **These are the reason to do the pass at all.** One of
-  them, `g_cmds.c:252`, dereferences `target->client` on what looks like a path where the
-  "unable to match player" guard above it did not return. That guard sits inside an enclosing `if`.
-  It is the vote-kick path, so a client can drive it. **Not yet confirmed** - the analyzer's path may
-  not be reachable in practice, and that is exactly what the triage has to establish.
-- `bugprone-unchecked-string-to-number-conversion`, 4. `atoi` on map and config data.
-- A handful each of `bugprone-assignment-in-if-condition`, `bugprone-suspicious-string-compare`,
-  `bugprone-branch-clone`, `bugprone-switch-missing-default-case`, `bugprone-signed-char-misuse`.
+**Two analyzer artifacts account for most of the remaining noise.** `gi.error` is noreturn but sits
+in the import struct as a bare varargs function pointer, so every guard built on it reads as falling
+through -- that is most of `NonNullParamChecker` and `unix.Stream`. And the game's own defensive
+`(tr.ent) &&` / `(tr.surface) &&` checks teach the analyzer a nullability the engine's trace contract
+rules out, which is most of `NullDereference`.
 
-Known false positive, already checked: `p_client.c:2677` reads `bike_premove_vel` as a garbage value.
-Real, but behind `FL_BIKE`, which only `g_vehicle_test` can reach and the shipped game never does.
+## Open: three gameplay-visible fixes awaiting a decision
+
+These are confirmed defects, deliberately NOT fixed because each changes shipped behaviour and the
+tree's rule is that gameplay changes are Thomas's call:
+
+- **`src/g_target.c:1019`** -- `fire_blaster` is passed `MOD_TARGET_BLASTER` (33) where the parameter
+  is `qboolean hyper`, so every `target_blaster` kill is attributed to `MOD_HYPERBLASTER` and the
+  `case MOD_TARGET_BLASTER:` obituary at `p_client.c:232` is unreachable. Inherited from stock
+  Quake 2. Fix is to pass `false`; the effect is a changed obituary string.
+- **`src/g_teamplay.c:222`** -- `CASH_BAG / CASH_ROLL` is integer division, 25/10 = 2 where the
+  comment ("bag, so longer delay") wants 2.5. Bags currently respawn 20% faster than designed.
+  Affects the live Bagman rotation, so fixing it is a balance change.
+- **`src/g_joe_misc.c:51, 704, 1060, 1151, 4649`** -- `spd = 2 * self->dmg / 200` truncates to 0 for
+  any `dmg` under 100, so debris drops instead of scattering. The sibling lines three above each one
+  already carry the `(float)` cast. Cosmetic, and only for maps that set `dmg` on a prop.
+
+## Open: flagged while triaging, each a separate change
+
+- **`src/g_local.h:1577` / `src/g_save.c:82`** -- `char head;` is declared `F_INT` in the spawn table,
+  and `ED_ParseField` stores through `*(int *)`. A 4-byte write into a 1-byte member, harmless only
+  because `head` sits between a float and a 4-aligned int so the spare bytes land on padding. The
+  duplicate `{"head", ...}` entry at `g_save.c:92` is also dead. Fixing means widening the member,
+  which changes `edict_t` layout and so touches the savegame build-ABI guard.
+- **`src/g_pawn.c:349`** -- `animate_tens = true;` in the ones-digit branch looks like a copy-paste of
+  the tens branch; cosmetic, masked by the `||` gate at :299.
+- **`src/g_cmds.c:2901`** -- `switch (target->key)` covers 1..11 with no default, so a map setting
+  `key >= 12` falls through and the door opens with no key. Fails open on map-file data.
+- **`src/g_ai_memory.c:182`** -- `head` may be left NULL by the switch and is dereferenced
+  unconditionally. Unreachable today; breaks the moment a fourth memory type is added.
+- **`src/g_save.c:1289`** -- `memset(level.characters, 0, 4 * MAX_CHARACTERS)` hardcodes the pointer
+  size. Correct on i386, wrong on any 64-bit port.
 
 Run it with the pinned Clang, against a compile database:
 
