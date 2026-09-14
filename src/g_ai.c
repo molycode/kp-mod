@@ -3062,7 +3062,7 @@ qboolean AI_canmove( edict_t *self, vec3_t dest )
 			if (res < 0)
 				self->ideal_yaw = self->s.angles[YAW] - 90;
 			else if (res > 0)
-				self->ideal_yaw = self->s.angles[YAW] - 90;
+				self->ideal_yaw = self->s.angles[YAW] + 90;
 
 			M_ChangeYaw( self );
 		}
