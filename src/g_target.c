@@ -681,7 +681,7 @@ void use_target_changelevel (edict_t *self, edict_t *other, edict_t *activator)
 	strcpy( last_changelevel, level.mapname );
 
 	// Ridah, copy the episode_flags over
-	if (activator->client)
+	if (activator && activator->client)
 	{
 		activator->client->pers.episode_flags |= activator->episode_flags;
 	}
