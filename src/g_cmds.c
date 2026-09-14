@@ -38,7 +38,7 @@ qboolean BanEnoughVotes(void)
 //	if (teamplay->value)
 //		need = (int)floor(ban_player_count / 2);
 //	else
-		need = (int)ceil(ban_player_count / 2);
+		need = (int)ceil(ban_player_count / 2.0);
 
 	if (need < 3)
 		need = 3;
