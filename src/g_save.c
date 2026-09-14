@@ -551,6 +551,23 @@ static void G_FRead (void *buf, size_t size, FILE *f)
 	}
 }
 
+/*
+==============
+G_CheckIndex
+
+The saved form of every pointer field is an array index, so each one is an arbitrary write unless
+it is bounded here. -1 is the stored NULL.
+==============
+*/
+static void G_CheckIndex (int index, int count, char const *what, FILE *f)
+{
+	if (index < -1 || index >= count)
+	{
+		fclose (f);
+		gi.error ("Savegame %s index %i is outside 0..%i", what, index, count - 1);
+	}
+}
+
 void ReadField (FILE *f, field_t *field, byte *base)
 {
 	void		*p;
@@ -572,6 +589,12 @@ void ReadField (FILE *f, field_t *field, byte *base)
 
 	case F_LSTRING:
 		len = *(int *)p;
+		if (len < 0 || len > MAX_STRING_CHARS)
+		{
+			fclose (f);
+			gi.error ("Savegame string field is %i bytes", len);
+		}
+
 		if (!len)
 			*(char **)p = NULL;
 		else
@@ -582,6 +605,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_EDICT:
 		index = *(int *)p;
+		G_CheckIndex (index, globals.max_edicts, "edict", f);
 		if ( index == -1 )
 			*(edict_t **)p = NULL;
 		else
@@ -589,6 +613,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_CLIENT:
 		index = *(int *)p;
+		G_CheckIndex (index, game.maxclients, "client", f);
 		if ( index == -1 )
 			*(gclient_t **)p = NULL;
 		else
@@ -596,6 +621,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_ITEM:
 		index = *(int *)p;
+		G_CheckIndex (index, game.num_items + 1, "item", f);
 		if ( index == -1 )
 			*(gitem_t **)p = NULL;
 		else
@@ -604,6 +630,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 
 	case F_CAST_MEMORY:
 		index = *(int *)p;
+		G_CheckIndex (index, MAX_CHARACTERS * MAX_CHARACTERS, "cast memory", f);
 		if ( index == -1 )
 			*(cast_memory_t **)p = NULL;
 		else
