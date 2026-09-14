@@ -3010,6 +3010,14 @@ startyourtriggers:
 							continue;
 						}
 					}
+					break;
+
+					// key comes from the map, and an unknown one must not open the door
+					default:
+					{
+						gi.sound (ent, CHAN_AUTO, gi.soundindex("world/doors/dr_locked.wav"), 1, ATTN_NORM, 0);
+						continue;
+					}
 				}
 
 				// Ridah, once unlocked, stay unlocked
