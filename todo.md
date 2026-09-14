@@ -151,16 +151,17 @@ shaped by measurement, not taste: every exclusion in it is a check that fired in
 hundreds on code that is correct as written, and each carries its reason in the file.
 
 **THE CLANG-TIDY TRIAGE IS COMPLETE, 2026-09-14.** Every check was triaged; the exclusions in
-`.clang-tidy` each carry the reason they were measured to be noise. A tree-wide run is now **120
-findings over 15 checks**, all of them individually examined and recorded false -- chiefly the
-`gi.error`-is-noreturn and trace-contract artifacts described below. Do not re-triage them without a
-reason; do re-run after any substantial change.
+`.clang-tidy` each carry the reason they were measured to be noise. A tree-wide run is now **99
+findings over 14 checks**, all of them individually examined and recorded false. Do not re-triage
+them without a reason; do re-run after any substantial change.
 
-**Two analyzer artifacts account for most of the remaining noise.** `gi.error` is noreturn but sits
-in the import struct as a bare varargs function pointer, so every guard built on it reads as falling
-through -- that is most of `NonNullParamChecker` and `unix.Stream`. And the game's own defensive
-`(tr.ent) &&` / `(tr.surface) &&` checks teach the analyzer a nullability the engine's trace contract
-rules out, which is most of `NullDereference`.
+**99 is the baseline.** A later run reporting more than this has found something new; at or below it
+is the documented residue. Diff against the number rather than triaging the pile again.
+
+**What remains is mostly one analyzer artifact:** the game's own defensive `(tr.ent) &&` /
+`(tr.surface) &&` checks teach the analyzer a nullability the engine's trace contract rules out,
+which is most of `NullDereference`. The other big one is gone -- `gi.error` is marked noreturn in
+`game.h` as of `1ab1f22`, which took the count from 109 to 99 and `.text` 128 bytes smaller.
 
 ## Done 2026-09-14: the three gameplay-visible fixes
 
