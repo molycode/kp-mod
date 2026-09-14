@@ -1684,7 +1684,7 @@ void AI_AfterLife(edict_t *self)
 		edict_t	*other=NULL;
 		trace_t tr;
 		vec3_t	end, travelvec;
-		byte	i;
+		int		i;
 		long	len;
 		float	dir;
 		int     dir2;
