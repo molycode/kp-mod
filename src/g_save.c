@@ -1113,6 +1113,8 @@ void ReadCastMemories (FILE *f)
 		if (i < 0)
 			break;
 
+		G_CheckIndex (i, MAX_CHARACTERS * MAX_CHARACTERS, "cast memory", f);
+
 		G_FRead (&(g_cast_memory[i]), sizeof(cast_memory_t), f);
 
 		for (field=castmemoryfields ; field->name ; field++)
@@ -1298,6 +1300,10 @@ void ReadLevel (char *filename)
 		G_FRead (&entnum, sizeof(entnum), f);
 		if (entnum == -1)
 			break;
+
+		// num_edicts is grown from entnum just below, so it cannot also be the limit
+		G_CheckIndex (entnum, globals.max_edicts, "edict", f);
+
 		if (entnum >= globals.num_edicts)
 			globals.num_edicts = entnum+1;
 
@@ -1353,6 +1359,9 @@ void ReadLevel (char *filename)
 		// set the character array
 		if (((ent->svflags & SVF_MONSTER) && (ent->character_index > 0)) || ent->client)
 		{
+			if (ent->character_index < 0 || ent->character_index >= MAX_CHARACTERS)
+				gi.error ("Savegame character index %i is outside 0..%i", ent->character_index, MAX_CHARACTERS - 1);
+
 			level.characters[ent->character_index] = ent;
 		}
 
