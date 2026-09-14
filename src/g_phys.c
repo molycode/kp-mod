@@ -1222,7 +1222,7 @@ void SV_Physics_Step (edict_t *ent)
 			}	
 
 			if (	(ent->flags & FL_FLY)
-				&&	((land_node = level.node_data->nodes[ent->nav_data.goal_index-1]) || ((ent->flags &= ~FL_FLY) && false))
+				&&	(ent->nav_data.goal_index) && ((land_node = level.node_data->nodes[ent->nav_data.goal_index-1]) || ((ent->flags &= ~FL_FLY) && false))
 				/*&&	(land_node->node_type & NODE_LANDING)*/)
 			{	// if climbing ladder, and we're reached the landing position, stop
 
