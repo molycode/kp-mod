@@ -177,16 +177,21 @@ shipped behaviour and someone comparing against a 1999 build will notice:
   under 100. Stock maps spawn these props with `dmg` 0 and are unaffected; only a mapper-set `dmg`
   changes.
 
-## Open: flagged while triaging, each a separate change
+## Done 2026-09-14: the smaller items flagged during triage
 
-- **`src/g_pawn.c:349`** -- `animate_tens = true;` in the ones-digit branch looks like a copy-paste of
-  the tens branch; cosmetic, masked by the `||` gate at :299.
-- **`src/g_cmds.c:2901`** -- `switch (target->key)` covers 1..11 with no default, so a map setting
-  `key >= 12` falls through and the door opens with no key. Fails open on map-file data.
-- **`src/g_ai_memory.c:182`** -- `head` may be left NULL by the switch and is dereferenced
-  unconditionally. Unreachable today; breaks the moment a fourth memory type is added.
-- **`src/g_save.c:1289`** -- `memset(level.characters, 0, 4 * MAX_CHARACTERS)` hardcodes the pointer
-  size. Correct on i386, wrong on any 64-bit port.
+All cleared, one commit each. The door key and the filter parser are the two that mattered:
+
+- **`g_cmds.c`** -- the switch over `target->key` had no default, so a map setting a key the game
+  does not define fell through and the door opened unlocked. It failed open on map-file data.
+- **`g_svcmds.c`** -- the octet scanner copied digits into a 128-byte stack buffer with no bound, so
+  a long enough `sv addip` argument smashed the stack; and an octet above 255 was truncated into a
+  byte, silently installing a filter on a different address.
+- **`g_pawn.c`** -- the ones-digit branch set the tens flag.
+- **`g_ai_memory.c`** -- `head` could be left NULL by a switch and was dereferenced unconditionally;
+  now a default names the bad memory type instead.
+- **`g_save.c`** -- a memset hardcoded 4 bytes per pointer.
+
+**84 is the current baseline** (was 99 before the savegame work).
 
 Run it with the pinned Clang, against a compile database:
 
