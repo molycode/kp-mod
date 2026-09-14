@@ -53,6 +53,28 @@
 			}
 		},
 		{
+			"name": "linux-gcc-ubsan",
+			"inherits": "linux-gcc-relwithdebinfo",
+			"displayName": "linux_gcc_ubsan",
+			"description": "UndefinedBehaviorSanitizer with GCC, on top of RelWithDebInfo",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" },
+			"binaryDir": "${sourceDir}/build/gcc-ubsan",
+			"cacheVariables": {
+				"KP_SANITIZER": "undefined"
+			}
+		},
+		{
+			"name": "linux-gcc-asan",
+			"inherits": "linux-gcc-relwithdebinfo",
+			"displayName": "linux_gcc_asan",
+			"description": "AddressSanitizer with GCC, on top of RelWithDebInfo",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" },
+			"binaryDir": "${sourceDir}/build/gcc-asan",
+			"cacheVariables": {
+				"KP_SANITIZER": "address"
+			}
+		},
+		{
 			"name": "linux-clang-debug",
 			"inherits": "base",
 			"displayName": "linux_clang_debug",
@@ -151,6 +173,16 @@
 		{
 			"name": "linux-gcc-relwithdebinfo",
 			"configurePreset": "linux-gcc-relwithdebinfo",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-gcc-ubsan",
+			"configurePreset": "linux-gcc-ubsan",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-gcc-asan",
+			"configurePreset": "linux-gcc-asan",
 			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
 		},
 		{
