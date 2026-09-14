@@ -3989,6 +3989,10 @@ void SP_func_door_secret (edict_t *ent)
 	
 	ent->classname = "func_door";
 
+	// to simplify logic elsewhere, make non-teamed doors into a team of one
+	if (!ent->team)
+		ent->teammaster = ent;
+
 	gi.linkentity (ent);
 }
 
