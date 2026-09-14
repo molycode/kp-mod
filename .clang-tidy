@@ -1,0 +1,43 @@
+# The bug-finding checks only. Style is the compiler's job here and the house rules' job in review; this
+# file exists to catch defects, so a check that argues about taste is off rather than argued with.
+#
+# This tree is 1999 C, so the noise profile differs from a modern C++ project: the exclusions below are
+# checks that fire in the hundreds on code that is correct as written. If one starts finding real
+# defects, turn it back on -- none of them are off because the findings were tedious.
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  performance-*,
+  misc-*,
+  -bugprone-narrowing-conversions,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-reserved-identifier,
+  -clang-analyzer-security.insecureAPI.strcpy,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
+  -misc-include-cleaner,
+  -misc-unused-parameters,
+  -misc-predictable-rand,
+  -misc-use-internal-linkage,
+  -performance-type-promotion-in-math-fn
+
+# Our own sources. external/navlib is FREDZ's MIT subtree and is not ours to fix.
+HeaderFilterRegex: 'src/'
+
+# bugprone-narrowing-conversions: 121 findings in four files. Quake 2 moves between int and float
+#   constantly and by design, and every vec3_t index is an int into a float array.
+# bugprone-easily-swappable-parameters: every (x, y, z) and (min, max) triple trips it.
+# bugprone-reserved-identifier: id's byte-swap helpers are named _BigShort, _LittleLong and so on.
+#   Technically reserved, but renaming 1999 API to satisfy a linter buys nothing.
+# clang-analyzer-security.insecureAPI.strcpy and DeprecatedOrUnsafeBufferHandling: 102 findings, and
+#   they fire on every strcpy, sprintf and memcpy in the tree rather than on a defect. All 324 copy
+#   sites were audited by hand in September 2026; a blanket "this function exists" report adds nothing.
+# misc-include-cleaner: 17 findings in one file, and it disagrees with the include rules this tree
+#   follows.
+# misc-unused-parameters: the compiler flags already carry -Wno-unused-parameter for the same reason.
+# misc-predictable-rand: the game uses rand() for gameplay, which is what it is for.
+# misc-use-internal-linkage: 64 findings in one file. clang-tidy sees one translation unit, so it
+#   cannot know a function is called from another one, and in a multi-TU C project that makes it a
+#   structural false positive rather than a finding.
+# performance-type-promotion-in-math-fn: the SDK calls the double math functions deliberately; the
+#   float variants change results, and the library has to behave like the 1999 one.

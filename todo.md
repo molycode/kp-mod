@@ -143,3 +143,35 @@ The blob is recoverable from this repository's history (`git show 3c8a724^:src/n
 or from `kpsdk.zip`. Restoring it means restoring `/NODEFAULTLIB:libc.lib` and re-guarding
 `add_subdirectory(external)` to Linux — but prefer fixing the reconstruction, so that both platforms
 run the same navigation code.
+
+## Triage the clang-tidy findings
+
+`.clang-tidy` is in place and tuned for this tree, but nothing has been triaged yet. The config was
+shaped by measurement, not taste: every exclusion in it is a check that fired in the dozens or
+hundreds on code that is correct as written, and each carries its reason in the file.
+
+What a pass would face, measured on `src/g_cmds.c` with the committed config:
+
+- `bugprone-macro-parentheses`, 50. All in headers, so the same finding repeats for every translation
+  unit that includes them. Run tree-wide with `run-clang-tidy` rather than per file, which
+  deduplicates. Unparenthesised macro parameters are a real defect class in C, which is why this one
+  is left on despite the volume.
+- `clang-analyzer-core.NullDereference`, 4. **These are the reason to do the pass at all.** One of
+  them, `g_cmds.c:252`, dereferences `target->client` on what looks like a path where the
+  "unable to match player" guard above it did not return. That guard sits inside an enclosing `if`.
+  It is the vote-kick path, so a client can drive it. **Not yet confirmed** - the analyzer's path may
+  not be reachable in practice, and that is exactly what the triage has to establish.
+- `bugprone-unchecked-string-to-number-conversion`, 4. `atoi` on map and config data.
+- A handful each of `bugprone-assignment-in-if-condition`, `bugprone-suspicious-string-compare`,
+  `bugprone-branch-clone`, `bugprone-switch-missing-default-case`, `bugprone-signed-char-misuse`.
+
+Known false positive, already checked: `p_client.c:2677` reads `bike_premove_vel` as a garbage value.
+Real, but behind `FL_BIKE`, which only `g_vehicle_test` can reach and the shipped game never does.
+
+Run it with the pinned Clang, against a compile database:
+
+    /media/thomas/data/compilers/clang_22/bin/clang-tidy -p build/clang_22-RelWithDebInfo src/<file>.c
+
+Treat it like the -Wsign-compare pass in kpded2: triage every finding into real or false, fix the real
+ones in their own commits, and disable a check only once its findings are shown to be false - with the
+reason written into `.clang-tidy`.
