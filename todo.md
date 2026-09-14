@@ -206,24 +206,28 @@ Treat it like the -Wsign-compare pass in kpded2: triage every finding into real 
 ones in their own commits, and disable a check only once its findings are shown to be false - with the
 reason written into `.clang-tidy`.
 
-## PARKED: the savegame trust boundary in g_save.c
+## Done 2026-09-14: the savegame trust boundary
 
-Deliberately parked by Thomas, 2026-09-14. The loader takes indices straight from the file with no
-upper bound, so a crafted or corrupt `.sav` is an arbitrary write:
-- `ReadCastMemories` reads an index, checks only `i < 0`, then writes `g_cast_memory[i]`; the array
-  is `MAX_CHARACTERS * MAX_CHARACTERS` (4096). A short read also leaves `i` unchanged, so the loop
-  never terminates.
-- `ReadLevel` bounds `entnum` against `globals.num_edicts` -- which it grows itself -- but never
-  against `game.maxentities`, the actual allocation.
-- `level.characters[ent->character_index]` is checked `> 0` and never against `MAX_CHARACTERS` (64).
-- `ReadField`'s `F_FUNCTION` builds a function pointer from a file-supplied int and it is later
-  called.
-- No `fread` return in the file is checked except the one at the `entnum` read, and `gi.TagMalloc`
-  does not zero, so truncation yields genuine garbage rather than zeros.
+Was parked; then done. The loader took indices and offsets straight from the file and turned them
+into pointers, so a corrupt or crafted `.sav` was an arbitrary write and, through `F_FUNCTION`, an
+arbitrary call. Five commits, `41150b5` through `6bb2c8f`:
 
-**The loop-counter bug in `ReadLevel` was NOT part of this and is fixed** (`d407cb7`) -- it was a
-hang on legitimate data, not a trust-boundary issue.
+- **Every read is checked.** One of twelve was. `gi.TagMalloc` does not zero, so a truncated save
+  left real garbage that the conversions below turned into pointers. This also ended
+  `ReadCastMemories`' spin-forever on a short read.
+- **`maxentities` and `num_items` are no longer taken from the file.** They describe this binary --
+  the edict array is already allocated when `game` is read -- so a limit taken from the file being
+  validated was no limit at all.
+- **Index-to-pointer conversions are bounded**: edict, client, item, cast memory, and the string
+  field's length, which drove both an allocation and a read.
+- **The three loose indices are bounded**: `ReadCastMemories`' slot, `ReadLevel`'s `entnum` (which
+  had been checked against a limit it grows itself), and `character_index`.
+- **Function and mmove offsets are bounded to this library's mapping**, reusing the
+  `dl_iterate_phdr` walk the build id already does. Note offsets are legitimately **negative** --
+  they are measured from `InitGame` -- so rejecting negatives would break every save.
 
-**What would settle it:** decide whether a savegame is a trust boundary at all. It is a local file,
-but level-transition `.sav` files are written during play, and the game dir is shared with downloaded
-content.
+**Verified end to end**, not just by reasoning: a probe build confirmed real symbols in .text, .data
+and .bss are accepted and wild offsets rejected in both directions; then a staged dedicated server
+ran map -> save -> load on `pv_1` and the save round-tripped clean. Never test this in the live
+`main/` -- use `+set game <dir>`.
+
