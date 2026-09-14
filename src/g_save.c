@@ -534,6 +534,23 @@ void WriteField2 (FILE *f, field_t *field, byte *base)
 	}
 }
 
+/*
+==============
+G_FRead
+
+Every read in the loader goes through this. gi.TagMalloc does not zero, so an unchecked short read
+leaves genuine garbage that the field conversions below then turn into pointers.
+==============
+*/
+static void G_FRead (void *buf, size_t size, FILE *f)
+{
+	if (fread (buf, size, 1, f) != 1)
+	{
+		fclose (f);
+		gi.error ("Truncated or unreadable savegame");
+	}
+}
+
 void ReadField (FILE *f, field_t *field, byte *base)
 {
 	void		*p;
@@ -560,7 +577,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		else
 		{
 			*(char **)p = gi.TagMalloc (len, TAG_LEVEL);
-			fread (*(char **)p, len, 1, f);
+			G_FRead (*(char **)p, len, f);
 		}
 		break;
 	case F_EDICT:
@@ -660,7 +677,7 @@ void ReadClient (FILE *f, gclient_t *client)
 {
 	field_t		*field;
 
-	fread (client, sizeof(*client), 1, f);
+	G_FRead (client, sizeof(*client), f);
 
 	for (field=clientfields ; field->name ; field++)
 	{
@@ -814,7 +831,7 @@ void ReadGame (char *filename)
 	if (!f)
 		gi.error ("Couldn't open %s", filename);
 
-	fread (str, sizeof(str), 1, f);
+	G_FRead (str, sizeof(str), f);
 	if (strcmp (str, G_SaveStamp()))
 	{
 		fclose (f);
@@ -830,7 +847,7 @@ void ReadGame (char *filename)
 	g_cast_groups = gi.TagMalloc (MAX_CAST_GROUPS * sizeof(cast_group_t), TAG_GAME );
 	memset( g_cast_groups, 0, MAX_CAST_GROUPS * sizeof(cast_group_t) );
 
-	fread (&game, sizeof(game), 1, f);
+	G_FRead (&game, sizeof(game), f);
 	game.clients = gi.TagMalloc (game.maxclients * sizeof(game.clients[0]), TAG_GAME);
 	for (i=0 ; i<game.maxclients ; i++)
 		ReadClient (f, &game.clients[i]);
@@ -971,7 +988,7 @@ ReadCastGroups
 void ReadCastGroups (FILE *f)
 {
 	// write the block
-	fread (g_cast_groups, sizeof(cast_group_t) * MAX_CAST_GROUPS, 1, f);
+	G_FRead (g_cast_groups, sizeof(cast_group_t) * MAX_CAST_GROUPS, f);
 }
 
 
@@ -993,7 +1010,7 @@ void ReadEdict (FILE *f, edict_t *ent)
 	for (i=0; i<MAX_MODEL_PARTS; i++)
 		memcpy( object_bounds[i], ent->s.model_parts[i].object_bounds, sizeof(int)*MAX_MODELPART_OBJECTS );
 
-	fread (ent, sizeof(*ent), 1, f);
+	G_FRead (ent, sizeof(*ent), f);
 
 	for (field=fields ; field->name ; field++)
 	{
@@ -1018,7 +1035,7 @@ void ReadLevelLocals (FILE *f)
 	
 	int			i, j;
 
-	fread (&level, sizeof(level), 1, f);
+	G_FRead (&level, sizeof(level), f);
 
 	for (field=levelfields ; field->name ; field++)
 	{
@@ -1052,12 +1069,12 @@ void ReadCastMemories (FILE *f)
 
 	while (1)
 	{
-		fread (&i, sizeof(i), 1, f);
+		G_FRead (&i, sizeof(i), f);
 
 		if (i < 0)
 			break;
 
-		fread (&(g_cast_memory[i]), sizeof(cast_memory_t), 1, f);
+		G_FRead (&(g_cast_memory[i]), sizeof(cast_memory_t), f);
 
 		for (field=castmemoryfields ; field->name ; field++)
 		{
@@ -1188,7 +1205,7 @@ void ReadLevel (char *filename)
 	memset( g_cast_groups, 0, MAX_CAST_GROUPS * sizeof(cast_group_t) );
 
 	// check edict size
-	fread (&i, sizeof(i), 1, f);
+	G_FRead (&i, sizeof(i), f);
 	if (i != sizeof(edict_t))
 	{
 		fclose (f);
@@ -1196,7 +1213,7 @@ void ReadLevel (char *filename)
 	}
 
 	// check function pointer base address
-	fread (&base, sizeof(base), 1, f);
+	G_FRead (&base, sizeof(base), f);
 #ifdef _WIN32
 	if (base != (void *)InitGame)
 	{
@@ -1239,11 +1256,7 @@ void ReadLevel (char *filename)
 	while (1)
 	{
 
-		if (fread (&entnum, sizeof(entnum), 1, f) != 1)
-		{
-			fclose (f);
-			gi.error ("ReadLevel: failed to read entnum");
-		}
+		G_FRead (&entnum, sizeof(entnum), f);
 		if (entnum == -1)
 			break;
 		if (entnum >= globals.num_edicts)
