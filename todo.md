@@ -162,21 +162,19 @@ through -- that is most of `NonNullParamChecker` and `unix.Stream`. And the game
 `(tr.ent) &&` / `(tr.surface) &&` checks teach the analyzer a nullability the engine's trace contract
 rules out, which is most of `NullDereference`.
 
-## Open: three gameplay-visible fixes awaiting a decision
+## Done 2026-09-14: the three gameplay-visible fixes
 
-These are confirmed defects, deliberately NOT fixed because each changes shipped behaviour and the
-tree's rule is that gameplay changes are Thomas's call:
+Applied after all, on Thomas's go-ahead, each in its own commit. Recorded here because each changes
+shipped behaviour and someone comparing against a 1999 build will notice:
 
-- **`src/g_target.c:1019`** -- `fire_blaster` is passed `MOD_TARGET_BLASTER` (33) where the parameter
-  is `qboolean hyper`, so every `target_blaster` kill is attributed to `MOD_HYPERBLASTER` and the
-  `case MOD_TARGET_BLASTER:` obituary at `p_client.c:232` is unreachable. Inherited from stock
-  Quake 2. Fix is to pass `false`; the effect is a changed obituary string.
-- **`src/g_teamplay.c:222`** -- `CASH_BAG / CASH_ROLL` is integer division, 25/10 = 2 where the
-  comment ("bag, so longer delay") wants 2.5. Bags currently respawn 20% faster than designed.
-  Affects the live Bagman rotation, so fixing it is a balance change.
-- **`src/g_joe_misc.c:51, 704, 1060, 1151, 4649`** -- `spd = 2 * self->dmg / 200` truncates to 0 for
-  any `dmg` under 100, so debris drops instead of scattering. The sibling lines three above each one
-  already carry the `(float)` cast. Cosmetic, and only for maps that set `dmg` on a prop.
+- **`target_blaster` obituaries.** `fire_blaster` was handed `MOD_TARGET_BLASTER` where the parameter
+  is `qboolean hyper`, so those kills read as hyperblaster and `p_client.c`'s "got blasted" case was
+  unreachable. It now prints. Stock Quake 2 bug, not a Kingpin one.
+- **Cash bags respawn slower.** `CASH_BAG / CASH_ROLL` truncated 2.5 to 2, so bags came back 20%
+  early. This is a live Bagman balance change.
+- **Small-chunk debris scatters.** Five `spd = 2 * dmg / 200` lines truncated to 0 for any `dmg`
+  under 100. Stock maps spawn these props with `dmg` 0 and are unaffected; only a mapper-set `dmg`
+  changes.
 
 ## Open: flagged while triaging, each a separate change
 
