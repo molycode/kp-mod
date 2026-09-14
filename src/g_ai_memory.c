@@ -190,6 +190,8 @@ void AI_AddToMemory ( edict_t *self, cast_memory_t *memory, int memory_type )
 	case MEMORY_TYPE_ENEMY :
 		head = &self->cast_info.enemy_memory;
 		break;
+	default :
+		gi.error ("AI_AddToMemory: unknown memory type %i", memory_type);
 	}
 
 	if (*head)
