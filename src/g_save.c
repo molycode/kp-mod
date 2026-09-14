@@ -89,7 +89,6 @@ field_t fields[] = {
 	{"save_other", FOFS(save_other), F_EDICT, 0},
 	{"deadticks", FOFS(deadticks), F_INT, 0},
 	{"thudsnd", FOFS(thudsnd), F_INT, 0},
-	{"head", FOFS(head), F_INT, 0},
 	{"firetype", FOFS(firetype), F_INT, 0},
 	{"thudsurf", FOFS(thudsurf), F_INT, 0},
 	{"lightit", FOFS(lightit), F_INT, 0},

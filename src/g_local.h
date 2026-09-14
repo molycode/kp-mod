@@ -1574,7 +1574,7 @@ struct edict_s
 	char     *type;
 	char	*localteam;
 	float	reactdelay;
-	char	head;
+	int		head;
 	int		key; // Door key [-1 = trigger unlocked][0 = unlocked][1+ = key to unlock]
 	int     lightit;
 	int		option;
