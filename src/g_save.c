@@ -1435,7 +1435,7 @@ void ReadLevel (char *filename)
 	}
 
 	// init the characters array (we'll set it manually
-	memset( level.characters, 0, 4 * MAX_CHARACTERS );
+	memset( level.characters, 0, sizeof(level.characters) );
 
 	// always set the client first
 	level.characters[0] = &g_edicts[1];
