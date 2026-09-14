@@ -824,6 +824,8 @@ void ReadGame (char *filename)
 	FILE	*f;
 	int		i;
 	char	str[16];
+	int		maxents;
+	int		numitems;
 
 	gi.FreeTags (TAG_GAME);
 
@@ -838,6 +840,9 @@ void ReadGame (char *filename)
 		gi.error ("Savegame was written by a different build of the game library.\n");
 	}
 
+	maxents = game.maxentities;
+	numitems = game.num_items;
+
 	g_edicts =  gi.TagMalloc (game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
 
@@ -848,6 +853,13 @@ void ReadGame (char *filename)
 	memset( g_cast_groups, 0, MAX_CAST_GROUPS * sizeof(cast_group_t) );
 
 	G_FRead (&game, sizeof(game), f);
+
+	// These two describe this binary, not the save. The edict array was already allocated from
+	// maxentities above, and the item table is compiled in -- taking either from the file would
+	// leave the bounds checks measuring against a number the file chose.
+	game.maxentities = maxents;
+	game.num_items = numitems;
+
 	game.clients = gi.TagMalloc (game.maxclients * sizeof(game.clients[0]), TAG_GAME);
 	for (i=0 ; i<game.maxclients ; i++)
 		ReadClient (f, &game.clients[i]);
