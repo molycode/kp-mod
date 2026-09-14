@@ -51,20 +51,26 @@ what either reports, and ship the GCC artifact.
 
 ### The shipping artifact
 
-A GCC **Release** build also writes a stripped copy to `build/<preset>/src/ship/gamei386.so`. That
-is the file to ship; the unstripped library beside it is the one to keep.
+A GCC **Release** build is the artifact to ship, straight out of
+`build/<preset>/src/gamei386.so`. There is no separate stripped copy and no post-build step: debug
+info is a property of the configuration, so Release simply never generates any.
 
-| | bytes |
-|---|---|
-| built (`-g`, full symbols) | 3,407,788 |
-| shipped (`ship/`, stripped) | 1,358,452 |
+| configuration | flags | bytes |
+|---|---|---|
+| `Debug` | `-O0 -g` | — |
+| `RelWithDebInfo` | `-O2 -g -DNDEBUG` | 3,305,456 |
+| `Release` | `-O3 -DNDEBUG` | 1,489,928 |
 
-Debug info is 54% of the built file, and stripping removes no code — only `GetGameAPI` is exported
-either way. Both carry the **same GNU build id**, which is what makes the pair useful: a crash in a
-shipped library symbolises against the unstripped copy, and savegames written by one load in the
-other, since the savegame stamp is that build id (see `G_SaveStamp` in `g_save.c`).
+Release keeps its **symbol table** (`.symtab`/`.strtab`, 127 KB of the total). That is deliberate:
+it costs nothing at runtime and gives function names in a backtrace from the shipped library, which
+is the one thing dropping `-g` would otherwise take away. Only `GetGameAPI` is ever exported —
+`.symtab` is not part of the ABI surface, `game.map` decides that.
 
-Clang Release deliberately produces no `ship/` directory.
+Reach for **`RelWithDebInfo`** when a bug needs hunting, not `Debug`: it is optimised, so it fails
+the way the shipped build fails. `-O0` and `-O3` code misbehave differently.
+
+Every configuration carries a **GNU build id**, which is what savegames are stamped with (see
+`G_SaveStamp` in `g_save.c`) — so a save binds to one exact build and any rebuild invalidates it.
 
 ## Why `-mstackrealign` is mandatory
 

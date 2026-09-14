@@ -6,7 +6,7 @@ project(KpMod VERSION 1.0.0 LANGUAGES C)
 if(PROJECT_IS_TOP_LEVEL)
 	set(CMAKE_C_STANDARD 11)
 	set(CMAKE_C_STANDARD_REQUIRED ON)
-	set(CMAKE_CONFIGURATION_TYPES Debug Release)
+	set(CMAKE_CONFIGURATION_TYPES Debug RelWithDebInfo Release)
 endif()
 
 if(NOT COMMAND KpApplyCompileFlags)
