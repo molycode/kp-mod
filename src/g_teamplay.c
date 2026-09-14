@@ -219,7 +219,7 @@ void SP_dm_cashspawn( edict_t *self )
 	}
 	else	// bag, so longer delay
 	{
-		self->delay = (float)g_cashspawndelay->value * (CASH_BAG / CASH_ROLL);
+		self->delay = (float)g_cashspawndelay->value * ((float)CASH_BAG / CASH_ROLL);
 	}
 
 	if (!self->speed)
