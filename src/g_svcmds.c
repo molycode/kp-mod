@@ -78,6 +78,12 @@ static qboolean StringToFilter (char *s, ipfilter_t *f)
 		j = 0;
 		while (*s >= '0' && *s <= '9')
 		{
+			if (j == (int)sizeof(num) - 1)
+			{
+				gi.cprintf(NULL, PRINT_HIGH, "Bad filter address: %s\n", s);
+				return false;
+			}
+
 			num[j++] = *s++;
 		}
 		num[j] = 0;
