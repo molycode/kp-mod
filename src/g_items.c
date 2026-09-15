@@ -1229,6 +1229,10 @@ void Touch_Item (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *surf
 			{
 				ent->item->icon = "/pics/h_pistol_mag.tga";
 			}	
+			else if (ent->count == 4)
+			{
+				ent->item->icon = "/pics/h_heavymachinegun_cooling.tga";
+			}
 		}
 		// END JOSEPH
 
@@ -3717,7 +3721,6 @@ void SP_hmg_mod_cooling (edict_t *self)
 	self->model = "models/pu_icon/coolmod/tris.md2";
 	self->count = 4;
 	SpawnItem (self, FindItem ("Pistol_Mods"));
-	self->item->icon = "/pics/h_heavymachinegun_cooling.tga";
 	//gi.soundindex ("items/pistol_mods.wav");
 }
 // END JOSEPH
