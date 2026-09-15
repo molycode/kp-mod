@@ -862,6 +862,15 @@ void Cmd_Spawn_f (edict_t *ent)
 	char *name;
 	vec3_t	forward;
 
+	if (!developer->value)
+		return;
+
+	if (deathmatch->value && !sv_cheats->value)
+	{
+		gi.cprintf (ent, PRINT_HIGH, "You must run the server with '+set cheats 1' to enable this command.\n");
+		return;
+	}
+
 	spawn = G_Spawn();
 
 	name = gi.args ();
