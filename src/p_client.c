@@ -1533,27 +1533,21 @@ ent->bikestate = 0;
 		memset(&(ent->s.model_parts[0]), 0, sizeof(model_part_t) * MAX_MODEL_PARTS);
 		
 		ent->s.num_parts++;
-		strcpy( modelname, "players/" );
-		strcat( modelname, modeldir );
-		strcat( modelname, "/head.mdx" );
+		Com_sprintf( modelname, sizeof(modelname), "players/%s/head.mdx", modeldir );
 		ent->s.model_parts[ent->s.num_parts-1].modelindex = 255;
 		gi.GetObjectBounds( modelname, &ent->s.model_parts[ent->s.num_parts-1] );
 		if (!ent->s.model_parts[ent->s.num_parts-1].object_bounds[0])
 			gi.GetObjectBounds( "players/male_thug/head.mdx", &ent->s.model_parts[ent->s.num_parts-1] );
 
 		ent->s.num_parts++;
-		strcpy( modelname, "players/" );
-		strcat( modelname, modeldir );
-		strcat( modelname, "/legs.mdx" );
+		Com_sprintf( modelname, sizeof(modelname), "players/%s/legs.mdx", modeldir );
 		ent->s.model_parts[ent->s.num_parts-1].modelindex = 255;
 		gi.GetObjectBounds( modelname, &ent->s.model_parts[ent->s.num_parts-1] );
 		if (!ent->s.model_parts[ent->s.num_parts-1].object_bounds[0])
 			gi.GetObjectBounds( "players/male_thug/legs.mdx", &ent->s.model_parts[ent->s.num_parts-1] );
 
 		ent->s.num_parts++;
-		strcpy( modelname, "players/" );
-		strcat( modelname, modeldir );
-		strcat( modelname, "/body.mdx" );
+		Com_sprintf( modelname, sizeof(modelname), "players/%s/body.mdx", modeldir );
 		ent->s.model_parts[ent->s.num_parts-1].modelindex = 255;
 		gi.GetObjectBounds( modelname, &ent->s.model_parts[ent->s.num_parts-1] );
 		if (!ent->s.model_parts[ent->s.num_parts-1].object_bounds[0])
