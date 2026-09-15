@@ -846,6 +846,10 @@ float	PlayersRangeFromSpot (edict_t *spot)
 		if (player->health <= 0)
 			continue;
 
+		// A team-less client keeps full health while spectating.
+		if (player->solid == SOLID_NOT)
+			continue;
+
 		VectorSubtract (spot->s.origin, player->s.origin, v);
 		playerdistance = VectorLength (v);
 
