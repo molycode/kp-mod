@@ -3445,9 +3445,10 @@ void ai_runFLASHLIGHT ( edict_t *self, float dist )
 void ai_run ( edict_t *self, float dist )
 {
 	static edict_t tempgoal;
+	static edict_t tempent;	// stored in self->last_goal, which outlives this call
 	edict_t		**goal=NULL;
 	int			len;
-	edict_t		tempent, *ptempent;
+	edict_t		*ptempent;
 
 	route_t		route;
 	node_t		*goal_node;
