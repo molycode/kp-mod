@@ -152,6 +152,9 @@ match (string)self.target and call their .use function
 
 ==============================
 */
+// func_timer applies delay once before it starts, not to each firing.
+void func_timer_think (edict_t *self);
+
 void G_UseTargets (edict_t *ent, edict_t *activator)
 {
 	edict_t		*t;
@@ -159,7 +162,7 @@ void G_UseTargets (edict_t *ent, edict_t *activator)
 //
 // check for a delay
 //
-	if (ent->delay && ent->think != Think_Delay)
+	if (ent->delay && ent->think != Think_Delay && ent->think != func_timer_think)
 	{
 	// create a temp object to fire at a later time
 		t = G_Spawn();
