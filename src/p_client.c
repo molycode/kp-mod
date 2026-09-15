@@ -2579,7 +2579,7 @@ chasing:
 	for (i=0 ; i<3 ; i++)
 	{
 		pm.s.origin[i] = ent->s.origin[i]*8;
-		pm.s.velocity[i] = ent->velocity[i]*8;
+		pm.s.velocity[i] = (int)(ent->velocity[i]*8);
 	}
 
 	if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
