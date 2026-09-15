@@ -3803,9 +3803,9 @@ void ClientCommand (edict_t *ent)
 
 	// JOSEPH 23-MAR-99
 	else if (Q_stricmp (cmd, "hideprops") == 0)
-		Cmd_SetProps_f (ent, 0);
-	else if (Q_stricmp (cmd, "showprops") == 0)
 		Cmd_SetProps_f (ent, 1);
+	else if (Q_stricmp (cmd, "showprops") == 0)
+		Cmd_SetProps_f (ent, 0);
 	else if (Q_stricmp (cmd, "extracrispy") == 0)
 		Cmd_FryAll_f (ent);
 	// END JOSEPH
