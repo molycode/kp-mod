@@ -866,6 +866,8 @@ void ED_ParseField (char *key, char *value, edict_t *ent)
 				*(char **)(b+f->ofs) = ED_NewString (value);
 				break;
 			case F_VECTOR:
+				// A value with fewer than three numbers leaves the rest of vec untouched.
+				vec[0] = vec[1] = vec[2] = 0;
 				sscanf (value, "%f %f %f", &vec[0], &vec[1], &vec[2]);
 				((float *)(b+f->ofs))[0] = vec[0];
 				((float *)(b+f->ofs))[1] = vec[1];
