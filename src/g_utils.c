@@ -565,7 +565,8 @@ qboolean KillBox (edict_t *ent)
 	while (1)
 	{
 		tr = gi.trace (ent->s.origin, ent->mins, ent->maxs, ent->s.origin, NULL, MASK_PLAYERSOLID);
-		if (!tr.ent)
+		// tr.ent is worldspawn on a clear trace, never null, so startsolid is the real test.
+		if (!tr.ent || !tr.startsolid)
 			break;
 
 		// nail it
