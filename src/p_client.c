@@ -885,6 +885,8 @@ edict_t *SelectRandomDeathmatchSpawnPoint (edict_t *ent)
 		range = PlayersRangeFromSpot(spot);
 		if (range < range1)
 		{
+			range2 = range1;
+			spot2 = spot1;
 			range1 = range;
 			spot1 = spot;
 		}
