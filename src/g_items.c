@@ -1627,8 +1627,6 @@ void SpawnItem (edict_t *ent, gitem_t *item)
 	if (!item)
 		return;
 
-	PrecacheItem (item);
-
 	if (ent->spawnflags)
 	{
 		if (strcmp(ent->classname, "key_fuse") != 0)
@@ -1751,6 +1749,8 @@ void SpawnItem (edict_t *ent, gitem_t *item)
 		item->drop = NULL;
 	}
 */
+	PrecacheItem (item);
+
 	// JOSEPH 22-JAN-99
 	ent->item = item;
 	ent->nextthink = level.time + 2 * FRAMETIME;    // items start after other solids
