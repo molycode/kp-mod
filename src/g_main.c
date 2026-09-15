@@ -270,7 +270,7 @@ char *MapCycleNext( char *map )
 {
 	char	*basevars[] = {"basedir", "cddir", NULL};	// consol variables that point to possible file locations
 	cvar_t	*game_dir, *base_dir;
-	char	filename[MAX_QPATH], dir[MAX_QPATH];
+	char	filename[MAX_QPATH];
 	FILE	*f = NULL;
 	static char	nextmap[MAX_QPATH];
 	char	firstmap[MAX_QPATH];
@@ -283,30 +283,31 @@ char *MapCycleNext( char *map )
 
 	game_dir = gi.cvar("game", "", 0);
 
-	// dir, eg: .\gamedir\routes
 	for (i=0; basevars[i]; i++)
 	{
+		char	*list_name, *separator;
+
 		base_dir = gi.cvar(basevars[i], ".", 0);
 
-		strcpy( dir, base_dir->string);
-
-		if (dir[strlen(dir)-1] != DIR_SLASH[0])
-			strcat( dir, DIR_SLASH);
-
-		if (strlen(game_dir->string) == 0)
-			strcat( dir, "main");
+		if (base_dir->string[0] != 0 && base_dir->string[strlen(base_dir->string)-1] == DIR_SLASH[0])
+			separator = "";
 		else
-			strcat( dir, game_dir->string);
+			separator = DIR_SLASH;
+
+		if (g_mapcycle_file->string && strlen(g_mapcycle_file->string) > 0)
+			list_name = g_mapcycle_file->string;
+		else if (!teamplay->value)
+			list_name = "maps.lst";
+		else
+			list_name = "teammaps.lst";
 
 		// filename, eg: .\gamedir\maps.lst
-		strcpy( filename, dir);
-		strcat( filename, DIR_SLASH);
-		if (g_mapcycle_file->string && strlen(g_mapcycle_file->string) > 0)
-			strcat( filename, g_mapcycle_file->string);
-		else if (!teamplay->value)
-			strcat( filename, "maps.lst");
-		else
-			strcat( filename, "teammaps.lst");
+		Com_sprintf( filename, sizeof(filename), "%s%s%s%s%s",
+			base_dir->string,
+			separator,
+			strlen(game_dir->string) == 0 ? "main" : game_dir->string,
+			DIR_SLASH,
+			list_name );
 
 		// try and open the file for reading
 		f = fopen ( filename, "rb");
