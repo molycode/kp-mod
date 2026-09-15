@@ -1354,6 +1354,14 @@ void PutClientInServer (edict_t *ent)
 	ent->flags &= ~FL_NO_KNOCKBACK;
 	ent->svflags &= ~(SVF_DEADMONSTER|SVF_NOCLIENT);
 
+	// ClientBeginDeathmatch demotes a teamless client to spectator too, but only after this has run.
+	if (teamplay->value && !ent->client->pers.team)
+	{
+		ent->movetype = MOVETYPE_NOCLIP;
+		ent->solid = SOLID_NOT;
+		ent->svflags |= SVF_NOCLIENT;
+	}
+
 	ent->s.renderfx2 = 0;
 	ent->onfiretime = 0;
 
@@ -1579,9 +1587,8 @@ ent->bikestate = 0;
 	VectorCopy (ent->s.angles, client->ps.viewangles);
 	VectorCopy (ent->s.angles, client->v_angle);
 
-	if (!KillBox (ent))
-	{	// could't spawn in?
-	}
+	if (ent->solid != SOLID_NOT)
+		KillBox (ent);
 
 	gi.linkentity (ent);
 
