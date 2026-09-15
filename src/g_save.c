@@ -40,7 +40,7 @@ field_t fields[] = {
 
 	{"light", FOFS(light_level), F_INT, 0}, // Ridah, used by model lighting code
 	{"_color", FOFS(rotate), F_VECTOR, 0}, // Ridah, used by model lighting code
-	{"radius", FOFS(dmg_radius), F_VECTOR, 0}, // Ridah, used by model lighting code
+	{"radius", FOFS(dmg_radius), F_FLOAT, 0}, // Ridah, used by model lighting code
 
 	{"dmg", FOFS(dmg), F_INT, 0},
 	{"mass", FOFS(mass), F_INT, 0},
