@@ -3470,11 +3470,16 @@ void Cmd_Players_f (edict_t *ent)
 			index[i] + 1,
 			game.clients[index[i]].pers.netname,
 			game.clients[index[i]].ps.stats[STAT_FRAGS] );
-		if (strlen (small) + strlen(large) > sizeof(large) - 100 )
-		{	// can't print all of them in one packet
-			strcat (large, "...\n");
-			break;
+
+		// The engine's cprintf formats into a 1024-byte buffer and drops the whole
+		// message if it overflows, so flush the running list before it can and carry
+		// on - a full server used to lose everyone past ~30 names to a silent drop.
+		if (strlen (small) + strlen(large) >= 900)
+		{
+			gi.cprintf (ent, PRINT_HIGH, "%s", large);
+			large[0] = 0;
 		}
+
 		strcat (large, small);
 	}
 
