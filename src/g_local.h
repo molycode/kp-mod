@@ -1554,6 +1554,7 @@ struct edict_s
 	int   footsteptype;
 	int   fxdensity;
 	int   currentcash;
+	int   coop_taken;
 	int   pullable;
 	int		deadticks;
 	int		healspeed;

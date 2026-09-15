@@ -653,6 +653,17 @@ void Drop_Ammo (edict_t *ent, gitem_t *item)
 // JOSEPH 18-MAR-99
 qboolean Pickup_Cash (edict_t *ent, edict_t *other)
 {
+	int		playerbit;
+
+	if (coop->value)
+	{	// cash items stay put in coop, so the touch refires every frame until we refuse it
+		playerbit = 1 << ((other->client - game.clients) & 31);
+
+		if (ent->coop_taken & playerbit)
+			return false;
+
+		ent->coop_taken |= playerbit;
+	}
 
 	if (!ent->currentcash)
 	//	gi.cprintf (other, PRINT_HIGH, "%i dollars found\n", ent->currentcash);
