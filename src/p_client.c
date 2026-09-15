@@ -1620,10 +1620,13 @@ void ClientBeginDeathmatch (edict_t *ent)
 	PutClientInServer (ent);
 
 	// send effect
-	gi.WriteByte (svc_muzzleflash);
-	gi.WriteShort (ent-g_edicts);
-	gi.WriteByte (MZ_LOGIN);
-	gi.multicast (ent->s.origin, MULTICAST_PVS);
+	if (ent->solid != SOLID_NOT)
+	{
+		gi.WriteByte (svc_muzzleflash);
+		gi.WriteShort (ent-g_edicts);
+		gi.WriteByte (MZ_LOGIN);
+		gi.multicast (ent->s.origin, MULTICAST_PVS);
+	}
 
 	// Teamplay: if they aren't assigned to a team, make them a spectator
 	if (teamplay->value)
