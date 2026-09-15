@@ -274,6 +274,43 @@ The game can issue gi.argc() / gi.argv() commands to get the rest
 of the parameters
 =================
 */
+/*
+=================
+SVCmd_NextMap_f
+
+Advance the map cycle now, as the timelimit would.
+=================
+*/
+static void SVCmd_NextMap_f (void)
+{
+	char	*next;
+
+	if (!deathmatch->value)
+	{
+		gi.cprintf (NULL, PRINT_HIGH, "nextmap is only available in deathmatch\n");
+		return;
+	}
+
+	if (level.intermissiontime)
+	{
+		gi.cprintf (NULL, PRINT_HIGH, "Already leaving %s.\n", level.mapname);
+		return;
+	}
+
+	// An unlisted map has no successor, so rejoin the cycle at its first entry rather than
+	// let EndDMLevel fall through to reloading the map we are already on.
+	next = MapCycleNext (true);
+
+	if (!next)
+	{
+		gi.cprintf (NULL, PRINT_HIGH, "No map cycle: the rotation file is missing or empty.\n");
+		return;
+	}
+
+	gi.cprintf (NULL, PRINT_HIGH, "Advancing to %s.\n", next);
+	EndDMLevel (next);
+}
+
 void	ServerCommand (void)
 {
 	char	*cmd;
@@ -289,6 +326,8 @@ void	ServerCommand (void)
 		SVCmd_ListIP_f ();
 	else if (Q_stricmp (cmd, "writeip") == 0)
 		SVCmd_WriteIP_f ();
+	else if (Q_stricmp (cmd, "nextmap") == 0)
+		SVCmd_NextMap_f ();
 	else
 		gi.cprintf (NULL, PRINT_HIGH, "Unknown server command \"%s\"\n", cmd);
 }

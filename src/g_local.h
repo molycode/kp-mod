@@ -1106,6 +1106,8 @@ void G_RunEntity (edict_t *ent);
 //
 void SaveClientData (void);
 void FetchClientEntData (edict_t *ent);
+char *MapCycleNext (qboolean restartIfUnlisted);
+void EndDMLevel (char *map);
 
 // 
 //	g_pawn.c

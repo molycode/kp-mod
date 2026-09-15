@@ -266,7 +266,7 @@ MapCycleNext
 	Uses maps.lst and teammaps.lst to cycle the maps during deathmatch
 =================
 */
-char *MapCycleNext( void )
+char *MapCycleNext( qboolean restartIfUnlisted )
 {
 	char	*basevars[] = {"basedir", "cddir", NULL};	// consol variables that point to possible file locations
 	cvar_t	*game_dir, *base_dir;
@@ -380,6 +380,14 @@ char *MapCycleNext( void )
 
 	fclose(f);
 
+	// Reaching here means the current map is not listed, so there is no "next" to take. It cannot
+	// be the first entry either -- that would have matched on the opening pass.
+	if (restartIfUnlisted)
+	{
+		strcpy( nextmap, firstmap );
+		return nextmap;
+	}
+
 	// no match, so return nothing
 	return NULL;
 }
@@ -391,10 +399,19 @@ EndDMLevel
 The timelimit or fraglimit has been exceeded
 =================
 */
-void EndDMLevel (void)
+void EndDMLevel (char *map)
 {
 	edict_t		*ent;
 	char		*nextmap;
+
+	if (map)
+	{	// a caller that already decided overrides the cycle, and DF_SAME_LEVEL with it
+		ent = G_Spawn ();
+		ent->classname = "target_changelevel";
+		ent->map = map;
+
+		goto done;
+	}
 
 	// stay on same level flag
 	if ((int)dmflags->value & DF_SAME_LEVEL)
@@ -406,7 +423,7 @@ void EndDMLevel (void)
 		goto done;
 	}
 
-	if ((nextmap = MapCycleNext()) != NULL)
+	if ((nextmap = MapCycleNext( false )) != NULL)
 	{
 		ent = G_Spawn ();
 		ent->classname = "target_changelevel";
@@ -467,7 +484,7 @@ void CheckDMRules (void)
 		if (level.time >= timelimit->value*60)
 		{
 			gi.bprintf (PRINT_HIGH, "Timelimit hit.\n");
-			EndDMLevel ();
+			EndDMLevel (NULL);
 			return;
 		}
 	}
@@ -483,7 +500,7 @@ void CheckDMRules (void)
 			if (cl->resp.score >= fraglimit->value)
 			{
 				gi.bprintf (PRINT_HIGH, "Fraglimit hit.\n");
-				EndDMLevel ();
+				EndDMLevel (NULL);
 				return;
 			}
 		}
@@ -494,7 +511,7 @@ void CheckDMRules (void)
 		if ((team_cash[1] >= cashlimit->value) || (team_cash[2] >= cashlimit->value))
 		{
 			gi.bprintf (PRINT_HIGH, "Cashlimit hit.\n");
-			EndDMLevel ();
+			EndDMLevel (NULL);
 			return;
 		}
 	}
