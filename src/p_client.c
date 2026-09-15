@@ -2059,6 +2059,7 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 		if (!valid)
 		{	// assign a random model
 			model_index = -1;
+			i = 0;
 
 			// look for a gender match
 			while (valid_models[i])
