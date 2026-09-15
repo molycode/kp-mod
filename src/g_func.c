@@ -2938,7 +2938,7 @@ void SP_func_train (edict_t *self)
 	{	
 		char string[256];
 		
-		sprintf(string, "%s%s", st.noise, ".wav");
+		Com_sprintf(string, sizeof(string), "%s.wav", st.noise);
 		
 		self->moveinfo.sound_middle = gi.soundindex(string);
 		if (!self->reactdelay)
@@ -3619,7 +3619,7 @@ void SP_func_train_rotating (edict_t *self)
 		//self->moveinfo.sound_middle = gi.soundindex("world/trainout.wav");
 		//self->reactdelay = 1.0;
 		
-		sprintf(string, "%s%s", st.noise, ".wav");
+		Com_sprintf(string, sizeof(string), "%s.wav", st.noise);
 		
 		self->moveinfo.sound_middle = gi.soundindex(string);
 		if (!self->reactdelay)
