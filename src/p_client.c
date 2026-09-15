@@ -1616,18 +1616,6 @@ void ClientBeginDeathmatch (edict_t *ent)
 
 	InitClientResp (ent->client);
 
-	// locate ent at a spawn point
-	PutClientInServer (ent);
-
-	// send effect
-	if (ent->solid != SOLID_NOT)
-	{
-		gi.WriteByte (svc_muzzleflash);
-		gi.WriteShort (ent-g_edicts);
-		gi.WriteByte (MZ_LOGIN);
-		gi.multicast (ent->s.origin, MULTICAST_PVS);
-	}
-
 	// Teamplay: if they aren't assigned to a team, make them a spectator
 	if (teamplay->value)
 	{
@@ -1651,6 +1639,10 @@ void ClientBeginDeathmatch (edict_t *ent)
 			}
 			else
 			{
+				// Teamplay_ValidateJoinTeam locates the ones that joined; a spectator still
+				// needs the client state PutClientInServer sets up.
+				PutClientInServer (ent);
+
 				ent->movetype = MOVETYPE_NOCLIP;
 				ent->solid = SOLID_NOT;
 				ent->svflags |= SVF_NOCLIENT;
@@ -1662,7 +1654,19 @@ void ClientBeginDeathmatch (edict_t *ent)
 	}
 	else
 	{
+		// locate ent at a spawn point
+		PutClientInServer (ent);
+
 		gi.bprintf (PRINT_HIGH, "%s entered the game\n", ent->client->pers.netname);
+	}
+
+	// send effect
+	if (ent->solid != SOLID_NOT)
+	{
+		gi.WriteByte (svc_muzzleflash);
+		gi.WriteShort (ent-g_edicts);
+		gi.WriteByte (MZ_LOGIN);
+		gi.multicast (ent->s.origin, MULTICAST_PVS);
 	}
 
 	// make sure all view stuff is valid
