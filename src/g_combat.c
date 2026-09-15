@@ -625,7 +625,8 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	int			te_sparks;
 	float		dmg;
 
-	dmg = (float)(damage);
+	// A map's dmg key reaches here unchecked; a negative one healed without limit.
+	dmg = (float)abs(damage);
 
 	if (!targ->takedamage)
 		return;
