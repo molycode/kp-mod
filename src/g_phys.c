@@ -800,6 +800,10 @@ void SV_Physics_Toss (edict_t *ent)
 // regular thinking
 	SV_RunThink (ent);
 
+	// SV_RunThink may have freed the edict - every gib does at expiry.
+	if (!ent->inuse)
+		return;
+
 	// if not a team captain, so movement will be handled elsewhere
 	if ( ent->flags & FL_TEAMSLAVE)
 		return;
