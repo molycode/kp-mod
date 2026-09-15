@@ -419,6 +419,28 @@ void Cmd_NavClear_f ( edict_t *self )
 	gi.AddCommandString( "echo \necho Cleared Navigational Data, closing down server.\necho \ndisconnect\n" );
 }
 
+void Cmd_NavSave_f ( edict_t *self )
+{
+	if (deathmatch->value)
+	{
+		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		return;
+	}
+
+	NAV_WriteActiveNodes ( self->active_node_data, level.mapname );
+}
+
+void Cmd_NavRebuild_f ( edict_t *self )
+{
+	if (deathmatch->value)
+	{
+		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		return;
+	}
+
+	NAV_RebuildRoutes( level.node_data );
+}
+
 // END:		Xatrix/Ridah/Navigator/23-mar-1998
 
 //--------------------------------------------------------
@@ -3733,11 +3755,11 @@ void ClientCommand (edict_t *ent)
 	else if (Q_stricmp (cmd, "nav_showpath") == 0)
 		Cmd_NavDebugShowPath_f (ent);
 	else if (Q_stricmp (cmd, "nav_save") == 0)
-		NAV_WriteActiveNodes ( ent->active_node_data, level.mapname );
+		Cmd_NavSave_f (ent);
 	else if (Q_stricmp (cmd, "nav_clear") == 0)
 		Cmd_NavClear_f ( ent );
 	else if (Q_stricmp (cmd, "nav_rebuild") == 0)
-		NAV_RebuildRoutes( level.node_data );
+		Cmd_NavRebuild_f (ent);
 // END:		Xatrix/Ridah/Navigator/23-mar-1998
 
 	else if (Q_stricmp (cmd, "spawn") == 0)
