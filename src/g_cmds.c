@@ -348,7 +348,7 @@ void Cmd_NavDebugDest_f (edict_t *ent)
 {
 	if (deathmatch->value)
 	{
-		gi.cprintf(ent, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(ent, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -366,7 +366,7 @@ void Cmd_NavDebugShowPath_f (edict_t *ent)
 {
 	if (deathmatch->value)
 	{
-		gi.cprintf(ent, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(ent, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 /*
@@ -403,7 +403,7 @@ void Cmd_NavClear_f ( edict_t *self )
 {
 	if (deathmatch->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -423,7 +423,7 @@ void Cmd_NavSave_f ( edict_t *self )
 {
 	if (deathmatch->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -434,7 +434,7 @@ void Cmd_NavRebuild_f ( edict_t *self )
 {
 	if (deathmatch->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -451,7 +451,7 @@ void Cmd_Spec_f (edict_t *self)
 {
 	if (!teamplay->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when teamplay is enabled\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when teamplay is enabled\n");
 		return;
 	}
 	
@@ -475,7 +475,7 @@ void Cmd_Join_f (edict_t *self, char *teamcmd)
 
 	if (!teamplay->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when teamplay is enabled\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when teamplay is enabled\n");
 		return;
 	}
 
@@ -534,7 +534,7 @@ void Cmd_GetTexture_f (edict_t *self)
 
 	if (deathmatch->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -643,7 +643,7 @@ void Cmd_BurnSave_f (edict_t *self)
 
 	if (deathmatch->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
@@ -1862,7 +1862,7 @@ void Cmd_SetProps_f (edict_t *ent, int status)
 
 	if (deathmatch->value)
 	{
-		gi.cprintf(ent, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		gi.cprintf(ent, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
 		return;
 	}
 
