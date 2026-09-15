@@ -266,7 +266,7 @@ MapCycleNext
 	Uses maps.lst and teammaps.lst to cycle the maps during deathmatch
 =================
 */
-char *MapCycleNext( char *map )
+char *MapCycleNext( void )
 {
 	char	*basevars[] = {"basedir", "cddir", NULL};	// consol variables that point to possible file locations
 	cvar_t	*game_dir, *base_dir;
@@ -406,7 +406,7 @@ void EndDMLevel (void)
 		goto done;
 	}
 
-	if ((nextmap = MapCycleNext( level.mapname )) != NULL)
+	if ((nextmap = MapCycleNext()) != NULL)
 	{
 		ent = G_Spawn ();
 		ent->classname = "target_changelevel";
