@@ -3305,7 +3305,7 @@ void Cmd_WeapLast_f (edict_t *ent)
 	it->use (ent, it);
 
 	// Ridah, show the current weapon on the hud, for easy scrolling
-	if (deathmatch && !strstr(it->icon, "pipe"))
+	if (deathmatch->value && !strstr(it->icon, "pipe"))
 	{
 		ent->client->ps.stats[STAT_PICKUP_ICON] = gi.imageindex(it->icon);
 		ent->client->ps.stats[STAT_PICKUP_STRING] = CS_ITEMS+ITEM_INDEX(it);
