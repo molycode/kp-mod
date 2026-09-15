@@ -1855,11 +1855,17 @@ void Cmd_ToggleCam_f ( edict_t *ent )
 // done.
 
 // JOSEPH 13-APR-99
-void Cmd_SetProps_f (int status)
+void Cmd_SetProps_f (edict_t *ent, int status)
 {
 	edict_t	*e;
 	int		i;
-					
+
+	if (deathmatch->value)
+	{
+		gi.cprintf(ent, PRINT_HIGH, "This command only available when deathmatch = 0\n");
+		return;
+	}
+
 	for (i=1, e=g_edicts+i ; i < globals.num_edicts ; i++,e++)
 	{
 		if ((e->svflags & SVF_PROP) && (e->option))
@@ -3797,9 +3803,9 @@ void ClientCommand (edict_t *ent)
 
 	// JOSEPH 23-MAR-99
 	else if (Q_stricmp (cmd, "hideprops") == 0)
-		Cmd_SetProps_f (0);
+		Cmd_SetProps_f (ent, 0);
 	else if (Q_stricmp (cmd, "showprops") == 0)
-		Cmd_SetProps_f (1);
+		Cmd_SetProps_f (ent, 1);
 	else if (Q_stricmp (cmd, "extracrispy") == 0)
 		Cmd_FryAll_f (ent);
 	// END JOSEPH
