@@ -101,6 +101,7 @@ cvar_t	*cl_parental_override;
 cvar_t	*dm_realmode;
 
 cvar_t	*g_mapcycle_file;
+cvar_t	*coop_restartmap;
 // Ridah, done.
 
 void SpawnEntities (char *mapname, char *entities, char *spawnpoint);
@@ -524,13 +525,57 @@ ExitLevel
 =============
 */
 
+/*
+=================
+CoopRestartMap
+
+	Where a co-op server goes after a screen that ends the campaign.
+=================
+*/
+static char *CoopRestartMap (void)
+{
+	char	*target;
+
+	if (coop_restartmap->string[0] != 0)
+		target = coop_restartmap->string;
+	else
+		// The map being left is a campaign map, so it is not in a cycle list and there is no
+		// "next" to take; starting the list from the top is the answer that wants no stock map
+		// name hardcoded here, and lets a server of custom maps answer for itself.
+		target = MapCycleNext (true);
+
+	if (target != NULL && target[0] == 0)
+		target = NULL;
+
+	return target;
+}
+
 void ExitLevel (void)
 {
 	int		i;
 	edict_t	*ent;
 	char	command [256];
+	char	*restart = NULL;
 
-	Com_sprintf (command, sizeof(command), "gamemap \"%s\"\n", level.changemap);
+	// A changemap carrying an extension is not a map: SV_Map hands it to the picture path
+	// instead, which is how the campaign ends - the credits, and Poisonville's fail state.
+	// Single player parks on such a screen, but co-op is exempted from that parking
+	// (SV_Nextserver) and reaches killserver, so a co-op server needs somewhere to go.
+	if (coop->value && level.changemap != NULL
+		&& strchr (level.changemap, '.') != NULL && strchr (level.changemap, '+') == NULL)
+	{
+		restart = CoopRestartMap ();
+
+		if (restart == NULL)
+			gi.dprintf ("WARNING: co-op ends at \"%s\" with nowhere to go - set coop_restartmap "
+				"or a map cycle list, or the server shuts down here\n", level.changemap);
+	}
+
+	if (restart != NULL)
+		Com_sprintf (command, sizeof(command), "gamemap \"%s+%s\"\n", level.changemap, restart);
+	else
+		Com_sprintf (command, sizeof(command), "gamemap \"%s\"\n", level.changemap);
+
 	gi.AddCommandString (command);
 	level.changemap = NULL;
 	level.exitintermission = 0;

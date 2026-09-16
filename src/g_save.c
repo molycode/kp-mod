@@ -411,6 +411,7 @@ void InitGame (void)
 	dm_realmode = gi.cvar( "dm_realmode", "0", CVAR_LATCH|CVAR_SERVERINFO);
 	
 	g_mapcycle_file = gi.cvar( "g_mapcycle_file", "", 0);
+	coop_restartmap = gi.cvar( "coop_restartmap", "", 0);
 // Ridah, done.
 
 	// items

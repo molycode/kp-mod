@@ -758,6 +758,8 @@ extern	cvar_t	*dm_realmode;
 extern	cvar_t	*g_mapcycle_file;
 // Ridah, done.
 
+extern	cvar_t	*coop_restartmap;
+
 extern  cvar_t	*cl_captions;
 
 #define world	(&g_edicts[0])
