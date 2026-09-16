@@ -659,7 +659,10 @@ static qboolean AnyClientsConnected (void)
 =================
 AnyClientInGame
 
-Connected is not the same as present: a client can spend a minute downloading before it spawns.
+The edict's own inuse is the signal. It is false while a client downloads before its first spawn,
+true from PutClientInServer, and cleared again by ClientDisconnect - and unlike pers.connected it
+survives a level change, which measurably clears connected for every client on the second
+transition while the players are still standing there.
 =================
 */
 static qboolean AnyClientInGame (void)
@@ -668,7 +671,7 @@ static qboolean AnyClientInGame (void)
 	qboolean	present = false;
 
 	for (i=0 ; i<maxclients->value && !present ; i++)
-		present = g_edicts[1+i].inuse && game.clients[i].pers.connected;
+		present = g_edicts[1+i].inuse;
 
 	return present;
 }
