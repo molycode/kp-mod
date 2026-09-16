@@ -79,7 +79,7 @@ void AI_ReleaseCastMemory(edict_t *self, cast_memory_t *cast_memory)
 	{
 		next_memory = this_memory->next;
 
-		level.global_cast_memory[self->character_index][g_edicts[cast_memory->cast_ent].character_index] = NULL;
+		level.global_cast_memory[self->character_index][g_edicts[this_memory->cast_ent].character_index] = NULL;
 		memset( this_memory, 0, sizeof(cast_memory_t) );
 
 		this_memory = next_memory;
