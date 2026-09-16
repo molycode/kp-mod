@@ -2353,6 +2353,21 @@ void ClientDisconnect (edict_t *ent)
 	if (!ent->client)
 		return;
 
+	if (coop->value)
+	{
+		// An item that stays in co-op remembers who has taken it, by client slot - but the slot
+		// outlives the player, so the next person to occupy it would inherit those marks and be
+		// refused items they never took.
+		int		playerbit = 1 << ((ent->client - game.clients) & 31);
+		edict_t	*e;
+
+		for (i = 1, e = g_edicts + 1 ; i < globals.num_edicts ; i++, e++)
+		{
+			if (e->inuse)
+				e->coop_taken &= ~playerbit;
+		}
+	}
+
 	// inform any chasers
 	for (i=1; i<=maxclients->value; i++)
 	{
