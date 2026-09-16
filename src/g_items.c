@@ -1163,9 +1163,20 @@ qboolean Pickup_JetPack (edict_t *ent, edict_t *other)
 // JOSEPH 12-MAR-99-B
 qboolean Pickup_Health_Large (edict_t *ent, edict_t *other)
 {
-	
+	int		playerbit;
+
 	if (other->health >= other->max_health)
 		return false;
+
+	if (coop->value)
+	{	// health items stay put in coop, so the touch refires every frame until we refuse it
+		playerbit = 1 << ((other->client - game.clients) & 31);
+
+		if (ent->coop_taken & playerbit)
+			return false;
+
+		ent->coop_taken |= playerbit;
+	}
 
 	other->health += 25;
 
@@ -1180,8 +1191,20 @@ qboolean Pickup_Health_Large (edict_t *ent, edict_t *other)
 
 qboolean Pickup_Health_Small (edict_t *ent, edict_t *other)
 {
+	int		playerbit;
+
 	if (other->health >= other->max_health)
 		return false;
+
+	if (coop->value)
+	{	// health items stay put in coop, so the touch refires every frame until we refuse it
+		playerbit = 1 << ((other->client - game.clients) & 31);
+
+		if (ent->coop_taken & playerbit)
+			return false;
+
+		ent->coop_taken |= playerbit;
+	}
 
 	other->health += 15;
 
