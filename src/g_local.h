@@ -408,8 +408,6 @@ typedef struct
 	// int		exit_cut_scene;
 	vec3_t	cut_scene_origin;
 	vec3_t	cut_scene_angle;
-	vec3_t	player_oldpos;
-	vec3_t	player_oldang;
 
 	float		pawn_time;
 	vec3_t		pawn_origin;
@@ -1347,6 +1345,10 @@ struct gclient_s
 	// chase
 	edict_t		*chase_target;
 	qboolean	update_chase;
+
+	vec3_t		cutscene_oldpos;
+	vec3_t		cutscene_oldang;
+	qboolean	cutscene_saved;
 };
 
 

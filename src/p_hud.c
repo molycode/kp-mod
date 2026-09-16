@@ -1420,13 +1420,23 @@ void FollowEnt (edict_t *ent)
 	}
 }
 
+static void MoveAllClientsToCutSceneCamera (edict_t *ent)
+{
+	edict_t	*client;
+	int		i;
+
+	for (i=0 ; i<maxclients->value ; i++)
+	{
+		client = g_edicts + 1 + i;
+		if (!client->inuse)
+			continue;
+		MoveClientToCutSceneCamera (client, ent->deadticks);
+	}
+}
+
 // JOSEPH 23-FEB-99
 void BeginCutScene (edict_t *ent)
 {
-	edict_t *player;
-
-	player = g_edicts + 1;
-
     level.cut_scene_camera_switch = 1;
 
 	level.cut_scene_time = level.time + 0.1;
@@ -1454,18 +1464,11 @@ void BeginCutScene (edict_t *ent)
 	VectorCopy (ent->s.angles, level.cut_scene_angle);
 	VectorCopy (ent->s.origin, level.cut_scene_origin);
 	
-	VectorCopy (player->s.origin, level.player_oldpos);
-	VectorCopy (player->s.angles, level.player_oldang);
-	
-	MoveClientToCutSceneCamera (player, ent->deadticks);
+	MoveAllClientsToCutSceneCamera (ent);
 }
 
 void NewCutSceneCamera (edict_t *ent)
 {
-	edict_t *player;
-
-	player = g_edicts + 1;
-
 	level.cut_scene_camera_switch = 1;
 
 	VectorCopy(ent->s.angles, ent->save_avel);
@@ -1497,15 +1500,11 @@ void NewCutSceneCamera (edict_t *ent)
 	VectorCopy (ent->s.angles, level.cut_scene_angle);
 	VectorCopy (ent->s.origin, level.cut_scene_origin);
 	
-	MoveClientToCutSceneCamera (player, ent->deadticks);
+	MoveAllClientsToCutSceneCamera (ent);
 }
 
 void AdjustCutSceneCamera(edict_t *ent)
 {
-	edict_t *player;
-
-	player = g_edicts + 1;
-
 	if (ent->accel)
 	{
 		if (ent->delay < (level.time - ent->timestamp))
@@ -1623,35 +1622,23 @@ void AdjustCutSceneCamera(edict_t *ent)
 	}
     // END JOSEPH
 
-    MoveClientToCutSceneCamera (player, ent->deadticks);
+	MoveAllClientsToCutSceneCamera (ent);
 }
 
-void EndCutScene (edict_t *ent)
+static void EndCutSceneForPlayer (edict_t *player)
 {
-	edict_t *player;
-
-	player = g_edicts + 1;
-
-    level.cut_scene_camera_switch = 0;
-
     player->client->ps.fov = 90;
 	
-	VectorCopy (level.player_oldpos, player->s.origin);
-	VectorCopy (level.player_oldang, player->s.angles);
-	
-	// JOSEPH 24-FEB-99
-    level.cut_scene_camera_switch = 1;
-	level.cut_scene_end_count = 5;
-	// END JOSEPH	
-
-	level.cut_scene_time = 0;
+	VectorCopy (player->client->cutscene_oldpos, player->s.origin);
+	VectorCopy (player->client->cutscene_oldang, player->s.angles);
 	
 	player->client->ps.pmove.origin[0] = player->s.origin[0]*8;
 	player->client->ps.pmove.origin[1] = player->s.origin[1]*8;
 	player->client->ps.pmove.origin[2] = player->s.origin[2]*8;
 	
-	VectorCopy (level.player_oldang, player->client->ps.viewangles);
+	VectorCopy (player->client->cutscene_oldang, player->client->ps.viewangles);
 
+	player->client->cutscene_saved = false;
 
 	if (!player->client->pers.weapon)
 		return;
@@ -1824,10 +1811,43 @@ void EndCutScene (edict_t *ent)
 
 // 	player->client->ps.gunindex = gi.modelindex(player->client->pers.weapon->view_model);
 }
+
+void EndCutScene (edict_t *ent)
+{
+	edict_t	*client;
+	int		i;
+
+    level.cut_scene_camera_switch = 0;
+
+	// JOSEPH 24-FEB-99
+    level.cut_scene_camera_switch = 1;
+	level.cut_scene_end_count = 5;
+	// END JOSEPH	
+
+	level.cut_scene_time = 0;
+
+	for (i=0 ; i<maxclients->value ; i++)
+	{
+		client = g_edicts + 1 + i;
+		if (!client->inuse)
+			continue;
+
+		if (client->client->cutscene_saved)
+			EndCutSceneForPlayer (client);
+	}
+}
 // END JOSEPH
 
 void MoveClientToCutScene (edict_t *ent)
 {
+	// Guarded save: the camera update reruns every frame, and a mid-scene joiner arrives via ClientBegin.
+	if (!ent->client->cutscene_saved)
+	{
+		VectorCopy (ent->s.origin, ent->client->cutscene_oldpos);
+		VectorCopy (ent->s.angles, ent->client->cutscene_oldang);
+		ent->client->cutscene_saved = true;
+	}
+
 	VectorCopy (level.cut_scene_origin, ent->s.origin);
 	ent->client->ps.pmove.origin[0] = level.cut_scene_origin[0]*8;
 	ent->client->ps.pmove.origin[1] = level.cut_scene_origin[1]*8;
@@ -1871,6 +1891,14 @@ void MoveClientToCutScene (edict_t *ent)
 
 void MoveClientToCutSceneCamera (edict_t *ent, int fov)
 {
+	// Guarded save: the camera update reruns every frame, and a mid-scene joiner arrives via ClientBegin.
+	if (!ent->client->cutscene_saved)
+	{
+		VectorCopy (ent->s.origin, ent->client->cutscene_oldpos);
+		VectorCopy (ent->s.angles, ent->client->cutscene_oldang);
+		ent->client->cutscene_saved = true;
+	}
+
 	ent->client->ps.fov = fov;
 	
 	VectorCopy (level.cut_scene_origin, ent->s.origin);
