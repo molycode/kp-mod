@@ -284,6 +284,9 @@ field_t		clientfields[] =
 	{"pers.weapon", CLOFS(pers.weapon), F_ITEM, 0},
 	{"pers.holsteredweapon", CLOFS(pers.holsteredweapon), F_ITEM, 0},
 	{"pers.lastweapon", CLOFS(pers.lastweapon), F_ITEM, 0},
+	{"resp.coop_respawn.weapon", CLOFS(resp.coop_respawn.weapon), F_ITEM, 0},
+	{"resp.coop_respawn.holsteredweapon", CLOFS(resp.coop_respawn.holsteredweapon), F_ITEM, 0},
+	{"resp.coop_respawn.lastweapon", CLOFS(resp.coop_respawn.lastweapon), F_ITEM, 0},
 	{"newweapon", CLOFS(newweapon), F_ITEM, 0},
 	{NULL, 0, F_INT, 0}
 };

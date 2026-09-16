@@ -1281,20 +1281,12 @@ void PutClientInServer (edict_t *ent)
 		InitClientPersistant (client);
 		ClientUserinfoChanged (ent, userinfo);
 	}
-/*
 	else if (coop->value)
 	{
-//		int			n;
 		char		userinfo[MAX_INFO_STRING];
 
 		resp = client->resp;
 		memcpy (userinfo, client->pers.userinfo, sizeof(userinfo));
-		// this is kind of ugly, but it's how we want to handle keys in coop
-//		for (n = 0; n < game.num_items; n++)
-//		{
-//			if (itemlist[n].flags & IT_KEY)
-//				resp.coop_respawn.inventory[n] = client->pers.inventory[n];
-//		}
 		resp.coop_respawn.game_helpchanged = client->pers.game_helpchanged;
 		resp.coop_respawn.helpchanged = client->pers.helpchanged;
 		client->pers = resp.coop_respawn;
@@ -1302,7 +1294,6 @@ void PutClientInServer (edict_t *ent)
 		if (resp.score > client->pers.score)
 			client->pers.score = resp.score;
 	}
-*/
 	else
 	{
 //		for (i=0; i<level.num_characters; i++)
