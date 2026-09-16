@@ -706,6 +706,10 @@ if (!deathmatch->value)
 	// Ridah, 7-5-99, prevent friendly's following into pawn-o-matic
 	if (strstr( self->map, "pawn" ) != self->map)
 	{
+		// A transition builds its own list; anything left from an earlier one belongs to a player
+		// who never arrived to claim it.
+		num_followers = 0;
+
 		for (i=0; i<level.num_characters; i++)
 		{
 			if (!level.characters[i])
@@ -719,10 +723,12 @@ if (!deathmatch->value)
 			if (!e->leader)
 				continue;
 
-			if (e->leader != activator)
+			// In co-op every player takes their own followers along, so measure against whoever
+			// this one is actually following rather than against the player who hit the exit.
+			if (!e->leader->client)
 				continue;
 
-			if (VectorDistance( e->s.origin, activator->s.origin ) > 512)
+			if (VectorDistance( e->s.origin, e->leader->s.origin ) > 512)
 				continue;
 
 			if (num_followers >= MAX_FOLLOWERS)
@@ -752,6 +758,7 @@ if (!deathmatch->value)
 			followers[num_followers].scale = e->cast_info.scale;
 			followers[num_followers].spawnflags = e->spawnflags;
 			followers[num_followers].count = e->count;	// for the Runt
+			followers[num_followers].leader_index = e->leader - g_edicts;
 
 			for (j=0; j<e->s.num_parts; j++)
 			{

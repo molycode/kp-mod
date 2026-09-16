@@ -1799,6 +1799,13 @@ void ClientBegin (edict_t *ent)
 		for (i=0; i<num_followers; i++)
 		{
 			fol = &followers[i];
+
+			// Someone else's, or already claimed. Without this the first client through
+			// ClientBegin took every player's followers and left the rest with none.
+			if (fol->leader_index != ent - g_edicts)
+				continue;
+
+			fol->leader_index = 0;		// claimed; 0 is the world, never a player
 			killed = false;
 
 			// spawn a similar entity
@@ -1912,8 +1919,6 @@ void ClientBegin (edict_t *ent)
 			newent->max_health = fol->max_health;
 
 		}
-
-		num_followers = 0;
 
 		// clear coop spawnflags
 		spawnspot = NULL;

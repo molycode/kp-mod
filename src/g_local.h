@@ -1726,6 +1726,10 @@ typedef struct
 	float	scale;
 	int		spawnflags;
 	int		count;		// for the Runt
+	// Edict number of the player being followed. A client keeps its slot for as long as it is
+	// connected, so this still identifies the same player on the next level, where the pointer
+	// would not.
+	int		leader_index;
 } follower_t;
 
 #define		MAX_FOLLOWERS	2
