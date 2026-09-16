@@ -634,10 +634,7 @@ void G_RunFrame (void)
 	// do character sighting/memory stuff
 	if ((maxclients->value > 1) && !(deathmatch->value))
 	{	// coop server, do more checking here
-
-		if (dedicated->value)
-			AI_UpdateCharacterMemories( 256 );
-
+		AI_UpdateCharacterMemories( 256 );
 	}
 
 
