@@ -3134,6 +3134,12 @@ static void CoopSpawnResolve (edict_t *ent)
 		// player_die owns SVF_DEADMONSTER from here - leave it set on the corpse.
 		ent->flags &= ~FL_COOP_SPAWN;
 	}
+	else if (ent->client->cutscene_saved)
+	{
+		// A cut scene parks every player on the camera, where nothing overlaps, so resolving
+		// there reads as clear and drops the pass-through. EndCutScene then puts them all back
+		// on the one spawn they came from, solid and inside each other, unable to move again.
+	}
 	else if (CoopSpawnClear (ent))
 	{
 		ent->flags &= ~FL_COOP_SPAWN;
