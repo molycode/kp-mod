@@ -1629,6 +1629,8 @@ static void EndCutSceneForPlayer (edict_t *player)
 {
     player->client->ps.fov = 90;
 	
+	player->svflags &= ~SVF_NOCLIENT;
+
 	VectorCopy (player->client->cutscene_oldpos, player->s.origin);
 	VectorCopy (player->client->cutscene_oldang, player->s.angles);
 	
@@ -1860,6 +1862,9 @@ void MoveClientToCutScene (edict_t *ent)
 	ent->client->ps.viewoffset[0] = 0;
 	ent->client->ps.viewoffset[1] = 0;
 	ent->client->ps.viewoffset[2] = PLAYER_VIEWHEIGHT;
+	// Every client is moved to the same camera origin, so without this each one renders the
+	// others at zero distance - a wall of player model across the shot.
+	ent->svflags |= SVF_NOCLIENT;
 
 		
 	// note to self
@@ -1920,6 +1925,9 @@ void MoveClientToCutSceneCamera (edict_t *ent, int fov)
 	ent->client->ps.viewoffset[0] = 0;
 	ent->client->ps.viewoffset[1] = 0;
 	ent->client->ps.viewoffset[2] = PLAYER_VIEWHEIGHT;
+	// Every client is moved to the same camera origin, so without this each one renders the
+	// others at zero distance - a wall of player model across the shot.
+	ent->svflags |= SVF_NOCLIENT;
 
 	
 	// note to self
