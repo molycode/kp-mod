@@ -581,7 +581,8 @@ void path_corner_cast_touch (edict_t *self, edict_t *other, cplane_t *plane, csu
 	}
 
 	// play a sound if there is one
-	if (self->name)
+	// A scene plays its own lines: sr1 has cut1.wav on cam_1 as well, and both is an echo.
+	if (self->name && !level.cut_scene_time)
 		gi.sound( other, CHAN_VOICE, gi.soundindex( self->name ), 1.0, 1, 0 );
 
 
