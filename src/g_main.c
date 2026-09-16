@@ -655,10 +655,34 @@ static qboolean AnyClientsConnected (void)
 	return connected;
 }
 
+/*
+=================
+AnyClientInGame
+
+Connected is not the same as present: a client can spend a minute downloading before it spawns.
+=================
+*/
+static qboolean AnyClientInGame (void)
+{
+	int			i;
+	qboolean	present = false;
+
+	for (i=0 ; i<maxclients->value && !present ; i++)
+		present = g_edicts[1+i].inuse && game.clients[i].pers.connected;
+
+	return present;
+}
+
 void G_RunFrame (void)
 {
 	int i;
 	edict_t *ent;
+
+	// The cast start walking their scripted routes the moment a level spawns, but a dedicated
+	// server loads it long before anyone arrives: sr1's intro actors leave the alley inside a
+	// minute, so the scene the first player triggers pans across a street they have left.
+	if (coop->value && !AnyClientInGame ())
+		return;
 
 	level.framenum++;
 	level.time = level.framenum*FRAMETIME;
