@@ -1030,25 +1030,6 @@ edict_t *SelectCoopSpawnPoint (edict_t *ent)
 		}
 	}
 
-	// Every stock map targets its coop spots at the transition they serve, and game.spawnpoint is
-	// empty when a map is started directly rather than walked into, so nothing above can match and
-	// every player would land on the one info_player_start and be telefragged by the next arrival.
-	// Take any coop spot instead - the same fallback SelectSpawnPoint already applies to
-	// info_player_start a few lines below.
-	if (!game.spawnpoint[0])
-	{
-		index = ent->client - game.clients;
-		spot = NULL;
-
-		while ((spot = G_Find (spot, FOFS(classname), "info_player_coop")) != NULL)
-		{
-			index--;
-
-			if (!index)
-				return spot;
-		}
-	}
-
 	return NULL;	// we didn't have enough...
 }
 
