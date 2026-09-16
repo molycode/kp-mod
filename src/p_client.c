@@ -3079,6 +3079,10 @@ car_resume:
 ==============
 CoopSpawnClear
 
+Only bbox entities are asked about: CONTENTS_MONSTER is the single bit separating MASK_PLAYERSOLID
+from MASK_DEADSOLID, so it is the whole of what going solid again changes. Including the world would
+strand a player standing anywhere that reports startsolid against it, such as on a step.
+
 The engine filters other passing-through players out of the trace, so they are tested by hand: two
 of them reading "clear" on the same frame would go solid inside each other and wedge for good.
 ==============
@@ -3090,7 +3094,7 @@ static qboolean CoopSpawnClear (edict_t *ent)
 	qboolean	clear;
 	int			i, j;
 
-	tr = gi.trace (ent->s.origin, ent->mins, ent->maxs, ent->s.origin, ent, MASK_PLAYERSOLID);
+	tr = gi.trace (ent->s.origin, ent->mins, ent->maxs, ent->s.origin, ent, CONTENTS_MONSTER);
 	clear = !tr.startsolid;
 
 	for (i = 0; clear && i < (int)maxclients->value; i++)
