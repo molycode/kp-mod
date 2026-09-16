@@ -1606,7 +1606,14 @@ ent->bikestate = 0;
 	VectorCopy (ent->s.angles, client->ps.viewangles);
 	VectorCopy (ent->s.angles, client->v_angle);
 
-	if (ent->solid != SOLID_NOT)
+	if (coop->value)
+	{
+		// Maps run out of spawn points before co-op runs out of players, so an arrival that
+		// lands on someone passes through them until its box is clear instead of telefragging.
+		ent->flags |= FL_COOP_SPAWN;
+		ent->svflags |= SVF_DEADMONSTER;
+	}
+	else if (ent->solid != SOLID_NOT)
 		KillBox (ent);
 
 	gi.linkentity (ent);
@@ -2414,7 +2421,8 @@ edict_t	*pm_passent;
 // pmove doesn't need to know about passent and contentmask
 trace_t	PM_trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end)
 {
-	if (pm_passent->health > 0)
+	// MASK_DEADSOLID omits CONTENTS_MONSTER, so an overlapping spawn can walk out through them.
+	if (pm_passent->health > 0 && !(pm_passent->flags & FL_COOP_SPAWN))
 	{
 		if (nav_dynamic->value)	// if dynamic on, get blocked by MONSTERCLIP brushes as the AI will be
 			return gi.trace (start, mins, maxs, end, pm_passent, MASK_PLAYERSOLID | CONTENTS_MONSTERCLIP);
@@ -3069,6 +3077,69 @@ car_resume:
 
 /*
 ==============
+CoopSpawnClear
+
+The engine filters other passing-through players out of the trace, so they are tested by hand: two
+of them reading "clear" on the same frame would go solid inside each other and wedge for good.
+==============
+*/
+static qboolean CoopSpawnClear (edict_t *ent)
+{
+	trace_t		tr;
+	edict_t		*other;
+	qboolean	clear;
+	int			i, j;
+
+	tr = gi.trace (ent->s.origin, ent->mins, ent->maxs, ent->s.origin, ent, MASK_PLAYERSOLID);
+	clear = !tr.startsolid;
+
+	for (i = 0; clear && i < (int)maxclients->value; i++)
+	{
+		other = g_edicts + 1 + i;
+
+		if ((other != ent) && other->inuse && (other->flags & FL_COOP_SPAWN))
+		{
+			qboolean	overlap = true;
+
+			for (j = 0; j < 3; j++)
+			{
+				if (	ent->s.origin[j] + ent->mins[j] > other->s.origin[j] + other->maxs[j]
+					||	ent->s.origin[j] + ent->maxs[j] < other->s.origin[j] + other->mins[j])
+				{
+					overlap = false;
+				}
+			}
+
+			if (overlap)
+				clear = false;
+		}
+	}
+
+	return clear;
+}
+
+/*
+==============
+CoopSpawnResolve
+==============
+*/
+static void CoopSpawnResolve (edict_t *ent)
+{
+	if (ent->deadflag)
+	{
+		// player_die owns SVF_DEADMONSTER from here - leave it set on the corpse.
+		ent->flags &= ~FL_COOP_SPAWN;
+	}
+	else if (CoopSpawnClear (ent))
+	{
+		ent->flags &= ~FL_COOP_SPAWN;
+		ent->svflags &= ~SVF_DEADMONSTER;
+		gi.linkentity (ent);
+	}
+}
+
+/*
+==============
 ClientBeginServerFrame
 
 This will be called once for each server frame, before running
@@ -3083,6 +3154,11 @@ void ClientBeginServerFrame (edict_t *ent)
 	if (ent->moveout_ent && ent->moveout_ent->health <= 0)
 	{
 		ent->moveout_ent = NULL;
+	}
+
+	if (ent->flags & FL_COOP_SPAWN)
+	{
+		CoopSpawnResolve (ent);
 	}
 
 	if (level.intermissiontime)

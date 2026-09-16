@@ -83,6 +83,8 @@
 											// If we're manually loading a level (not changing levels), leave
 											// these characters in place, and clear the flag.
 
+#define FL_COOP_SPAWN			0x00080000	// co-op: overlapping a spawn, passing through other players
+
 #define FL_CHASECAM				0x00100000	// entity is using chasecam
 #define FL_MDXBBOX				0x00200000
 #define FL_JETPACK				0x00400000	// Jet Pack enabled
