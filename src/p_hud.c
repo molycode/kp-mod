@@ -721,6 +721,8 @@ void HelpComputer (edict_t *ent, int page)
 	char	string[1024];
 	char	clue[MAX_NOTEPAD_CLUE+1];
 	char	*cut;
+	char	*text;
+	char	*ver;
 	/*char	*sk;
 
 	if (skill->value == 0)
@@ -753,23 +755,38 @@ void HelpComputer (edict_t *ent, int page)
 
 	level.helpchange = 0;
 	
-	strncpy (clue, game.helpmessage2, MAX_NOTEPAD_CLUE);
-	clue[MAX_NOTEPAD_CLUE] = 0;
+	// Our patched engine marks itself with 'm' after the version digits, which still
+	// atoi() to 121. kpded2 reads 'p' in the same place for MonkeyHarris's clients, whose
+	// protocol we do not implement - so never treat a 'p' as one of ours.
+	ver = Info_ValueForKey (ent->client->pers.userinfo, "ver");
 
-	// Cut on a line boundary, so a clipped page still reads as whole lines.
-	if (strlen (game.helpmessage2) > MAX_NOTEPAD_CLUE)
+	while (*ver >= '0' && *ver <= '9')
+		ver++;
+
+	text = game.helpmessage2;
+
+	if (*ver != 'm')
 	{
-		cut = strrchr (clue, '\n');
+		strncpy (clue, game.helpmessage2, MAX_NOTEPAD_CLUE);
+		clue[MAX_NOTEPAD_CLUE] = 0;
 
-		if (cut)
-			cut[1] = 0;
+		// Cut on a line boundary, so a clipped page still reads as whole lines.
+		if (strlen (game.helpmessage2) > MAX_NOTEPAD_CLUE)
+		{
+			cut = strrchr (clue, '\n');
+
+			if (cut)
+				cut[1] = 0;
+		}
+
+		text = clue;
 	}
 
 	Com_sprintf (string, sizeof(string),
 		"picnote \"%s\" "
 		" \"%s\" ",		
 		game.helpmessage1,
-		clue);
+		text);
 
 //	Com_sprintf (string, sizeof(string),
 //		"xv 32 yv 8 string2 \"Help screen not yet implemented\" "	);
