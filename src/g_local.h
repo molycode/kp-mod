@@ -771,6 +771,9 @@ extern  cvar_t	*cl_captions;
 #define	DROPPED_PLAYER_ITEM		0x00020000
 #define ITEM_TARGETS_USED		0x00040000
 
+// A standing player's eye height above its origin, as PutClientInServer sets it.
+#define PLAYER_VIEWHEIGHT	40
+
 //
 // fields are needed for spawning from the entity string
 // and saving / loading games

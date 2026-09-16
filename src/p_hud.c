@@ -1854,6 +1854,13 @@ void MoveClientToCutScene (edict_t *ent)
 	ent->client->ps.pmove.origin[2] = level.cut_scene_origin[2]*8;
 	VectorCopy (level.cut_scene_angle, ent->client->ps.viewangles);
 	ent->client->ps.pmove.pm_type = PM_FREEZE;
+
+	// Pinned, not left alone: ClientEndServerFrame's cut-scene early return freezes whatever
+	// each client arrived with, and every scene was framed at a standing player's eye height.
+	ent->client->ps.viewoffset[0] = 0;
+	ent->client->ps.viewoffset[1] = 0;
+	ent->client->ps.viewoffset[2] = PLAYER_VIEWHEIGHT;
+
 		
 	// note to self
 	// this may cause a problem
@@ -1907,6 +1914,13 @@ void MoveClientToCutSceneCamera (edict_t *ent, int fov)
 	ent->client->ps.pmove.origin[2] = level.cut_scene_origin[2]*8;
 	VectorCopy (level.cut_scene_angle, ent->client->ps.viewangles);
 	ent->client->ps.pmove.pm_type = PM_FREEZE;
+
+	// Pinned, not left alone: ClientEndServerFrame's cut-scene early return freezes whatever
+	// each client arrived with, and every scene was framed at a standing player's eye height.
+	ent->client->ps.viewoffset[0] = 0;
+	ent->client->ps.viewoffset[1] = 0;
+	ent->client->ps.viewoffset[2] = PLAYER_VIEWHEIGHT;
+
 	
 	// note to self
 	// this may cause a problem
