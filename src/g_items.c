@@ -1141,6 +1141,17 @@ void Use_JetPack (edict_t *ent, gitem_t *item)
 qboolean Pickup_JetPack (edict_t *ent, edict_t *other)
 {
 	int		quantity;
+	int		playerbit;
+
+	if (coop->value)
+	{	// jetpack items stay put in coop, so the touch refires every frame until we refuse it
+		playerbit = 1 << ((other->client - game.clients) & 31);
+
+		if (ent->coop_taken & playerbit)
+			return false;
+
+		ent->coop_taken |= playerbit;
+	}
 
 	quantity = other->client->pers.inventory[ITEM_INDEX(ent->item)];
 
