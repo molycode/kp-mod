@@ -1315,7 +1315,17 @@ void PutClientInServer (edict_t *ent)
 	memset (client, 0, sizeof(*client));
 	client->pers = saved;
 	if (client->pers.health <= 0)
-		InitClientPersistant(client);
+	{
+		char	userinfo[MAX_INFO_STRING];
+
+		// InitClientPersistant memsets pers, and the userinfo and netname go with it. Save and
+		// reapply it, the same pair the deathmatch branch above uses - otherwise a player who was
+		// dead when the level changed arrives on the next one with no name and nothing left to
+		// rebuild it from.
+		memcpy (userinfo, client->pers.userinfo, sizeof(userinfo));
+		InitClientPersistant (client);
+		ClientUserinfoChanged (ent, userinfo);
+	}
 	client->resp = resp;
 
 	// copy some data from the client to the entity
