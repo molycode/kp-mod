@@ -309,6 +309,8 @@ only happens when a new game is started or a save game
 is loaded.
 ============
 */
+static char const *G_SaveStamp (void);
+
 void InitGame (void)
 {
 	gi.dprintf ("==== InitGame ====\n");
@@ -332,6 +334,10 @@ void InitGame (void)
 	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
 	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
+	gi.cvar ("gamebuild", (char *)G_SaveStamp(), CVAR_SERVERINFO | CVAR_NOSET);
+	// gi.cvar keeps an existing value, so a stale server.cfg entry would let the build
+	// identity lie about the library actually loaded.
+	gi.cvar_forceset ("gamebuild", (char *)G_SaveStamp());
 
 	maxclients = gi.cvar ("maxclients", "4", CVAR_SERVERINFO | CVAR_LATCH);
 	deathmatch = gi.cvar ("deathmatch", "0", CVAR_LATCH);
