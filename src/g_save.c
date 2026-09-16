@@ -981,6 +981,14 @@ void ReadGame (char *filename)
 	game.maxentities = maxents;
 	game.num_items = numitems;
 
+	// ReadLevel and ClientConnect index game.clients by the cvar, so a save written under a
+	// different slot count would have them reach past this allocation.
+	if (game.maxclients != (int)maxclients->value)
+	{
+		fclose (f);
+		gi.error ("Savegame holds %i client slots, this server runs %i.\n", game.maxclients, (int)maxclients->value);
+	}
+
 	game.clients = gi.TagMalloc (game.maxclients * sizeof(game.clients[0]), TAG_GAME);
 	for (i=0 ; i<game.maxclients ; i++)
 		ReadClient (f, &game.clients[i]);
