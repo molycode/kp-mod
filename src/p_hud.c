@@ -703,6 +703,12 @@ void Cmd_Score_f (edict_t *ent)
 }
 
 
+// The client parses this clue with a copy of COM_Parse that caps tokens at 256 but
+// writes the 128-byte com_token every other caller shares. Past 127 characters it runs
+// off the end: into the next variable on Windows, into a called function pointer on
+// Linux, where the clue's own bytes are then jumped to.
+#define	MAX_NOTEPAD_CLUE	127
+
 /*
 ==================
 HelpComputer
@@ -713,6 +719,8 @@ Draw help computer.
 void HelpComputer (edict_t *ent, int page)
 {
 	char	string[1024];
+	char	clue[MAX_NOTEPAD_CLUE+1];
+	char	*cut;
 	/*char	*sk;
 
 	if (skill->value == 0)
@@ -745,11 +753,23 @@ void HelpComputer (edict_t *ent, int page)
 
 	level.helpchange = 0;
 	
+	strncpy (clue, game.helpmessage2, MAX_NOTEPAD_CLUE);
+	clue[MAX_NOTEPAD_CLUE] = 0;
+
+	// Cut on a line boundary, so a clipped page still reads as whole lines.
+	if (strlen (game.helpmessage2) > MAX_NOTEPAD_CLUE)
+	{
+		cut = strrchr (clue, '\n');
+
+		if (cut)
+			cut[1] = 0;
+	}
+
 	Com_sprintf (string, sizeof(string),
 		"picnote \"%s\" "
 		" \"%s\" ",		
 		game.helpmessage1,
-		game.helpmessage2);
+		clue);
 
 //	Com_sprintf (string, sizeof(string),
 //		"xv 32 yv 8 string2 \"Help screen not yet implemented\" "	);
