@@ -304,11 +304,10 @@ void trigger_key_use (edict_t *self, edict_t *other, edict_t *activator)
 
 		if (strcmp(self->item->classname, "key_fuse") == 0)
 		{
-			int	cube;
-
-			for (cube = 0; cube < 8; cube++)
-				if (activator->client->pers.power_cubes & (1 << cube))
-					break;
+			// Quake 2 matched the spent cube by its power_cubes bit, but Kingpin never sets one:
+			// the code that would is commented out and g_spawn strips the spawnflag bits, so this
+			// matched nobody and a used fuse stayed in every inventory. One fuse was spent, so take
+			// one from each player holding any - never the stack, since a map can need several.
 			for (player = 1; player <= game.maxclients; player++)
 			{
 				ent = &g_edicts[player];
@@ -316,11 +315,8 @@ void trigger_key_use (edict_t *self, edict_t *other, edict_t *activator)
 					continue;
 				if (!ent->client)
 					continue;
-				if (ent->client->pers.power_cubes & (1 << cube))
-				{
+				if (ent->client->pers.inventory[index] > 0)
 					ent->client->pers.inventory[index]--;
-					ent->client->pers.power_cubes &= ~(1 << cube);
-				}
 			}
 		}
 		else
