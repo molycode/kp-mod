@@ -510,7 +510,7 @@ if (!(other->cast_info.aiflags & AI_GRUNT))
 		int		i=0;
 
 		// inform characters of the trigger
-		while ((character = level.characters[i++]) != NULL)
+		while ((i < MAX_CHARACTERS) && ((character = level.characters[i++]) != NULL))
 		{
 			if ((!character->client) && ((other == character) || (VectorDistance(character->s.origin, other->s.origin) < 512)))
 				character->target_ent = ent;
