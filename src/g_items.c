@@ -506,11 +506,14 @@ qboolean Pickup_Key (edict_t *ent, edict_t *other)
 	if (coop->value)
 	{
 		if (strcmp(ent->classname, "key_fuse") == 0)
-		{
-			if (other->client->pers.power_cubes & ((ent->spawnflags & 0x0000ff00)>> 8))
+		{	// a map can need several fuses at once, so refuse per entity rather than per item type
+			int		playerbit = 1 << ((other->client - game.clients) & 31);
+
+			if (ent->coop_taken & playerbit)
 				return false;
+
+			ent->coop_taken |= playerbit;
 			other->client->pers.inventory[ITEM_INDEX(ent->item)]++;
-			other->client->pers.power_cubes |= ((ent->spawnflags & 0x0000ff00) >> 8);
 		}
 		else
 		{
