@@ -1108,6 +1108,54 @@ void AI_CheckRecordMemory( edict_t *src, edict_t *dest )
 	AI_RecordSighting(src, dest, sqrt(length));
 }
 
+// Two players a quarter-distance apart are, to a cast deciding who to deal with, the same distance.
+#define AI_TARGET_TIE_BAND	1.25f
+
+/*
+===========
+AI_PreferredClient
+
+	Which player a cast should end up remembering. Every client shares one memory slot, so the
+	sighting recorded LAST owns it; ties are split round-robin on character_index, which is
+	consecutive where edict numbers are not, or a group standing together would all pick the same
+	player and leave the other unopposed.
+===========
+*/
+static edict_t *AI_PreferredClient (edict_t *src)
+{
+	edict_t	*client, *candidates[MAX_CLIENTS];
+	float	dists[MAX_CLIENTS];
+	float	nearest = 0;
+	int		i, num = 0, near = 0;
+
+	for (i=0 ; (i<maxclients->value) && (num < MAX_CLIENTS) ; i++)
+	{
+		client = g_edicts + 1 + i;
+
+		if (client->inuse && !(client->flags & FL_NOTARGET))
+		{
+			dists[num] = VectorDistance (src->s.origin, client->s.origin);
+			candidates[num] = client;
+
+			if (!num || (dists[num] < nearest))
+				nearest = dists[num];
+
+			num++;
+		}
+	}
+
+	for (i=0 ; i<num ; i++)
+	{
+		if (dists[i] <= nearest * AI_TARGET_TIE_BAND)
+		{
+			candidates[near] = candidates[i];
+			near++;
+		}
+	}
+
+	return near ? candidates[src->character_index % near] : NULL;
+}
+
 /*
 ===========
 AI_UpdateCharacterMemories
@@ -1134,7 +1182,7 @@ void AI_UpdateCharacterMemories( int max_iterations )
 
 	static int src_index, dest_index;
 	int			num_iterations=0;
-	edict_t		*src, *dest;
+	edict_t		*src, *dest, *preferred;
 	int			i, c;
 
 	if (deathmatch->value)
@@ -1160,6 +1208,8 @@ void AI_UpdateCharacterMemories( int max_iterations )
 		if (src->cast_group < 2)
 			continue;
 
+		preferred = AI_PreferredClient (src);
+
 		for (c=0; c<maxclients->value; c++)
 		{
 			dest = g_edicts + 1 + c;
@@ -1170,8 +1220,13 @@ void AI_UpdateCharacterMemories( int max_iterations )
 			if (dest->flags & FL_NOTARGET)
 				continue;
 
-			AI_CheckRecordMemory( src, dest );
+			if (dest != preferred)
+				AI_CheckRecordMemory( src, dest );
 		}
+
+		// Last, so that of the players this cast can actually see, this is the one left in the slot.
+		if (preferred)
+			AI_CheckRecordMemory( src, preferred );
 	}
 
 	if (src_index >= level.num_characters)
