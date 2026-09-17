@@ -390,7 +390,11 @@ void AI_ShareEnemies ( edict_t *self, edict_t *other )
 
 			}
 
-			AI_PointMemoryAt (other, other_memory, &g_edicts[self_memory->cast_ent]);
+			// Hearsay fills a gap, it never overrides first-hand sighting: the clients share one
+			// slot, so re-pointing a cast that is already dealing with someone would drag the
+			// whole group onto whichever player one of them happens to be shouting about.
+			if (other_memory->timestamp < (level.time - ENEMY_SIGHT_DURATION))
+				AI_PointMemoryAt (other, other_memory, &g_edicts[self_memory->cast_ent]);
 
 			// make sure we share any flags necessary
 			other_memory->flags |= (self_memory->flags & MEMORY_HOSTILE_ENEMY);
