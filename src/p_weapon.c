@@ -277,6 +277,9 @@ void ChangeWeapon (edict_t *ent)
 		else
 			i = 0;
 		ent->s.skinnum = (ent - g_edicts - 1) | i;
+
+		// The client's weapon index 0 is a hardcoded tommygun, so empty-handed must mean no gun part.
+		ent->s.model_parts[PART_GUN].modelindex = ent->client->pers.weapon ? 255 : 0;
 	}
 
 	if (ent->client->pers.weapon && ent->client->pers.weapon->ammo)
