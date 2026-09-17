@@ -26,5 +26,12 @@ if(NOT KP_SANITIZER STREQUAL "none")
 
 	target_compile_options(KpCompileFlags INTERFACE -fsanitize=${KP_SANITIZER} -fno-omit-frame-pointer)
 	target_link_options(KpCompileFlags INTERFACE -fsanitize=${KP_SANITIZER})
+
+	if(KP_SANITIZER STREQUAL "undefined")
+		# The library is dlopen'd on servers without libubsan, where the load fails outright.
+		# Not for address: that runtime cannot be static in a shared object, it must come first.
+		target_link_options(KpCompileFlags INTERFACE -static-libubsan)
+	endif()
+
 	message(STATUS "Sanitizer enabled: ${KP_SANITIZER}")
 endif()
