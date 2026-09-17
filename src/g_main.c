@@ -676,6 +676,31 @@ static qboolean AnyClientInGame (void)
 	return present;
 }
 
+/*
+=================
+AnyClientSees
+
+Model lighting is recomputed only for something a player is looking at, so asking g_edicts[1]
+alone leaves every model unlit for the co-op players who are the ones standing in front of it.
+=================
+*/
+static qboolean AnyClientSees (edict_t *ent)
+{
+	int			i;
+	edict_t		*client;
+	qboolean	seen = false;
+
+	for (i=0 ; i<maxclients->value && !seen ; i++)
+	{
+		client = g_edicts + 1 + i;
+
+		if (client->inuse)
+			seen = gi.inPVS (client->s.origin, ent->s.origin) && infront (client, ent);
+	}
+
+	return seen;
+}
+
 void G_RunFrame (void)
 {
 	int i;
@@ -998,8 +1023,7 @@ void G_RunFrame (void)
 						||	(	(VectorDistance( ent->s.origin, ent->s.last_lighting_update_pos ) > (deathmatch->value ? 128 : 64))
 							 &&	(	(deathmatch->value)
 								 ||	(level.cut_scene_time)
-								 ||	(	(gi.inPVS( g_edicts[1].s.origin, ent->s.origin))
-									 &&	(infront( &g_edicts[1], ent ) ))))))
+								 ||	(AnyClientSees( ent ))))))
 				{
 					UpdateDirLights( ent );
 
