@@ -2150,7 +2150,7 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 
 		Info_SetValueForKey( userinfo, "skin", tempstr );
 	}
-	else if (!deathmatch->value)	// enforce thug with single player skin set
+	else if (!deathmatch->value && !coop->value)	// enforce thug with single player skin set
 	{
 		static char *singleplayerskin = "male_thug/018 016 010";
 
