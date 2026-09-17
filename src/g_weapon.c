@@ -2523,16 +2523,19 @@ static qboolean fire_concussion (edict_t *self, vec3_t start, vec3_t aimdir, flo
 //	vec3_t		tempvec;
 	qboolean	is_mdx = false;
 
+	// The aiming block below is skipped when the muzzle itself is blocked - a rat's muzzle sits
+	// 16 units ahead, inside the player it bites - and MDX_HitCheck past it still traces to end.
+	vectoangles (aimdir, dir);
+	AngleVectors (dir, forward, right, up);
+	VectorMA (start, dist, forward, end);
+
 	tr = gi.trace (self->s.origin, NULL, NULL, start, self, MASK_SHOT );
+
 	if (!(tr.fraction < 1.0))
 	{
-		vectoangles (aimdir, dir);
-		AngleVectors (dir, forward, right, up);
-
 		r = crandom()*hspread;
 		u = fabs(crandom()*vspread);
 
-		VectorMA (start, dist, forward, end);
 		VectorMA (end, r, right, end);
 		VectorMA (end, u, up, end);
 
