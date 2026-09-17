@@ -116,6 +116,11 @@ void AI_UnloadCastMemory (edict_t *self)
 	if (!(self->svflags & SVF_MONSTER || self->client))	// <- Note to Rafael: the lack of this line was causing memory problems (hopefully all of them..)
 		return;
 
+	// A dying client is not leaving the game, and in co-op its row and column are the ones every
+	// other player is recorded in, so releasing them forgets the survivors too.
+	if (self->client && coop->value)
+		return;
+
 	// delete all our memories
 	AI_ReleaseCastMemory( self, self->cast_info.friend_memory );
 	self->cast_info.friend_memory = NULL;
