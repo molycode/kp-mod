@@ -706,7 +706,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_EDICT:
 		index = *(int *)p;
-		G_CheckIndex (index, globals.max_edicts, "edict", f);
+		G_CheckIndex (index, globals.max_edicts, field->name, f);
 		if ( index == -1 )
 			*(edict_t **)p = NULL;
 		else
@@ -714,7 +714,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_CLIENT:
 		index = *(int *)p;
-		G_CheckIndex (index, game.maxclients, "client", f);
+		G_CheckIndex (index, game.maxclients, field->name, f);
 		if ( index == -1 )
 			*(gclient_t **)p = NULL;
 		else
@@ -722,7 +722,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 		break;
 	case F_ITEM:
 		index = *(int *)p;
-		G_CheckIndex (index, game.num_items + 1, "item", f);
+		G_CheckIndex (index, game.num_items + 1, field->name, f);
 		if ( index == -1 )
 			*(gitem_t **)p = NULL;
 		else
@@ -731,7 +731,7 @@ void ReadField (FILE *f, field_t *field, byte *base)
 
 	case F_CAST_MEMORY:
 		index = *(int *)p;
-		G_CheckIndex (index, MAX_CHARACTERS * MAX_CHARACTERS, "cast memory", f);
+		G_CheckIndex (index, MAX_CHARACTERS * MAX_CHARACTERS, field->name, f);
 		if ( index == -1 )
 			*(cast_memory_t **)p = NULL;
 		else
