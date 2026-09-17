@@ -288,6 +288,13 @@ qboolean AI_ClearSight ( edict_t *self, edict_t *other, qboolean boxtrace )
 		mask = MASK_SOLID;
 	}
 
+	// A co-op player waiting for its spawn box to clear links as CONTENTS_DEADMONSTER, which no
+	// mask here covers, so the trace passes through and the cast pursues something it can never
+	// shoot. Widened only for such a player: doing it for every client would make cast corpses
+	// block line of sight, which they do not today.
+	if (other->client && (other->svflags & SVF_DEADMONSTER))
+		mask |= CONTENTS_DEADMONSTER;
+
 again:
 
 	VectorCopy( self->s.origin, start );
