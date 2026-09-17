@@ -188,12 +188,15 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 
 	PlayerNoise(self, start, PNOISE_WEAPON);
 
+	// The aiming block below is skipped when the muzzle itself is blocked - point blank into
+	// a character - and the damage path past it still reads dir, forward and end.
+	vectoangles (aimdir, dir);
+	AngleVectors (dir, forward, right, up);
+	VectorMA (start, 8192, forward, end);
+
 	tr = gi.trace (self->s.origin, NULL, NULL, start, self, MASK_SHOT );
 	if (!(tr.fraction < 1.0))
 	{
-		vectoangles (aimdir, dir);
-		AngleVectors (dir, forward, right, up);
-
 		if (deathmatch->value && (mod == MOD_PISTOL || mod == MOD_SILENCER))
 		{
 			r = 0.0;
@@ -205,7 +208,6 @@ static void fire_lead (edict_t *self, vec3_t start, vec3_t aimdir, int damage, i
 			u = crandom()*vspread;
 		}
 
-		VectorMA (start, 8192, forward, end);
 		VectorMA (end, r, right, end);
 		VectorMA (end, u, up, end);
 
