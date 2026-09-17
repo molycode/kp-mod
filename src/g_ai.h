@@ -204,6 +204,7 @@ void AI_InitMemory( edict_t *self );
 void AI_UnloadCastMemory (edict_t *self);
 
 void AI_ShareEnemies ( edict_t *self, edict_t *other );
+void AI_PointMemoryAt (edict_t *src, cast_memory_t *cast_memory, edict_t *dest);
 void AI_RecordSighting(edict_t *src, edict_t *dest, float dist);
 void AI_UpdateCharacterMemories( int max_iterations );
 void AI_MakeEnemy ( edict_t *self, edict_t *other, int memory_flags );

@@ -443,6 +443,8 @@ void AI_StartAttack(edict_t *self, edict_t *enemy)
 
 	if ((mem = level.global_cast_memory[self->character_index][enemy->character_index]) != NULL)
 	{
+		AI_PointMemoryAt (self, mem, enemy);
+
 		mem->flags |= MEMORY_STARTED_ATTACK;
 	}
 

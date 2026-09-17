@@ -213,6 +213,25 @@ void AI_AddToMemory ( edict_t *self, cast_memory_t *memory, int memory_type )
 
 /*
 ===========
+AI_PointMemoryAt
+
+	Every client shares character_index 0, so one slot serves them all and cast_ent is what names
+	the player it currently describes.
+===========
+*/
+void AI_PointMemoryAt (edict_t *src, cast_memory_t *cast_memory, edict_t *dest)
+{
+	if (cast_memory->cast_ent != (int) (dest - g_edicts))
+	{
+		cast_memory->cast_ent = (int) (dest - g_edicts);
+
+		VectorCopy (dest->s.origin, cast_memory->last_known_origin);
+		cast_memory->timestamp_dist = VectorDistance (src->s.origin, dest->s.origin);
+	}
+}
+
+/*
+===========
 AI_CreateCharacterMemory
 
 	Creates a Character Memory association between 2 characters
@@ -366,6 +385,8 @@ void AI_ShareEnemies ( edict_t *self, edict_t *other )
 
 			}
 
+			AI_PointMemoryAt (other, other_memory, &g_edicts[self_memory->cast_ent]);
+
 			// make sure we share any flags necessary
 			other_memory->flags |= (self_memory->flags & MEMORY_HOSTILE_ENEMY);
 		}
@@ -478,6 +499,8 @@ void AI_MakeEnemy ( edict_t *self, edict_t *other, int memory_flags )
 
 	}
 
+	AI_PointMemoryAt (self, cast_memory, other);
+
 	if (cast_memory->memory_type != MEMORY_TYPE_ENEMY)
 	{	// make them one
 
@@ -516,6 +539,8 @@ void AI_RecordSighting(edict_t *src, edict_t *dest, float dist)
 		AI_CreateCharacterMemory(src, dest);
 		cast_memory = level.global_cast_memory[src->character_index][dest->character_index];
 	}
+
+	AI_PointMemoryAt (src, cast_memory, dest);
 
 	// do we have a sight target?
 	if (	(cast_memory->memory_type == MEMORY_TYPE_ENEMY)
@@ -1105,7 +1130,7 @@ void AI_UpdateCharacterMemories( int max_iterations )
 	static int src_index, dest_index;
 	int			num_iterations=0;
 	edict_t		*src, *dest;
-	int			i;
+	int			i, c;
 
 	if (deathmatch->value)
 		return;
@@ -1114,24 +1139,30 @@ void AI_UpdateCharacterMemories( int max_iterations )
 		return;
 
 	// first check client sightings
-	dest = level.characters[0];
-
-	if (dest && !(dest->flags & FL_NOTARGET))
+	for (i=1; i<level.num_characters; i++)
 	{
-		for (i=1; i<level.num_characters; i++)
+		src = level.characters[i];
+
+		if (!src)
+			continue;
+
+		if (src->health <= 0)
+			continue;
+
+		if (src->client)
+			continue;
+
+		if (src->cast_group < 2)
+			continue;
+
+		for (c=0; c<maxclients->value; c++)
 		{
-			src = level.characters[i];
+			dest = g_edicts + 1 + c;
 
-			if (!src)
+			if (!dest->inuse)
 				continue;
 
-			if (src->health <= 0)
-				continue;
-
-			if (src->client)
-				continue;
-
-			if (src->cast_group < 2)
+			if (dest->flags & FL_NOTARGET)
 				continue;
 
 			AI_CheckRecordMemory( src, dest );
@@ -1219,7 +1250,9 @@ qboolean AI_HearPlayer (edict_t *self)
 	edict_t			*player;
 	float			dist;
 	vec3_t			vec;
-	
+	qboolean		heard = false;
+	int				i;
+
 	if (self->cast_info.aiflags & AI_IMMORTAL)
 		return false;
 	
@@ -1236,13 +1269,16 @@ qboolean AI_HearPlayer (edict_t *self)
 	// if (!EP_GetCharacter ( self->name_index ))
 	//	return false;
 	
-	player = &g_edicts[1];
-	
-	if (!player->client)
-		return false;
-
-	if (player->client->gun_noise)
+	for (i=0 ; i<maxclients->value && !heard ; i++)
 	{
+		player = g_edicts + 1 + i;
+
+		if (!player->inuse)
+			continue;
+
+		if (!player->client->gun_noise)
+			continue;
+
 		if (	(self->cast_group || directly_infront(player, self))
 			&&	gi.inPVS (player->s.origin, self->s.origin))
 		{
@@ -1257,9 +1293,10 @@ qboolean AI_HearPlayer (edict_t *self)
 					self->cast_info.aiflags |= AI_HEARD_GUN_SHOT;
 					AI_ReactDelay (self, player);
 				}
-				else 
-					AI_MakeEnemy (self, player, 0);			
-				return true;
+				else
+					AI_MakeEnemy (self, player, 0);
+
+				heard = true;
 			}
 			/*
 			else
@@ -1271,7 +1308,7 @@ qboolean AI_HearPlayer (edict_t *self)
 		}
 	}
 
-	return false;
+	return heard;
 
 }
 
