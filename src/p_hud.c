@@ -767,11 +767,14 @@ void HelpComputer (edict_t *ent, int page)
 
 	if (*ver != 'm')
 	{
-		strncpy (clue, game.helpmessage2, MAX_NOTEPAD_CLUE);
-		clue[MAX_NOTEPAD_CLUE] = 0;
+		size_t const full = strlen (game.helpmessage2);
+		size_t const kept = (full > MAX_NOTEPAD_CLUE) ? MAX_NOTEPAD_CLUE : full;
+
+		memcpy (clue, game.helpmessage2, kept);
+		clue[kept] = 0;
 
 		// Cut on a line boundary, so a clipped page still reads as whole lines.
-		if (strlen (game.helpmessage2) > MAX_NOTEPAD_CLUE)
+		if (full > MAX_NOTEPAD_CLUE)
 		{
 			cut = strrchr (clue, '\n');
 
