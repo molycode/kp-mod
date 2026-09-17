@@ -2031,7 +2031,10 @@ void ammocrate_bust_die (edict_t *self, edict_t *inflictor, edict_t *attacker, i
 	else
 	{
 		vec3_t	vec;
-		
+
+		VectorClear(vec);
+		vec[2] = 1;
+
 		self->model = "models/props/crate/exp.md2";
 		self->s.modelindex = gi.modelindex (self->model);
 		self->think = ammocrate_bust_finalA;
