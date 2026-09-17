@@ -469,10 +469,23 @@ void WriteField1 (FILE *f, field_t *field, byte *base)
 		*(int *)p = len;
 		break;
 	case F_EDICT:
-		if ( *(edict_t **)p == NULL)
-			index = -1;
-		else
-			index = *(edict_t **)p - g_edicts;
+		{
+			edict_t const	*ent = *(edict_t **)p;
+
+			if (ent == NULL)
+				index = -1;
+			else if (ent < g_edicts || ent >= g_edicts + globals.max_edicts)
+			{
+				// A cast chasing a remembered enemy aims at a file-static stand-in edict
+				// (g_ai.c), which has no index - the reader would turn the difference back
+				// into a pointer outside the array.
+				gi.dprintf ("WARNING: %s points outside the entity array, saving as NULL\n", field->name);
+				index = -1;
+			}
+			else
+				index = ent - g_edicts;
+		}
+
 		*(int *)p = index;
 		break;
 	case F_CLIENT:
