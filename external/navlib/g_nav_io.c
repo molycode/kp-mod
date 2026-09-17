@@ -20,27 +20,18 @@ void NAV_WriteActiveNodes(active_node_data_t *active_node_data, char *unitname)
     base_dir = gi.cvar("basedir", "", 0);
 
     /* Build path */
-    strcpy(path, base_dir->string);
-    strcat(path, DIR_SLASH);
-
-    if (strlen(game_dir->string) == 0)
-        strcat(path, "main");
-    else
-        strcat(path, game_dir->string);
-
-    strcat(path, DIR_SLASH);
-    strcat(path, ROUTE_SUBDIR);
+    Com_sprintf(path, sizeof(path), "%s%s%s%s%s",
+                base_dir->string, DIR_SLASH,
+                strlen(game_dir->string) == 0 ? "main" : game_dir->string,
+                DIR_SLASH, ROUTE_SUBDIR);
 
 #ifdef _WIN32
     _mkdir(path);   // Only exists in Windows version
 #endif
 
     /* Build filename */
-    strcpy(filename, path);
-    strcat(filename, DIR_SLASH);
-    strcat(filename, unitname);
-    strcat(filename, ".");
-    strcat(filename, ROUTE_EXT);
+    Com_sprintf(filename, sizeof(filename), "%s%s%s.%s",
+                path, DIR_SLASH, unitname, ROUTE_EXT);
 
     f = fopen(filename, "wb");
     if (!f)
@@ -142,10 +133,8 @@ void NAV_ReadActiveNodes(active_node_data_t *active_node_data, char *unitname)
 
     game_dir = gi.cvar("game", "", 0);
 
-    if (strlen(game_dir->string) > 0)
-        strcpy(gamedir, game_dir->string);
-    else
-        strcpy(gamedir, "main");
+    Com_sprintf(gamedir, sizeof(gamedir), "%s",
+                strlen(game_dir->string) > 0 ? game_dir->string : "main");
 
     tried_main = false;
 
@@ -158,17 +147,11 @@ void NAV_ReadActiveNodes(active_node_data_t *active_node_data, char *unitname)
         {
             base_dir = gi.cvar((char *)basevars[base_index], ".", 0);
 
-            strcpy(path, base_dir->string);
-            strcat(path, DIR_SLASH);
-            strcat(path, gamedir);
-            strcat(path, DIR_SLASH);
-            strcat(path, ROUTE_SUBDIR);
+            Com_sprintf(path, sizeof(path), "%s%s%s%s%s",
+                        base_dir->string, DIR_SLASH, gamedir, DIR_SLASH, ROUTE_SUBDIR);
 
-            strcpy(filename, path);
-            strcat(filename, DIR_SLASH);
-            strcat(filename, unitname);
-            strcat(filename, ".");
-            strcat(filename, ROUTE_EXT);
+            Com_sprintf(filename, sizeof(filename), "%s%s%s.%s",
+                        path, DIR_SLASH, unitname, ROUTE_EXT);
 
             f = fopen(filename, "rb");
             if (f)

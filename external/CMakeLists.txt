@@ -1,5 +1,5 @@
 # navlib is vendored source with no build files of its own, so its target is defined here rather
-# than inside navlib/, which is a git subtree of the upstream project and is left untouched.
+# than inside navlib/, which is a verbatim copy of our fork and is left untouched (UPSTREAM.md).
 file(GLOB KP_NAVLIB_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/navlib/*.c")
 
 # An OBJECT library rather than a static one: a static library lets the linker drop members nothing
