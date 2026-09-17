@@ -1525,15 +1525,16 @@ void EP_PV_Player_Log (edict_t *self, int page)
 	else if (the_log_page >= NUM_PV_PLAYER_LOG)
 		the_log_page = 0;
 
+	// cnt has to end as the player's full entry count, because the "no entries yet" branch
+	// below keys on it: the old early break left it at 0 whenever entry 1 was not owned.
 	for (i=1; i<NUM_PV_PLAYER_LOG; i++)
 	{
 		if (self->client->pers.episode_flags & ep_pv_player_log[i].ep_flag)
+		{
 			cnt++;
 
-		if (cnt == the_log_page)
-		{
-			select = i;
-			break;
+			if (cnt == the_log_page)
+				select = i;
 		}
 	}	
 
