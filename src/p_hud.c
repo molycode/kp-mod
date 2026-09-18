@@ -2,6 +2,22 @@
 
 #define ENABLE_INDEX_NAMES		1
 
+// a dmstr glyph is 10 units wide and the layout space is 640 across
+#define MOTD_MAX_COLUMNS		64
+
+// read from <gamedir>/motd.txt; 20 lines matches Monkey Mod, though the engine caps a
+// layout at 1 KB so a message of full-width lines runs out of room before reaching it
+#define MOTD_FILENAME			"motd.txt"
+#define MOTD_MAX_LINES			20
+
+// a full-width line plus room for the ^rgb marks, which take bytes but no columns
+#define MOTD_LINE_BYTES			(MOTD_MAX_COLUMNS*2 + 1)
+#define MOTD_SECONDS			10.0
+
+// dmstr takes one digit of red, green and blue
+#define MOTD_TITLE_COLOUR		990
+#define MOTD_BODY_COLOUR		999
+
 
 /*
 ======================================================================
@@ -683,6 +699,7 @@ void Cmd_Score_f (edict_t *ent)
 {
 	ent->client->showinventory = false;
 	ent->client->showhelp = false;
+	ent->client->showmotd = false;
 
 	if (!deathmatch->value && !coop->value)
 		return;
@@ -876,6 +893,351 @@ void Cmd_Help_f (edict_t *ent, int page)
 	ent->client->pers.helpchanged = 0;
 
 	HelpComputer (ent, page);
+}
+
+static char	motd_lines[MOTD_MAX_LINES][MOTD_LINE_BYTES];
+static int	motd_colours[MOTD_MAX_LINES];
+static int	motd_numlines;
+
+/*
+==================
+MotdColour
+
+Reads a ^rgb mark - one digit each of red, green and blue.
+==================
+*/
+static qboolean MotdColour (char const *text, int *colour)
+{
+	qboolean	found = false;
+
+	if (text[0] == '^'
+		&& text[1] >= '0' && text[1] <= '9'
+		&& text[2] >= '0' && text[2] <= '9'
+		&& text[3] >= '0' && text[3] <= '9')
+	{
+		*colour = (text[1]-'0')*100 + (text[2]-'0')*10 + (text[3]-'0');
+		found = true;
+	}
+
+	return found;
+}
+
+/*
+==================
+MotdAddLine
+
+Keeps the ^rgb marks in the stored line - MotdScreen splits on them - and counts the
+column limit in visible characters only.
+==================
+*/
+static void MotdAddLine (char const *text)
+{
+	char	*dst;
+	int		colour;
+	int		len;
+	int		visible;
+
+	if (motd_numlines < MOTD_MAX_LINES)
+	{
+		dst = motd_lines[motd_numlines];
+		len = 0;
+		visible = 0;
+
+		while (text[0] && visible < MOTD_MAX_COLUMNS && len < MOTD_LINE_BYTES-5)
+		{
+			if (MotdColour (text, &colour))
+			{
+				dst[len++] = text[0];
+				dst[len++] = text[1];
+				dst[len++] = text[2];
+				dst[len++] = text[3];
+				text += 4;
+			}
+			else
+			{
+				// an unbalanced quote would swallow the rest of the layout
+				dst[len++] = (text[0] == '"') ? '\'' : text[0];
+				text++;
+				visible++;
+			}
+		}
+
+		dst[len] = '\0';
+		motd_colours[motd_numlines] = (motd_numlines == 0) ? MOTD_TITLE_COLOUR : MOTD_BODY_COLOUR;
+		motd_numlines++;
+	}
+}
+
+/*
+==================
+MotdLoadString
+
+Split a cvar's worth of text. kpded2 rewrites "\n" in sv_connectmessage to a real newline,
+but only once it has served a connect, so both spellings have to be understood.
+==================
+*/
+static void MotdLoadString (char *src)
+{
+	char	line[MOTD_MAX_COLUMNS+1];
+	int		len;
+
+	while (src[0] && motd_numlines < MOTD_MAX_LINES)
+	{
+		len = 0;
+		while (src[0] && src[0] != '\n' && !(src[0] == '\\' && src[1] == 'n') && len < MOTD_MAX_COLUMNS)
+			line[len++] = *src++;
+		line[len] = '\0';
+
+		while (src[0] && src[0] != '\n' && !(src[0] == '\\' && src[1] == 'n'))
+			src++;
+
+		if (src[0] == '\n')
+			src++;
+		else if (src[0] == '\\')
+			src += 2;
+
+		MotdAddLine (line);
+	}
+}
+
+/*
+==================
+MotdLoadFile
+
+Looks for the file the same way MapCycleNext finds maps.lst, so a mod directory gets its
+own without touching main/.
+==================
+*/
+static qboolean MotdLoadFile (void)
+{
+	char	*basevars[] = {"basedir", "cddir", NULL};
+	cvar_t	*game_dir;
+	cvar_t	*base_dir;
+	char	filename[MAX_QPATH];
+	char	buffer[256];
+	char	*separator;
+	FILE	*f = NULL;
+	int		i;
+	int		len;
+
+	game_dir = gi.cvar ("game", "", 0);
+
+	for (i = 0; basevars[i]; i++)
+	{
+		base_dir = gi.cvar (basevars[i], ".", 0);
+
+		if (base_dir->string[0] != 0 && base_dir->string[strlen(base_dir->string)-1] == DIR_SLASH[0])
+			separator = "";
+		else
+			separator = DIR_SLASH;
+
+		Com_sprintf (filename, sizeof(filename), "%s%s%s%s%s",
+			base_dir->string,
+			separator,
+			strlen(game_dir->string) == 0 ? "main" : game_dir->string,
+			DIR_SLASH,
+			MOTD_FILENAME);
+
+		f = fopen (filename, "r");
+		if (f)
+			break;
+	}
+
+	if (f)
+	{
+		while (motd_numlines < MOTD_MAX_LINES && fgets (buffer, sizeof(buffer), f))
+		{
+			len = strlen (buffer);
+			while (len > 0 && (buffer[len-1] == '\n' || buffer[len-1] == '\r'))
+				buffer[--len] = '\0';
+
+			// "//" comments out a line, the convention Monkey Mod's config uses
+			if (!(buffer[0] == '/' && buffer[1] == '/'))
+				MotdAddLine (buffer);
+		}
+
+		fclose (f);
+	}
+
+	return (motd_numlines > 0);
+}
+
+/*
+==================
+MotdLoad
+
+Called once per level load. The file is this mod's own; falling back to the engine's
+connect banner means a server that already set sv_connectmessage needs no second copy.
+==================
+*/
+void MotdLoad (void)
+{
+	motd_numlines = 0;
+
+	if (!MotdLoadFile ())
+		MotdLoadString (sv_connectmessage->string);
+}
+
+/*
+==================
+MotdScreen
+
+One row per line, split into a dmstr per ^rgb run. yv is sticky across an xm, which is how
+p_hud.c:311 already puts a score and a name on one row - so the runs share the row and each
+xm steps along it by 10 units per character.
+==================
+*/
+static void MotdScreen (edict_t *ent)
+{
+	char		string[1024];
+	char		entry[128];
+	char		run[MOTD_MAX_COLUMNS+1];
+	char		*src;
+	char		*scan;
+	int			stringlength;
+	int			colour;
+	int			ignored;
+	int			visible;
+	int			yofs;
+	int			xofs;
+	int			len;
+	int			i;
+	int			j;
+
+	string[0] = '\0';
+	stringlength = 0;
+
+	// centre the block on its own height, so a longer message does not walk off the screen
+	yofs = 110 - motd_numlines*10;
+	if (yofs < 0)
+		yofs = 0;
+	yofs -= 109;
+
+	for (i = 0; i < motd_numlines; i++)
+	{
+		// the marks take no columns, so the row is centred on what actually shows
+		visible = 0;
+		for (scan = motd_lines[i]; scan[0]; )
+		{
+			if (MotdColour (scan, &ignored))
+				scan += 4;
+			else
+			{
+				scan++;
+				visible++;
+			}
+		}
+
+		xofs = -5*visible;
+		colour = motd_colours[i];
+		src = motd_lines[i];
+
+		while (src[0] && stringlength < (int)sizeof(string) - (int)sizeof(entry))
+		{
+			if (MotdColour (src, &colour))
+				src += 4;
+			else
+			{
+				len = 0;
+				while (src[len] && !MotdColour (src + len, &ignored) && len < MOTD_MAX_COLUMNS)
+				{
+					run[len] = src[len];
+					len++;
+				}
+				run[len] = '\0';
+				src += len;
+
+				Com_sprintf (entry, sizeof(entry),
+					"xm %i yv %i dmstr %i \"%s\" ",
+					xofs, yofs, colour, run);
+
+				j = strlen (entry);
+				strcpy (string + stringlength, entry);
+				stringlength += j;
+
+				xofs += 10*len;
+			}
+		}
+
+		yofs += 20;
+	}
+
+	gi.WriteByte (svc_layout);
+	gi.WriteString (string);
+	gi.unicast (ent, true);
+}
+
+/*
+==================
+Cmd_Motd_f
+==================
+*/
+void Cmd_Motd_f (edict_t *ent)
+{
+	ent->client->showinventory = false;
+	ent->client->showscores = false;
+	ent->client->showhelp = false;
+	if (ent->client->showmotd)
+	{
+		ent->client->showmotd = false;
+		ent->client->motd_time = 0;
+		return;
+	}
+
+	if (motd_numlines == 0)
+	{
+		gi.cprintf (ent, PRINT_HIGH, "No message of the day has been set on this server.\n");
+		return;
+	}
+
+	ent->client->showmotd = true;
+	ent->client->motd_time = level.time + MOTD_SECONDS;
+
+	MotdScreen (ent);
+}
+
+/*
+==================
+G_MotdFrame
+==================
+*/
+void G_MotdFrame (edict_t *ent)
+{
+	int		playernum;
+
+	playernum = ent - g_edicts - 1;
+
+	// a cut scene starts a frame or two after the player enters, so it is not enough to
+	// check the screen is free when showing: take the motd back down and forget it was
+	// shown, or the timer runs out behind the scene and the player never sees it
+	if (level.cut_scene_time || level.intermissiontime)
+	{
+		if (ent->client->showmotd)
+		{
+			ent->client->showmotd = false;
+			ent->client->motd_time = 0;
+			game.motd_shown[playernum] = false;
+		}
+	}
+	// no "pending" flag on the client: PutClientInServer memsets the whole struct, so a
+	// mark set at ClientBegin would not survive the spawn it triggers
+	else if (motd_numlines > 0 && game.maxclients > 1 && !game.motd_shown[playernum])
+	{
+		game.motd_shown[playernum] = true;
+		ent->client->showinventory = false;
+		ent->client->showscores = false;
+		ent->client->showhelp = false;
+		ent->client->showmotd = true;
+		ent->client->motd_time = level.time + MOTD_SECONDS;
+
+		MotdScreen (ent);
+	}
+
+	if (ent->client->showmotd && ent->client->motd_time && level.time > ent->client->motd_time)
+	{
+		ent->client->showmotd = false;
+		ent->client->motd_time = 0;
+	}
 }
 
 
@@ -1302,14 +1664,14 @@ void G_SetStats (edict_t *ent)
 	if (deathmatch->value)
 	{
 		if (ent->client->pers.health <= 0 || level.intermissiontime
-			|| ent->client->showscores)
+			|| ent->client->showscores || ent->client->showmotd)
 			ent->client->ps.stats[STAT_LAYOUTS] |= 1;
 		if (ent->client->showinventory && ent->client->pers.health > 0)
 			ent->client->ps.stats[STAT_LAYOUTS] |= 2;
 	}
 	else
 	{
-		if (ent->client->showscores || ent->client->showhelp)
+		if (ent->client->showscores || ent->client->showhelp || ent->client->showmotd)
 			ent->client->ps.stats[STAT_LAYOUTS] |= 1;
 		if (ent->client->showinventory && ent->client->pers.health > 0)
 			ent->client->ps.stats[STAT_LAYOUTS] |= 2;

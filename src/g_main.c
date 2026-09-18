@@ -25,6 +25,7 @@ int		num_object_bounds=0;
 object_bounds_t	*g_objbnds[MAX_OBJECT_BOUNDS];
 
 cvar_t	*deathmatch;
+cvar_t	*sv_connectmessage;
 
 // RAFAEL
 // cvar_t	*marines;

@@ -2407,6 +2407,8 @@ void ClientDisconnect (edict_t *ent)
 
 	playernum = ent-g_edicts-1;
 	gi.configstring (CS_PLAYERSKINS+playernum, "");
+
+	game.motd_shown[playernum] = false;
 }
 
 //==============================================================

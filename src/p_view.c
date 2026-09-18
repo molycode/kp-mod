@@ -1696,6 +1696,10 @@ void ClientEndServerFrame (edict_t *ent)
 	current_player = ent;
 	current_client = ent->client;
 
+	// ahead of the intermission and cut scene early-outs below, which return without
+	// reaching it - a scene has to be able to take the motd back off the screen
+	G_MotdFrame (ent);
+
 	//
 	// If the origin or velocity have changed since ClientThink(),
 	// update the pmove values.  This will happen when the client

@@ -1,0 +1,45 @@
+// motd.txt - the message of the day kp-mod shows players.
+//
+// Put this file in your server's game directory: main/, or your own mod
+// directory if you run one. It is read once per level load, so editing it
+// and changing map is enough to see the result - no restart needed.
+//
+// One line here is one line on screen. A blank line is a spacer and "//"
+// comments a line out. Keep lines under 64 characters: a glyph is 10 units
+// wide and the layout is 640 across, so longer lines are cut.
+//
+// ^rgb at the start of a line colours it - one digit each of red, green and
+// blue, 0-9. Red over green gives warmth, all three together desaturate
+// toward white, and lower numbers are dimmer, which reads as softer over a
+// dark scene.
+//
+//    742 warm orange     751 amber        554 soft warm grey
+//    321 dim rule        277 turquoise    666 neutral grey
+//
+// Raise all three together for a louder screen, lower them for a quieter
+// one; the ratio between them is what sets the hue.
+//
+// A mark may appear mid-line too, so one word can differ from the rest:
+//   ^666type ^277motd^666 to see this again
+//
+// It is shown once, when a player enters the game, and stays for ten
+// seconds. Players bring it back at any time by typing  motd  in console.
+//
+// This file is optional: with no motd.txt the server's sv_connectmessage is
+// used instead, and with neither, typing motd simply says so.
+// Add your own lines here - map rotation, rules, a web address.
+//
+// Add your own lines below - map rotation, rules, a web address.
+^742Your server name here
+^321========================================
+
+^751Kingpin, rebuilt and repaired
+^554Game library built from Xatrix's
+^554own 1999 SDK
+
+^751Tons of fixes to the 1999 code
+^554crashes, overflows, map rotation - and
+^554the original co-op, made to work
+
+^321========================================
+^666type ^277motd^666 to see this again

@@ -2527,6 +2527,7 @@ void Cmd_Inven_f (edict_t *ent)
 
 	cl->showscores = false;
 	cl->showhelp = false;
+	cl->showmotd = false;
 
 	if (cl->showinventory)
 	{
@@ -3417,6 +3418,7 @@ void Cmd_PutAway_f (edict_t *ent)
 	ent->client->showscores = false;
 	ent->client->showhelp = false;
 	ent->client->showinventory = false;
+	ent->client->showmotd = false;
 }
 
 int PlayerSort (void const *a, void const *b)
@@ -3638,6 +3640,12 @@ void ClientCommand (edict_t *ent)
 	if (Q_stricmp (cmd, "score") == 0)
 	{
 		Cmd_Score_f (ent);
+		return;
+	}
+
+	if (Q_stricmp (cmd, "motd") == 0)
+	{
+		Cmd_Motd_f (ent);
 		return;
 	}
 

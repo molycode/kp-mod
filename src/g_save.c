@@ -341,6 +341,7 @@ void InitGame (void)
 
 	maxclients = gi.cvar ("maxclients", "4", CVAR_SERVERINFO | CVAR_LATCH);
 	deathmatch = gi.cvar ("deathmatch", "0", CVAR_LATCH);
+	sv_connectmessage = gi.cvar ("sv_connectmessage", "", 0);
 	coop = gi.cvar ("coop", "0", CVAR_LATCH);
 	skill = gi.cvar ("skill", "1", CVAR_LATCH);
 
@@ -413,6 +414,8 @@ void InitGame (void)
 	g_mapcycle_file = gi.cvar( "g_mapcycle_file", "", 0);
 	coop_restartmap = gi.cvar( "coop_restartmap", "", 0);
 // Ridah, done.
+
+	MotdLoad ();
 
 	// items
 	InitItems ();

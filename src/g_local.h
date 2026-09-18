@@ -321,6 +321,10 @@ typedef struct
 	int			num_items;
 
 	qboolean	autosaved;
+
+	// greeted already, by client slot. pers is wiped on every spawn and resp on every level
+	// change, so the mark cannot live on the client; ClientDisconnect clears it.
+	qboolean	motd_shown[MAX_CLIENTS];
 } game_locals_t;
 
 
@@ -688,6 +692,9 @@ extern	cast_group_t	*g_cast_groups;
 extern	cvar_t	*maxentities;
 extern	cvar_t	*deathmatch;
 
+// owned by kpded2/R1Q2; empty on engines that do not have it
+extern	cvar_t	*sv_connectmessage;
+
 extern	cvar_t	*maxrate;
 extern	cvar_t	*minrate;
 
@@ -817,6 +824,9 @@ extern	gitem_t	itemlist[];
 //
 void Cmd_Help_f (edict_t *ent, int page);
 void Cmd_Score_f (edict_t *ent);
+void Cmd_Motd_f (edict_t *ent);
+void MotdLoad (void);
+void G_MotdFrame (edict_t *ent);
 
 //
 // g_items.c
@@ -1250,6 +1260,8 @@ struct gclient_s
 	qboolean	showinventory;		// set layout stat
 	qboolean	showhelp;
 	qboolean	showhelpicon;
+	qboolean	showmotd;			// set layout stat
+	float		motd_time;			// the motd on screen expires at this level.time
 
 	int			ammo_index;
 
