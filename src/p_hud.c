@@ -18,6 +18,13 @@
 #define MOTD_TITLE_COLOUR		990
 #define MOTD_BODY_COLOUR		999
 
+// score, inventory and notepad each clear the other two, so at most one screen is up for
+// the motd to cover and a single value says what to put back
+#define MOTD_COVERED_NOTHING	0
+#define MOTD_COVERED_SCORES		1
+#define MOTD_COVERED_INVENTORY	2
+#define MOTD_COVERED_NOTEPAD	3
+
 
 /*
 ======================================================================
@@ -882,6 +889,8 @@ void Cmd_Help_f (edict_t *ent, int page)
 
 	ent->client->showinventory = false;
 	ent->client->showscores = false;
+	// left set, the motd's expiry would hand the scoreboard back over this notepad
+	ent->client->showmotd = false;
 
 	if (ent->client->showhelp && (ent->client->pers.game_helpchanged == game.helpchanged) && !(page))
 	{
@@ -1169,31 +1178,84 @@ static void MotdScreen (edict_t *ent)
 
 /*
 ==================
+MotdShow
+==================
+*/
+static void MotdShow (edict_t *ent)
+{
+	if (ent->client->showscores)
+		ent->client->motd_covered = MOTD_COVERED_SCORES;
+	else if (ent->client->showinventory)
+		ent->client->motd_covered = MOTD_COVERED_INVENTORY;
+	else if (ent->client->showhelp)
+		ent->client->motd_covered = MOTD_COVERED_NOTEPAD;
+	else
+		ent->client->motd_covered = MOTD_COVERED_NOTHING;
+
+	ent->client->showscores = false;
+	ent->client->showinventory = false;
+	ent->client->showhelp = false;
+	ent->client->showmotd = true;
+	ent->client->motd_time = level.time + MOTD_SECONDS;
+
+	MotdScreen (ent);
+}
+
+/*
+==================
+MotdHide
+
+Setting the flag back is not enough for a screen that draws through the layout: the
+client keeps only the last layout sent, and that is now the motd.
+==================
+*/
+static void MotdHide (edict_t *ent)
+{
+	int		covered;
+
+	covered = ent->client->motd_covered;
+
+	ent->client->showmotd = false;
+	ent->client->motd_time = 0;
+	ent->client->motd_covered = MOTD_COVERED_NOTHING;
+
+	if (covered == MOTD_COVERED_SCORES)
+	{
+		ent->client->showscores = true;
+
+		DeathmatchScoreboard (ent);
+	}
+	else if (covered == MOTD_COVERED_NOTEPAD)
+	{
+		ent->client->showhelp = true;
+
+		HelpComputer (ent, 0);
+	}
+	else if (covered == MOTD_COVERED_INVENTORY)
+	{
+		ent->client->showinventory = true;
+	}
+}
+
+/*
+==================
 Cmd_Motd_f
 ==================
 */
 void Cmd_Motd_f (edict_t *ent)
 {
-	ent->client->showinventory = false;
-	ent->client->showscores = false;
-	ent->client->showhelp = false;
 	if (ent->client->showmotd)
 	{
-		ent->client->showmotd = false;
-		ent->client->motd_time = 0;
-		return;
+		MotdHide (ent);
 	}
-
-	if (motd_numlines == 0)
+	else if (motd_numlines == 0)
 	{
 		gi.cprintf (ent, PRINT_HIGH, "No message of the day has been set on this server.\n");
-		return;
 	}
-
-	ent->client->showmotd = true;
-	ent->client->motd_time = level.time + MOTD_SECONDS;
-
-	MotdScreen (ent);
+	else
+	{
+		MotdShow (ent);
+	}
 }
 
 /*
@@ -1214,8 +1276,7 @@ void G_MotdFrame (edict_t *ent)
 	{
 		if (ent->client->showmotd)
 		{
-			ent->client->showmotd = false;
-			ent->client->motd_time = 0;
+			MotdHide (ent);
 			game.motd_shown[playernum] = false;
 		}
 	}
@@ -1224,19 +1285,13 @@ void G_MotdFrame (edict_t *ent)
 	else if (motd_numlines > 0 && game.maxclients > 1 && !game.motd_shown[playernum])
 	{
 		game.motd_shown[playernum] = true;
-		ent->client->showinventory = false;
-		ent->client->showscores = false;
-		ent->client->showhelp = false;
-		ent->client->showmotd = true;
-		ent->client->motd_time = level.time + MOTD_SECONDS;
 
-		MotdScreen (ent);
+		MotdShow (ent);
 	}
 
 	if (ent->client->showmotd && ent->client->motd_time && level.time > ent->client->motd_time)
 	{
-		ent->client->showmotd = false;
-		ent->client->motd_time = 0;
+		MotdHide (ent);
 	}
 }
 

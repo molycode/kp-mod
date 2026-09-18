@@ -1262,6 +1262,7 @@ struct gclient_s
 	qboolean	showhelpicon;
 	qboolean	showmotd;			// set layout stat
 	float		motd_time;			// the motd on screen expires at this level.time
+	int			motd_covered;		// the screen the motd took, put back when it goes
 
 	int			ammo_index;
 
