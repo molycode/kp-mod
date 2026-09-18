@@ -5,8 +5,8 @@
 // a dmstr glyph is 10 units wide and the layout space is 640 across
 #define MOTD_MAX_COLUMNS		64
 
-// read from <gamedir>/motd.txt; 20 lines matches Monkey Mod, though the engine caps a
-// layout at 1 KB so a message of full-width lines runs out of room before reaching it
+// read from <gamedir>/motd.txt. The engine caps a layout at 1 KB, so a message of
+// full-width lines runs out of room before it reaches this many
 #define MOTD_FILENAME			"motd.txt"
 #define MOTD_MAX_LINES			20
 
@@ -1051,7 +1051,7 @@ static qboolean MotdLoadFile (void)
 			while (len > 0 && (buffer[len-1] == '\n' || buffer[len-1] == '\r'))
 				buffer[--len] = '\0';
 
-			// "//" comments out a line, the convention Monkey Mod's config uses
+			// "//" comments out a line
 			if (!(buffer[0] == '/' && buffer[1] == '/'))
 				MotdAddLine (buffer);
 		}
