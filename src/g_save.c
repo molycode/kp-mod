@@ -342,7 +342,7 @@ void InitGame (void)
 	maxclients = gi.cvar ("maxclients", "4", CVAR_SERVERINFO | CVAR_LATCH);
 	deathmatch = gi.cvar ("deathmatch", "0", CVAR_LATCH);
 	sv_connectmessage = gi.cvar ("sv_connectmessage", "", 0);
-	coop = gi.cvar ("coop", "0", CVAR_LATCH);
+	coop = gi.cvar ("coop", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	skill = gi.cvar ("skill", "1", CVAR_LATCH);
 
 	// JOSEPH 16-OCT-98
