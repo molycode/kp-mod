@@ -1252,6 +1252,9 @@ void rocket_touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *su
 		return;
 	}
 
+	// A blast set off by this one must not kill the rocket and explode it a second time.
+	ent->takedamage = DAMAGE_NO;
+
 	if (ent->owner->client)
 		PlayerNoise(ent->owner, ent->s.origin, PNOISE_IMPACT);
 
