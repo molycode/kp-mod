@@ -3191,11 +3191,11 @@ again:
 			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
 			if (frames) frames++;
 
-			if (self->rotate[0]) self->avelocity[0] = (self->rotate[0] / frames)*10;	
+			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
 				else self->avelocity[0] = 0;
-			if (self->rotate[1]) self->avelocity[1] = (self->rotate[1] / frames)*10;	
+			if (self->rotate[1] && frames) self->avelocity[1] = (self->rotate[1] / frames)*10;	
 				else self->avelocity[1] = 0;		
-			if (self->rotate[2]) self->avelocity[2] = (self->rotate[2] / frames)*10;	
+			if (self->rotate[2] && frames) self->avelocity[2] = (self->rotate[2] / frames)*10;	
 				else self->avelocity[2] = 0;  
 		}
 		else if (remain)
@@ -3206,11 +3206,11 @@ again:
 			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
 			if (frames) frames++;
 
-			if (self->rotate[0]) self->avelocity[0] = (self->rotate[0] / frames)*10;	
+			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
 				else self->avelocity[0] = 0;
-			if (self->rotate[1]) self->avelocity[1] = (self->rotate[1] / frames)*10;	
+			if (self->rotate[1] && frames) self->avelocity[1] = (self->rotate[1] / frames)*10;	
 				else self->avelocity[1] = 0;		
-			if (self->rotate[2]) self->avelocity[2] = (self->rotate[2] / frames)*10;	
+			if (self->rotate[2] && frames) self->avelocity[2] = (self->rotate[2] / frames)*10;	
 				else self->avelocity[2] = 0;  
 		}
 		else
@@ -3250,11 +3250,11 @@ again:
 			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
 			if (frames) frames++;
 			
-			if (self->rotate[0]) self->avelocity[0] = (self->rotate[0] / frames)*10;	
+			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
 				else self->avelocity[0] = 0;
-			if (self->rotate[1]) self->avelocity[1] = (self->rotate[1] / frames)*10;	
+			if (self->rotate[1] && frames) self->avelocity[1] = (self->rotate[1] / frames)*10;	
 				else self->avelocity[1] = 0;		
-			if (self->rotate[2]) self->avelocity[2] = (self->rotate[2] / frames)*10;	
+			if (self->rotate[2] && frames) self->avelocity[2] = (self->rotate[2] / frames)*10;	
 				else self->avelocity[2] = 0;    
 		}
 		else if (remain)
@@ -3265,11 +3265,11 @@ again:
 			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
 			if (frames) frames++;
 			
-			if (self->rotate[0]) self->avelocity[0] = (self->rotate[0] / frames)*10;	
+			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
 				else self->avelocity[0] = 0;
-			if (self->rotate[1]) self->avelocity[1] = (self->rotate[1] / frames)*10;	
+			if (self->rotate[1] && frames) self->avelocity[1] = (self->rotate[1] / frames)*10;	
 				else self->avelocity[1] = 0;		
-			if (self->rotate[2]) self->avelocity[2] = (self->rotate[2] / frames)*10;	
+			if (self->rotate[2] && frames) self->avelocity[2] = (self->rotate[2] / frames)*10;	
 				else self->avelocity[2] = 0;    
 		}
 		else
