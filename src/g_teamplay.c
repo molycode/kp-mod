@@ -261,6 +261,7 @@ void safebag_touch( edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 			// let them go away on their own terms
 			T_Damage( other, other, other, vec3_origin, other->s.origin, vec3_origin, 9999, 0, 0, MOD_SAFECAMPER );
 			last_touch_count = 0;
+			return;
 		}
 	}
 
