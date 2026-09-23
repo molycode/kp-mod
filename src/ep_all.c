@@ -193,7 +193,7 @@ edict_t	*EP_GetCharacterByName ( char *name )
 		if (!level.characters[i])
 			continue;
 
-		if (!Q_stricmp( level.characters[i]->name, name ))
+		if ((level.characters[i]->name != NULL) && !Q_stricmp( level.characters[i]->name, name ))
 		{
 			if ((level.characters[i]->inuse) && (level.characters[i]->svflags & SVF_MONSTER) && (level.characters[i]->health > 0))
 				return level.characters[i];
