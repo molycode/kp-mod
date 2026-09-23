@@ -155,7 +155,7 @@ hundreds on code that is correct as written, and each carries its reason in the 
 findings over 14 checks**, all of them individually examined and recorded false. Do not re-triage
 them without a reason; do re-run after any substantial change.
 
-**99 is the baseline.** A later run reporting more than this has found something new; at or below it
+**The baseline is below.** A later run reporting more than it has found something new; at or below it
 is the documented residue. Diff against the number rather than triaging the pile again.
 
 **What remains is mostly one analyzer artifact:** the game's own defensive `(tr.ent) &&` /
@@ -191,7 +191,11 @@ All cleared, one commit each. The door key and the filter parser are the two tha
   now a default names the bad memory type instead.
 - **`g_save.c`** -- a memset hardcoded 4 bytes per pointer.
 
-**84 is the current baseline** (was 99 before the savegame work).
+**85 is the current baseline**, counted as unique `realpath:line:col` (99 before the savegame work,
+then 84 by an earlier count that the same commit reproduces as 83). The two added since are both
+false: `bugprone-inc-dec-in-conditions` on the `level.characters[i++]` walk in `g_func.c`, whose
+`&&` is a sequence point, and `bugprone-random-generator-seed` on `InitGame`'s `srand`, which is
+not cryptographic.
 
 Run it with the pinned Clang, against a compile database:
 
