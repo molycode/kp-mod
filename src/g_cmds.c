@@ -2857,7 +2857,7 @@ void Cmd_Activate_f (edict_t *ent)
 			tr = gi.trace(neworigin, NULL, NULL, endorg, ent, MASK_SOLID);
 
 			// Ridah, added this since it's frustrating hitting the switches in deathmatch
-			if (!deathmatch->value || (!Q_stricmp(target->classname, "func_button") && !Q_stricmp(target->target, "safe2")))
+			if (!deathmatch->value || (!Q_stricmp(target->classname, "func_button") && (target->target != NULL) && !Q_stricmp(target->target, "safe2")))
 			if (tr.ent != target)
 				continue;
 
