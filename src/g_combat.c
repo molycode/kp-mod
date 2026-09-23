@@ -641,7 +641,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 	// knockback still occurs
 	if (!(dflags & DAMAGE_NO_PROTECTION) && (targ != attacker) && ((deathmatch->value && (teamplay->value || ((int)(dmflags->value) & (DF_MODELTEAMS/*| DF_SKINTEAMS*/))) /*|| coop->value*/)))
 	{
-		if ((OnSameTeam (targ, attacker)) && (!targ->client->pers.friendly_vulnerable))
+		if ((OnSameTeam (targ, attacker)) && (targ->client != NULL) && (!targ->client->pers.friendly_vulnerable))
 		{
 			if ((int)(dmflags->value) & DF_NO_FRIENDLY_FIRE)
 			{
@@ -1552,7 +1552,7 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 	// knockback still occurs
 	if (!(dflags & DAMAGE_NO_PROTECTION) && (targ != attacker) && ((deathmatch->value && (teamplay->value || ((int)(dmflags->value) & (DF_MODELTEAMS/*| DF_SKINTEAMS*/))) /*|| coop->value*/)))
 	{
-		if ((OnSameTeam (targ, attacker)) && (!targ->client->pers.friendly_vulnerable))
+		if ((OnSameTeam (targ, attacker)) && (targ->client != NULL) && (!targ->client->pers.friendly_vulnerable))
 		{
 			if ((int)(dmflags->value) & DF_NO_FRIENDLY_FIRE)
 			{
