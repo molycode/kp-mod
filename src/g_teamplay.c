@@ -234,38 +234,38 @@ void SP_dm_cashspawn( edict_t *self )
 
 void safebag_touch( edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
-	static float	last_touch_time;
-	static edict_t	*last_touch_ent;
-	static int		last_touch_count = 0;
+	static float	last_touch_time[3];
+	static edict_t	*last_touch_ent[3];
+	static int		last_touch_count[3];
 
 	if (!other->client)
 		return;
 
-	if ((level.time < last_touch_time) || (last_touch_time && (last_touch_time < (level.time - 2.0))) || (last_touch_ent && (last_touch_ent != other)))
+	if ((level.time < last_touch_time[self->style]) || (last_touch_time[self->style] && (last_touch_time[self->style] < (level.time - 2.0))) || (last_touch_ent[self->style] && (last_touch_ent[self->style] != other)))
 	{	// reset
-		last_touch_time = 0;
-		last_touch_ent = NULL;
-		last_touch_count = 0;
+		last_touch_time[self->style] = 0;
+		last_touch_ent[self->style] = NULL;
+		last_touch_count[self->style] = 0;
 	}
-	else if (last_touch_time > (level.time - 0.1))
+	else if (last_touch_time[self->style] > (level.time - 0.1))
 	{
 		return;
 	}
 	else
 	{
-		last_touch_count++;
-		last_touch_time = level.time;
+		last_touch_count[self->style]++;
+		last_touch_time[self->style] = level.time;
 
-		if (last_touch_count > (int)(50.0 * (1.0 + (0.5*(other->client->pers.team == self->style)))))
+		if (last_touch_count[self->style] > (int)(50.0 * (1.0 + (0.5*(other->client->pers.team == self->style)))))
 		{
 			// let them go away on their own terms
 			T_Damage( other, other, other, vec3_origin, other->s.origin, vec3_origin, 9999, 0, 0, MOD_SAFECAMPER );
-			last_touch_count = 0;
+			last_touch_count[self->style] = 0;
 			return;
 		}
 	}
 
-	last_touch_ent = other;
+	last_touch_ent[self->style] = other;
 
 	if (self->timestamp > (level.time - 1.0))
 		return;
