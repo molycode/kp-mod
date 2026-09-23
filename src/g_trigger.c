@@ -30,7 +30,10 @@ void multi_trigger (edict_t *ent)
 
 	G_UseTargets (ent, ent->activator);
 
-	if (ent->wait > 0)	
+	if (!ent->inuse)
+		return;		// a target killtargeted this trigger
+
+	if (ent->wait > 0)
 	{
 		ent->think = multi_wait;
 		ent->nextthink = level.time + ent->wait;
