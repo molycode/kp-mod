@@ -213,6 +213,12 @@ void SP_dm_cashspawn( edict_t *self )
 	teamplay_mode = TM_GRABDALOOT;
 	num_cash_items = 0;
 
+	if (!self->type)
+	{
+		gi.dprintf ("dm_cashspawn without a type at %s, using cashbag\n", vtos(self->s.origin));
+		self->type = "cashbag";
+	}
+
 	if (!strcmp(self->type, "cashroll"))
 	{
 		self->delay = (float)g_cashspawndelay->value;
