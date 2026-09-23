@@ -592,6 +592,14 @@ void SP_ai_trigger_character (edict_t *ent)
 	ent->svflags |= SVF_NOCLIENT;
 
 	gi.setmodel (ent, ent->model);
+
+	if (!ent->target)
+	{
+		gi.dprintf ("ai_trigger_character without a target at %s\n", vtos(ent->absmin));
+		G_FreeEdict (ent);
+		return;
+	}
+
 	gi.linkentity (ent);
 }
 
