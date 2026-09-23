@@ -464,7 +464,7 @@ void plat_blocked (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 	}
@@ -1663,7 +1663,7 @@ void door_blocked  (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 		
@@ -2574,7 +2574,7 @@ void train_blocked (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 	}
@@ -3043,7 +3043,7 @@ void train_blocked_rotating (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 	}
@@ -3905,7 +3905,7 @@ void door_secret_blocked  (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 	}
@@ -4222,7 +4222,7 @@ void lift_blocked (edict_t *self, edict_t *other)
 		// give it a chance to go away on it's own terms (like gibs)
 		T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, 100000, 1, 0, MOD_CRUSH);
 		// if it's still there, nuke it
-		if (other)
+		if (other->inuse)
 			BecomeExplosion1 (other);
 		return;
 	}
