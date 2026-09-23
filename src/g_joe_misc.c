@@ -4283,7 +4283,7 @@ void SP_props_rat (edict_t *self)
 	self->monsterprop = 1;
 	self->deadticks = 1;
 	self->fxdensity = 0;
-	self->healspeed = rand()&360;
+	self->healspeed = rand()%360;
 	self->debugprint = 0;
 	// Born left or right handed
 	self->durationflag = rand()&1;
@@ -4356,7 +4356,7 @@ void SP_props_rat_trigger (edict_t *self)
 	self->monsterprop = 1;
 	self->deadticks = 1;
 	self->fxdensity = 0;
-	self->healspeed = rand()&360;
+	self->healspeed = rand()%360;
 	self->debugprint = 0;
 	// Born left or right handed
 	self->durationflag = rand()&1;
@@ -6337,7 +6337,7 @@ void SP_props2_fish (edict_t *self)
 	self->monsterprop = 1;
 	self->deadticks = 1;
 	self->fxdensity = 0;
-	self->healspeed = rand()&360;
+	self->healspeed = rand()%360;
 	self->debugprint = 0;
 	// Born left or right handed
 	self->durationflag = rand()&1;
@@ -6412,7 +6412,7 @@ void SP_props2_fish_trigger (edict_t *self)
 	self->monsterprop = 1;
 	self->deadticks = 1;
 	self->fxdensity = 0;
-	self->healspeed = rand()&360;
+	self->healspeed = rand()%360;
 	self->debugprint = 0;
 	// Born left or right handed
 	self->durationflag = rand()&1;
