@@ -660,9 +660,9 @@ void Teamplay_AutoJoinTeam( edict_t *self )
 	team_count[0] = 0;
 	team_count[1] = 0;
 
-	for (i=1; i<maxclients->value; i++)
+	for (i=1; i<=maxclients->value; i++)
 	{
-		if (g_edicts[i].client && g_edicts[i].client->pers.team)
+		if (g_edicts[i].inuse && g_edicts[i].client && g_edicts[i].client->pers.team)
 			team_count[g_edicts[i].client->pers.team - 1]++;
 	}
 
