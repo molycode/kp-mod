@@ -1381,6 +1381,8 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		{
 			// Tell Jed to start evading Buster
 			ent->enemy = EP_GetCharacter( NAME_BUSTER );
+			if (!ent->enemy)
+				break;
 			AI_RecordSighting( ent, ent->enemy, VectorDistance( ent->s.origin, ent->enemy->s.origin ) );
 			ent->cast_info.currentmove = ent->cast_info.move_evade;
 		}
@@ -1394,6 +1396,8 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 			// Stand here looking at Jed
 
 			other = EP_GetCharacter( NAME_JED );
+			if (!other)
+				break;
 
 			AI_RecordSighting( ent, other, VectorDistance( ent->s.origin, other->s.origin ) );
 			ent->cast_info.avoid( ent, other, true );
