@@ -346,9 +346,9 @@ edict_t	*showpath_ent;
 
 void Cmd_NavDebugDest_f (edict_t *ent)
 {
-	if (deathmatch->value)
+	if (deathmatch->value || coop->value)
 	{
-		gi.cprintf(ent, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
+		gi.cprintf(ent, PRINT_HIGH, "This command is only available in single player\n");
 		return;
 	}
 
@@ -364,9 +364,9 @@ void Cmd_NavDebugDest_f (edict_t *ent)
 
 void Cmd_NavDebugShowPath_f (edict_t *ent)
 {
-	if (deathmatch->value)
+	if (deathmatch->value || coop->value)
 	{
-		gi.cprintf(ent, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
+		gi.cprintf(ent, PRINT_HIGH, "This command is only available in single player\n");
 		return;
 	}
 /*
@@ -401,9 +401,9 @@ void Cmd_NavDebugShowPath_f (edict_t *ent)
 // Clears the nav_data for the current level
 void Cmd_NavClear_f ( edict_t *self )
 {
-	if (deathmatch->value)
+	if (deathmatch->value || coop->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available in single player\n");
 		return;
 	}
 
@@ -421,9 +421,9 @@ void Cmd_NavClear_f ( edict_t *self )
 
 void Cmd_NavSave_f ( edict_t *self )
 {
-	if (deathmatch->value)
+	if (deathmatch->value || coop->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available in single player\n");
 		return;
 	}
 
@@ -432,9 +432,9 @@ void Cmd_NavSave_f ( edict_t *self )
 
 void Cmd_NavRebuild_f ( edict_t *self )
 {
-	if (deathmatch->value)
+	if (deathmatch->value || coop->value)
 	{
-		gi.cprintf(self, PRINT_HIGH, "This command is only available when deathmatch = 0\n");
+		gi.cprintf(self, PRINT_HIGH, "This command is only available in single player\n");
 		return;
 	}
 
