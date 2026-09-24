@@ -117,6 +117,35 @@ void NAV_WriteNode(FILE *f, active_node_data_t *active_node_data, node_t *node)
         fwrite(&packed, sizeof(packed), 1, f);
 }
 
+/* Every index a node carries must name a node in this file, or path-finding indexes out of bounds. */
+static qboolean NAV_NodesValid(active_node_data_t *active_node_data)
+{
+    int i, j;
+    node_t *node;
+
+    for (i = 0; i < active_node_data->node_count; i++)
+    {
+        node = active_node_data->nodes[i];
+
+        if (!isfinite(node->origin[0]) || !isfinite(node->origin[1]) || !isfinite(node->origin[2]))
+            return false;
+
+        if (node->num_visible < 0 || node->num_visible > MAX_VIS_NODES)
+            return false;
+
+        if (node->goal_index < -1 || node->goal_index >= active_node_data->node_count)
+            return false;
+
+        for (j = 0; j < MAX_VIS_NODES; j++)
+        {
+            if (node->visible_nodes[j] < -1 || node->visible_nodes[j] >= active_node_data->node_count)
+                return false;
+        }
+    }
+
+    return true;
+}
+
 void NAV_ReadActiveNodes(active_node_data_t *active_node_data, char *unitname)
 {
     const char *basevars[] = { "basedir", "cddir", NULL };
@@ -179,6 +208,14 @@ void NAV_ReadActiveNodes(active_node_data_t *active_node_data, char *unitname)
         {
             fread(&active_node_data->node_count, sizeof(active_node_data->node_count), 1, f);
 
+            if (active_node_data->node_count < 0 || active_node_data->node_count > MAX_NODES)
+            {
+                gi.dprintf("NAV: %s has %i nodes, more than %i - ignored\n", filename, active_node_data->node_count, MAX_NODES);
+                fclose(f);
+                NAV_InitActiveNodes(active_node_data);
+                return;
+            }
+
             for (i = 0; i < active_node_data->node_count; i++)
             {
                 active_node_data->nodes[i] = gi.TagMalloc(sizeof(node_t), TAG_GAME);
@@ -187,9 +224,20 @@ void NAV_ReadActiveNodes(active_node_data_t *active_node_data, char *unitname)
                 active_node_data->nodes[i]->index = i;
 
                 NAV_ReadNode(f, active_node_data, active_node_data->nodes[i]);
-
-                NAV_AddNodeToCells(active_node_data, active_node_data->nodes[i]);
             }
+
+            if (feof(f) || !NAV_NodesValid(active_node_data))
+            {
+                gi.dprintf("NAV: %s is truncated or corrupt - ignored\n", filename);
+                fclose(f);
+                for (i = 0; i < active_node_data->node_count; i++)
+                    gi.TagFree(active_node_data->nodes[i]);
+                NAV_InitActiveNodes(active_node_data);
+                return;
+            }
+
+            for (i = 0; i < active_node_data->node_count; i++)
+                NAV_AddNodeToCells(active_node_data, active_node_data->nodes[i]);
         }
 
         fclose(f);

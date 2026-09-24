@@ -25,6 +25,10 @@ int NAV_GetCellIndexForAxis(float pos)
 
     tmp = pos * scale + half;
 
+    /* Rounding puts anything above ~4844 in cell CELL_AXIS_SUBDIVISION, one past the grid. */
+    if (tmp + 0.5f >= CELL_AXIS_SUBDIVISION)
+        return CELL_AXIS_SUBDIVISION - 1;
+
     return (int)floor(tmp + 0.5f);
 }
 
