@@ -1588,20 +1588,26 @@ void Think_CalcMoveSpeed (edict_t *self)
 		return;		// only the team master does this
 
 	// find the smallest distance any member of the team will be moving
-	min = fabs(self->moveinfo.distance);
-	for (ent = self->teamchain; ent; ent = ent->teamchain)
+	min = 0;
+	for (ent = self; ent; ent = ent->teamchain)
 	{
 		dist = fabs(ent->moveinfo.distance);
-		if (dist < min)
+		if (dist > 0 && (min == 0 || dist < min))
 			min = dist;
 	}
+
+	if (min == 0)
+		return;
 
 	time = min / self->moveinfo.speed;
 
 	// adjust speeds so they will all complete at the same time
 	for (ent = self; ent; ent = ent->teamchain)
 	{
-		newspeed = fabs(ent->moveinfo.distance) / time;
+		dist = fabs(ent->moveinfo.distance);
+		if (dist == 0)
+			continue;
+		newspeed = dist / time;
 		ratio = newspeed / ent->moveinfo.speed;
 		if (ent->moveinfo.accel == ent->moveinfo.speed)
 			ent->moveinfo.accel = newspeed;
