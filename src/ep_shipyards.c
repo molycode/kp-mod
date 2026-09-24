@@ -1084,7 +1084,8 @@ void larry_say (edict_t *self)
 	Player = &g_edicts[1];
 	Larry = EP_GetCharacter (NAME_LARRY);
 
-	Voice_Specific (Larry, Player, ty_larry, 0);
+	if (Larry)		// killed in the 1.5 s since Moe died
+		Voice_Specific (Larry, Player, ty_larry, 0);
 }
 
 void EP_SY_SpecialEventDeath (edict_t *self)
