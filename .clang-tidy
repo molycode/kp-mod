@@ -32,7 +32,7 @@ Checks: >
   -performance-no-int-to-ptr,
   -performance-type-promotion-in-math-fn
 
-# Our own sources. external/navlib is FREDZ's MIT subtree and is not ours to fix.
+# Our own sources. external/navlib is vendored from its own repository and is fixed there.
 HeaderFilterRegex: 'src/'
 
 # bugprone-narrowing-conversions: 121 findings in four files. Quake 2 moves between int and float

@@ -780,7 +780,7 @@ void HelpComputer (edict_t *ent, int page)
 	level.helpchange = 0;
 	
 	// Our patched engine marks itself with 'm' after the version digits, which still
-	// atoi() to 121. kpded2 reads 'p' in the same place for MonkeyHarris's clients, whose
+	// atoi() to 121. kpded2 reads 'p' in the same place for the community patched client, whose
 	// protocol we do not implement - so never treat a 'p' as one of ours.
 	ver = Info_ValueForKey (ent->client->pers.userinfo, "ver");
 

@@ -112,7 +112,7 @@ has been built**, because Windows is not currently built or played.
 ### Why the blob went
 
 It was the SDK's binary-only NavLib: Xatrix never released its source, which is why
-[drFredz/Kingpin_NavLib](https://github.com/drFredz/Kingpin_NavLib) exists. Keeping it meant the two
+[Kingpin_NavLib](https://github.com/molycode/Kingpin_NavLib), a reconstruction, exists. Keeping it meant the two
 platforms ran different navigation code, and it was the only piece of Xatrix object code in the
 tree.
 
@@ -157,14 +157,14 @@ Two are known false and need no second look: `bugprone-inc-dec-in-conditions` on
 `level.characters[i++]` walk in `g_func.c`, whose `&&` is a sequence point, and
 `bugprone-random-generator-seed` on `InitGame`'s `srand`, which is not cryptographic.
 
-Run it with the pinned Clang, against the compile database that
-`cmake --preset linux-clang_22-relwithdebinfo` writes:
+Run it with the pinned Clang (`$KP_CLANG_PATH`, the root your user presets pass), against the
+compile database that `cmake --preset linux-clang_22-relwithdebinfo` writes:
 
-    /media/thomas/data/compilers/clang_22/bin/clang-tidy -p build/clang_22-RelWithDebInfo src/<file>.c
+    $KP_CLANG_PATH/bin/clang-tidy -p build/clang_22-RelWithDebInfo src/<file>.c
 
 Tree-wide, which is the only way the header findings deduplicate:
 
-    /media/thomas/data/compilers/clang_22/bin/run-clang-tidy -clang-tidy-binary /media/thomas/data/compilers/clang_22/bin/clang-tidy \
+    $KP_CLANG_PATH/bin/run-clang-tidy -clang-tidy-binary $KP_CLANG_PATH/bin/clang-tidy \
       -p build/clang_22-RelWithDebInfo -quiet -j 8 '/src/'
 
 Neither binary is on `PATH`, and `run-clang-tidy` needs `-clang-tidy-binary` even when called by its
