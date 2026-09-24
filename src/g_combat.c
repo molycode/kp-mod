@@ -244,6 +244,9 @@ void Killed (edict_t *targ, edict_t *inflictor, edict_t *attacker, int damage, v
 		cast_death_use (targ);
 	}
 
+	if (!targ->inuse)
+		return;		// a death target killtargeted this cast
+
 	if (targ->svflags & SVF_MONSTER)
 		EP_SpecialEventDeath (targ);
 
@@ -958,6 +961,9 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 			CheckHealthTarget( targ, targ->health_target3 );
 			targ->health_target3 = NULL;
 		}
+
+		if (!targ->inuse)
+			return;		// a health target killtargeted this cast
 
 		
 		if (targ->health <= 0)
@@ -1846,6 +1852,9 @@ void T_DamageMDX (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t d
 			CheckHealthTarget( targ, targ->health_target3 );
 			targ->health_target3 = NULL;
 		}
+
+		if (!targ->inuse)
+			return;		// a health target killtargeted this cast
 
 		// gi.dprintf ("health %d\n", targ->health);
 
