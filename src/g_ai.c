@@ -411,7 +411,7 @@ qboolean AI_CheckTalk( edict_t *self )
 	// check clients
 	for (i=1; i<=maxclients->value; i++)
 	{
-		if (g_edicts[i].client && g_edicts[i].health > 0)
+		if (g_edicts[i].inuse && g_edicts[i].client && g_edicts[i].health > 0)
 		{
 
 			cast = level.global_cast_memory[self->character_index][g_edicts[i].character_index];
