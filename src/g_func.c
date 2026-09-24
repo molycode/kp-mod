@@ -3188,7 +3188,10 @@ again:
 			// Set speed from saved first node
 			self->moveinfo.speed = self->moveinfo.accel = self->moveinfo.decel = self->speed;
 
-			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
+			if (self->moveinfo.speed > 0)
+				frames = floor((remain / self->moveinfo.speed) / FRAMETIME);
+			else
+				frames = 0;
 			if (frames) frames++;
 
 			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
@@ -3247,7 +3250,10 @@ again:
 			// Set speed from saved current node
 			self->moveinfo.speed = self->moveinfo.accel = self->moveinfo.decel = self->speed;		
 			
-			frames = floor((remain / self->moveinfo.speed) / FRAMETIME);	
+			if (self->moveinfo.speed > 0)
+				frames = floor((remain / self->moveinfo.speed) / FRAMETIME);
+			else
+				frames = 0;
 			if (frames) frames++;
 			
 			if (self->rotate[0] && frames) self->avelocity[0] = (self->rotate[0] / frames)*10;	
