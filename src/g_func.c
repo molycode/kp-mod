@@ -2126,7 +2126,7 @@ void Touch_DoorTrigger_subdoor (edict_t *self, edict_t *other, cplane_t *plane, 
 	
 	if ((self->owner->doorflag) && (!self->owner->firstnode))
 	{
-		if (self->owner->handle->duration) 
+		if ((self->owner->handle) && (self->owner->handle->duration))
 			traveltime = self->owner->handle->duration;
 				else traveltime = 0.5;
 		
