@@ -1305,15 +1305,18 @@ void intro_player_standup(edict_t* self)
 
 	other = EP_GetCharacter(NAME_INTROGUY1);
 
-	other->cast_info.currentmove = other->cast_info.move_stand_up;
-	other->s.frame = other->cast_info.currentmove->firstframe;
-	other->maxs[2] = other->cast_info.standing_max_z;
+	if (other)
+	{
+		other->cast_info.currentmove = other->cast_info.move_stand_up;
+		other->s.frame = other->cast_info.currentmove->firstframe;
+		other->maxs[2] = other->cast_info.standing_max_z;
 
-	other->last_talk_time = level.time;	// make talking jesture when standing
+		other->last_talk_time = level.time;	// make talking jesture when standing
 
-	// head for the corner in a few seconds
-	other->goal_ent = trav;
-	other->cast_info.goal_ent_pausetime = level.time + 2.5;		// pause for a bit
+		// head for the corner in a few seconds
+		other->goal_ent = trav;
+		other->cast_info.goal_ent_pausetime = level.time + 2.5;		// pause for a bit
+	}
 
 	//			other->maxs[2] = DUCKING_MAX_Z;
 }
@@ -1446,14 +1449,17 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 
 			other = EP_GetCharacter( NAME_TOUGHGUY2 );
 
-			other->last_talk_time = level.time + 2;
-			other->cast_info.talk( ent );
+			if (other)
+			{
+				other->last_talk_time = level.time + 2;
+				other->cast_info.talk( ent );
 
-			other->yaw_speed = 40;
+				other->yaw_speed = 40;
 
-			other->leader = ent;
-//			ent->cast_info.aiflags |= AI_GOALENT_MANUAL_CLEAR;
-			other->cast_info.pausetime = level.time + 2;
+				other->leader = ent;
+//				ent->cast_info.aiflags |= AI_GOALENT_MANUAL_CLEAR;
+				other->cast_info.pausetime = level.time + 2;
+			}
 
 		}
 
@@ -1500,18 +1506,21 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 
 			other = EP_GetCharacter( NAME_INTROGUY1 );
 
-			other->yaw_speed = 5;
-
-			other->s.frame = move.firstframe;
-			other->cast_info.currentmove = &move;
-
-			other->s.model_parts[PART_GUN].invisible_objects = 0xFF;
-
-			if (!(cl_parental_lock->value && !cl_parental_override->value))
+			if (other)
 			{
-				// set pain skins
-				other->s.model_parts[PART_HEAD].skinnum[0] =  other->s.model_parts[PART_HEAD].baseskin + 1;
-				other->s.model_parts[PART_BODY].skinnum[0] =  other->s.model_parts[PART_BODY].baseskin + 1;
+				other->yaw_speed = 5;
+
+				other->s.frame = move.firstframe;
+				other->cast_info.currentmove = &move;
+
+				other->s.model_parts[PART_GUN].invisible_objects = 0xFF;
+
+				if (!(cl_parental_lock->value && !cl_parental_override->value))
+				{
+					// set pain skins
+					other->s.model_parts[PART_HEAD].skinnum[0] =  other->s.model_parts[PART_HEAD].baseskin + 1;
+					other->s.model_parts[PART_BODY].skinnum[0] =  other->s.model_parts[PART_BODY].baseskin + 1;
+				}
 			}
 		}
 		else if (!strcmp( scriptname, "intro_camera3" ))
@@ -1526,9 +1535,11 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		{
 			// delete the tough guys
 			other = EP_GetCharacter( NAME_TOUGHGUY1 );
-			G_FreeEdict( other );
+			if (other)
+				G_FreeEdict( other );
 			other = EP_GetCharacter( NAME_TOUGHGUY2 );
-			G_FreeEdict( other );
+			if (other)
+				G_FreeEdict( other );
 
 		}
 		else if (!strcmp( scriptname, "intro_player_script2" ))
@@ -1564,7 +1575,8 @@ void EP_Skidrow_Script( edict_t *ent, char *scriptname )
 		{	// end of intro
 
 			other = EP_GetCharacter( NAME_INTROGUY1 );
-			G_FreeEdict( other );
+			if (other)
+				G_FreeEdict( other );
 
 		}
 
