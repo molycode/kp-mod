@@ -1146,7 +1146,9 @@ void G_SetClientFrame (edict_t *ent)
 
 	run *= 1 + (speed > 200);
 
-	if (client->pers.weapon && (ent->noise_time > (level.time + 1.5)))
+	// melee swings make no PlayerNoise, so the swing itself must count
+	if (client->pers.weapon && ((ent->noise_time > (level.time + 1.5))
+		|| (!client->pers.weapon->ammo && (client->weaponstate == WEAPON_FIRING || (client->buttons & BUTTON_ATTACK)))))
 	{
 		if (strstr(client->pers.weapon->classname, "pistol"))
 			weapontype = WEAPON_PISTOL;
