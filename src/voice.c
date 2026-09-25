@@ -8,6 +8,22 @@ char	stranger_str[] = "(Stranger)";
 
 int	num_precached_voices = 0;
 
+static qboolean Voice_InEarshot( edict_t *self )
+{
+	int		i;
+	edict_t	*client;
+
+	for (i=0 ; i<maxclients->value ; i++)
+	{
+		client = g_edicts + 1 + i;
+
+		if (client->inuse && client->client && VectorDistance( client->s.origin, self->s.origin ) < 1024)
+			return true;
+	}
+
+	return false;
+}
+
 void Voice_Random_rc( edict_t *self, edict_t *other, voice_table_t *voice_table, int num_entries );
 void Voice_Specific_rc( edict_t *self, edict_t *other, voice_table_t *voice_table, int entry );
 
@@ -130,7 +146,7 @@ again:
 			voice_table[ entry ].soundindex = 0;
 		}
 
-		if (deathmatch->value || VectorDistance( g_edicts[1].s.origin, self->s.origin ) < 1024)
+		if (deathmatch->value || Voice_InEarshot( self ))
 		{
 			if ((other && other->client) || self->client)
 				gi.sound( self, CHAN_VOICE | CHAN_RELIABLE, (voice_table[ entry ].soundindex ? voice_table[ entry ].soundindex - 1 : (voice_table[ entry ].soundindex = 1 + gi.soundindex ( voice_table[ entry ].filename )) - 1 ), 1.0, 1, 0 );
@@ -225,7 +241,7 @@ void Voice_Specific( edict_t *self, edict_t *other, voice_table_t *voice_table, 
 			voice_table[ entry ].soundindex = 0;
 		}
 
-		if (VectorDistance( g_edicts[1].s.origin, self->s.origin ) < 1024)
+		if (Voice_InEarshot( self ))
 		{
 			if ((other && other->client) || self->client)
 				gi.sound( self, CHAN_VOICE + CHAN_RELIABLE, (voice_table[ entry ].soundindex ? voice_table[ entry ].soundindex - 1 : (voice_table[ entry ].soundindex = 1 + gi.soundindex ( voice_table[ entry ].filename )) - 1 ), 1.0, 1, 0 );
@@ -592,7 +608,7 @@ again:
 			voice_table[ entry ].soundindex = 0;
 		}
 
-		if (VectorDistance( g_edicts[1].s.origin, self->s.origin ) < 1024)
+		if (Voice_InEarshot( self ))
 		{
 			if ((other && other->client) || self->client)
 				gi.sound( self, CHAN_VOICE | CHAN_RELIABLE, (voice_table[ entry ].soundindex ? voice_table[ entry ].soundindex - 1 : (voice_table[ entry ].soundindex = 1 + gi.soundindex ( voice_table[ entry ].filename )) - 1 ), 1.0, 1, 0 );
@@ -773,7 +789,7 @@ void Voice_Specific_rc( edict_t *self, edict_t *other, voice_table_t *voice_tabl
 			voice_table[ entry ].soundindex = 0;
 		}
 
-		if (VectorDistance( g_edicts[1].s.origin, self->s.origin ) < 1024)
+		if (Voice_InEarshot( self ))
 		{
 			if ((other && other->client) || self->client)
 				gi.sound( self, CHAN_VOICE + CHAN_RELIABLE, (voice_table[ entry ].soundindex ? voice_table[ entry ].soundindex - 1 : (voice_table[ entry ].soundindex = 1 + gi.soundindex ( voice_table[ entry ].filename )) - 1 ), 1.0, 1, 0 );
