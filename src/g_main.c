@@ -338,12 +338,12 @@ char *MapCycleNext( qboolean restartIfUnlisted )
 
 	strcpy( travmap, firstmap );
 	ch = 0;
-	while (ch!='\n' && !feof(f))
-		fscanf(f, "%c", &ch);
+	while (ch!='\n' && fscanf(f, "%c", &ch) == 1)
+		;
 
 	do
 	{
-		eof = feof(f);
+		eof = feof(f) || ferror(f);
 
 		if (!Q_stricmp( travmap, level.mapname ))
 		{
@@ -352,15 +352,16 @@ char *MapCycleNext( qboolean restartIfUnlisted )
 
 		if (!eof)
 		{
-			fscanf( f, fmt, travmap );
+			if (fscanf( f, fmt, travmap ) != 1)
+				travmap[0] = 0;
 
 			if (strlen(travmap) == sizeof(travmap) - 1)
 				gi.dprintf ("MapCycleNext: a map name in %s reached the %i character limit and was truncated\n",
 					filename, (int)sizeof(travmap) - 1);
 
 			ch = 0;
-			while (ch!='\n' && !feof(f))
-				fscanf(f, "%c", &ch);
+			while (ch!='\n' && fscanf(f, "%c", &ch) == 1)
+				;
 		}
 
 		if (matched)
