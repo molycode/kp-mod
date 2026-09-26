@@ -1131,7 +1131,7 @@ void bitch_pain (edict_t *self, edict_t *other, float kick, int damage, int mdx_
 			}
 		case ORIENTATION_LEFT :
 			{
-				rnd = rand() * 2;
+				rnd = rand() % 2;
 				if (rnd)
 					self->cast_info.currentmove = &bitch_move_p_pain_lleg; 			
 				else
@@ -1140,7 +1140,7 @@ void bitch_pain (edict_t *self, edict_t *other, float kick, int damage, int mdx_
 			}
 		case ORIENTATION_RIGHT :
 			{
-				rnd = rand() * 2;
+				rnd = rand() % 2;
 				if (rnd)
 					self->cast_info.currentmove = &bitch_move_p_pain_rleg; 	
 				else
