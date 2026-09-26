@@ -1122,7 +1122,7 @@ void bitch_pain (edict_t *self, edict_t *other, float kick, int damage, int mdx_
 				}
 				else
 				{
-					if (rnd == 2)
+					if (rnd == 1)
 						self->cast_info.currentmove = &bitch_move_p_pain_butt; 
 					else
 						self->cast_info.currentmove = &bitch_move_p_pain_butt2; 			
