@@ -5,8 +5,6 @@
 
 
 static qboolean	is_quad;
-// RAFAEL
-static qboolean is_quadfire;
 static byte		is_silenced;
 
 void weapon_grenade_fire (edict_t *ent, qboolean held);
@@ -717,8 +715,6 @@ void Think_Weapon (edict_t *ent)
 	else if (ent->client->pers.weapon && ent->client->pers.weapon->weaponthink)
 	{
 		is_quad = (ent->client->quad_framenum > level.framenum);
-		// RAFAEL
-		is_quadfire = (ent->client->quadfire_framenum > level.framenum);
 		//if (ent->client->pers.silencer_shots)
 		//	is_silenced = MZ_SILENCED;
 		//else
