@@ -57,7 +57,7 @@ again:
 		&&	(other->last_voice->num_responses))
 	{
 		// we should pick a specific response
-		i = (int)floor( random()*other->last_voice->num_responses );
+		i = (int)floor( random()*other->last_voice->num_responses ) % other->last_voice->num_responses;	// random() can return 1.0
 
 		while ((entry < 0) || (voice_table[entry].last_played > 0.1))
 		{
@@ -85,7 +85,7 @@ again:
 	else	// not responding, just pick any non-response
 	{
 
-		entry = (int)floor( random()*num_entries );
+		entry = (int)floor( random()*num_entries ) % num_entries;
 
 		while (count++ < num_entries)
 		{
@@ -108,7 +108,7 @@ again:
 		}
 
 		if (best_entry < 0)
-			best_entry = (int)floor( random()*num_entries );
+			best_entry = (int)floor( random()*num_entries ) % num_entries;
 
 		entry = best_entry;
 	}
@@ -519,7 +519,7 @@ again:
 		&&	(other->last_voice->num_responses))
 	{
 		// we should pick a specific response
-		i = (int)floor( random()*other->last_voice->num_responses );
+		i = (int)floor( random()*other->last_voice->num_responses ) % other->last_voice->num_responses;	// random() can return 1.0
 
 		while ((entry < 0) || (voice_table[entry].last_played > 0.1))
 		{
@@ -547,7 +547,7 @@ again:
 	else	// not responding, just pick any non-response
 	{
 
-		entry = (int)floor( random()*num_entries );
+		entry = (int)floor( random()*num_entries ) % num_entries;
 
 		while (count++ < num_entries)
 		{
@@ -570,7 +570,7 @@ again:
 		}
 
 		if (best_entry < 0)
-			best_entry = (int)floor( random()*num_entries );
+			best_entry = (int)floor( random()*num_entries ) % num_entries;
 
 		entry = best_entry;
 	}
