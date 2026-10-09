@@ -1538,7 +1538,7 @@ void G_SetStats (edict_t *ent)
 						
 							if ((theent->enemy) && (theent->enemy->health > 0))
 							{
-								ent->client->ps.stats[STAT_HUD_HIRE1_CMD] = 3;
+								ent->client->ps.stats[STAT_HUD_HIRE2_CMD] = 3;
 							}
 							else if (theent->cast_info.aiflags & AI_MOVEOUT || theent->cast_info.aiflags & AI_DOKEY)
 							{
