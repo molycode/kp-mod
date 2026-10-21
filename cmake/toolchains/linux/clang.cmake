@@ -1,5 +1,7 @@
 set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR i386)
+
+set(KP_ARCH "i386" CACHE STRING "Target architecture: i386 or x86_64")
+set_property(CACHE KP_ARCH PROPERTY STRINGS i386 x86_64)
 
 # Both paths accept a cache variable and fall back to the environment. An environment-only setting is
 # unreachable from an IDE: QtCreator applies a preset's `environment` block to the BUILD step, never to
@@ -14,7 +16,7 @@ endif()
 
 # try_compile re-runs this file in a scratch project that inherits the environment but NOT the cache, so
 # without this the compiler-ABI probe would measure a different toolchain than the build then uses.
-list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES KP_CLANG_PATH KP_GCC_PATH)
+list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES KP_CLANG_PATH KP_GCC_PATH KP_ARCH)
 
 if(KP_CLANG_PATH)
 	set(CMAKE_C_COMPILER "${KP_CLANG_PATH}/bin/clang" CACHE FILEPATH "" FORCE)
@@ -31,15 +33,27 @@ elseif(NOT DEFINED CMAKE_CXX_COMPILER)
 	set(CMAKE_CXX_COMPILER "clang++")
 endif()
 
-# The retail engine that dlopens this library is i386; a 64-bit build cannot be loaded.
-# -mstackrealign: the 1999 engine calls in on a 4-byte-aligned stack, but the compiler assumes
-# the modern 16-byte ABI, so an aligned SSE spill (movapd) faults. Costs a prologue, not optional.
-set(CMAKE_C_FLAGS_INIT "-m32 -mstackrealign")
-# The linker flags below are language-agnostic, so C++ must be built 32-bit as well or it produces
-# a 64-bit object against a 32-bit link.
-set(CMAKE_CXX_FLAGS_INIT "-m32 -mstackrealign")
-set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")
-set(CMAKE_EXE_LINKER_FLAGS_INIT "-m32")
+# An engine loads only a library of its own width: i386 for the retail engine, x86_64 for a 64-bit one.
+if(KP_ARCH STREQUAL "i386")
+	set(CMAKE_SYSTEM_PROCESSOR i386)
+	# -mstackrealign: the 1999 engine calls in on a 4-byte-aligned stack, but the compiler assumes
+	# the modern 16-byte ABI, so an aligned SSE spill (movapd) faults. Costs a prologue, not optional.
+	set(_kp_cflags "-m32 -mstackrealign")
+	set(_kp_mflag "-m32")
+elseif(KP_ARCH STREQUAL "x86_64")
+	set(CMAKE_SYSTEM_PROCESSOR x86_64)
+	set(_kp_cflags "-m64")
+	set(_kp_mflag "-m64")
+else()
+	message(FATAL_ERROR "KP_ARCH is '${KP_ARCH}'; expected i386 or x86_64")
+endif()
+
+set(CMAKE_C_FLAGS_INIT "${_kp_cflags}")
+# The linker flags below are language-agnostic, so C++ must match the C target or it produces objects
+# of the other width against the link.
+set(CMAKE_CXX_FLAGS_INIT "${_kp_cflags}")
+set(CMAKE_SHARED_LINKER_FLAGS_INIT "${_kp_mflag}")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "${_kp_mflag}")
 
 if(KP_GCC_PATH)
 	file(GLOB _gcc_ver_dirs LIST_DIRECTORIES true "${KP_GCC_PATH}/lib/gcc/x86_64-pc-linux-gnu/*")
@@ -58,5 +72,6 @@ else()
 	message(STATUS "Using system Clang (set KP_CLANG_PATH to use custom Clang)")
 endif()
 
+message(STATUS "Target architecture: ${KP_ARCH}")
 message(STATUS "CMAKE_C_COMPILER = ${CMAKE_C_COMPILER}")
 message(STATUS "CMAKE_CXX_COMPILER = ${CMAKE_CXX_COMPILER}")

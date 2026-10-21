@@ -128,6 +128,39 @@
 			}
 		},
 		{
+			"name": "x86_64",
+			"hidden": true,
+			"cacheVariables": { "KP_ARCH": "x86_64" }
+		},
+		{
+			"name": "linux-gcc-x86_64-release",
+			"inherits": [ "x86_64", "linux-gcc-release" ],
+			"displayName": "linux_gcc_x86_64_release",
+			"description": "x86-64 Release build with GCC (uses KP_GCC_PATH or system GCC)",
+			"binaryDir": "${sourceDir}/build/gcc-x86_64-Release"
+		},
+		{
+			"name": "linux-gcc-x86_64-relwithdebinfo",
+			"inherits": [ "x86_64", "linux-gcc-relwithdebinfo" ],
+			"displayName": "linux_gcc_x86_64_relwithdebinfo",
+			"description": "x86-64 optimised build with symbols, using GCC (uses KP_GCC_PATH or system GCC)",
+			"binaryDir": "${sourceDir}/build/gcc-x86_64-RelWithDebInfo"
+		},
+		{
+			"name": "linux-gcc-x86_64-asanubsan",
+			"inherits": [ "x86_64", "linux-gcc-asanubsan" ],
+			"displayName": "linux_gcc_x86_64_asanubsan",
+			"description": "x86-64 ASan + UBSan build with GCC",
+			"binaryDir": "${sourceDir}/build/gcc-x86_64-asanubsan"
+		},
+		{
+			"name": "linux-clang-x86_64-release",
+			"inherits": [ "x86_64", "linux-clang-release" ],
+			"displayName": "linux_clang_x86_64_release",
+			"description": "x86-64 Release build with Clang (uses KP_CLANG_PATH or system Clang)",
+			"binaryDir": "${sourceDir}/build/clang-x86_64-Release"
+		},
+		{
 			"name": "windows-msvc-debug",
 			"inherits": "base",
 			"displayName": "windows_msvc_debug",
@@ -214,6 +247,26 @@
 		{
 			"name": "linux-clang-relwithdebinfo",
 			"configurePreset": "linux-clang-relwithdebinfo",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-gcc-x86_64-release",
+			"configurePreset": "linux-gcc-x86_64-release",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-gcc-x86_64-relwithdebinfo",
+			"configurePreset": "linux-gcc-x86_64-relwithdebinfo",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-gcc-x86_64-asanubsan",
+			"configurePreset": "linux-gcc-x86_64-asanubsan",
+			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+		},
+		{
+			"name": "linux-clang-x86_64-release",
+			"configurePreset": "linux-clang-x86_64-release",
 			"condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
 		},
 		{
