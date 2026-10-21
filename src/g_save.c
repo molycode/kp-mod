@@ -1390,7 +1390,7 @@ void ReadLevel (char *filename)
 		gi.error ("ReadLevel: function pointers have moved");
 	}
 #else
-	gi.dprintf("Function offsets %d\n", ((byte *)base) - ((byte *)InitGame));
+	gi.dprintf("Function offsets %td\n", ((byte *)base) - ((byte *)InitGame));
 #endif
 
 // BEGIN:	Xatrix/Ridah/Navigator/18-apr-1998
