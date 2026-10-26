@@ -1155,6 +1155,9 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 		ED_CallSpawn (ent);
 	}	
 
+	// later spawns (followers, target_spawner) must not see the last entity's keys; ReadLevel frees them
+	memset (&st, 0, sizeof(st));
+
 
 // Ridah, HACK, fix spawn spots in team_towers
 	if (!strcmp( level.mapname, "team_towers" ))
