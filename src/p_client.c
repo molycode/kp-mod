@@ -1966,7 +1966,7 @@ void maxrate_think(edict_t *self)
 
 void minrate_think(edict_t *self)
 {
-	gi.cprintf( self->owner, PRINT_HIGH, "Server raising rate to %i\n", (int)minrate->value );
+	gi.cprintf( self->owner, PRINT_HIGH, "Your rate %i is below the server's minimum - raising it to %i\n", self->count, (int)minrate->value );
 	G_FreeEdict(self);
 }
 
@@ -2020,6 +2020,7 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 		thinker->think = minrate_think;
 		thinker->nextthink = level.time + 2 + random()*2;
 		thinker->owner = ent;
+		thinker->count = rate;
 		Info_SetValueForKey( userinfo, "rate", va("%i", (int)minrate->value) );
 	}
 
