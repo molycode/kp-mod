@@ -711,7 +711,9 @@ void G_RunFrame (void)
 	// The cast start walking their scripted routes the moment a level spawns, but a dedicated
 	// server loads it long before anyone arrives: sr1's intro actors leave the alley inside a
 	// minute, so the scene the first player triggers pans across a street they have left.
-	if (coop->value && !AnyClientInGame ())
+	if (level.catchup_frames > 0)
+		level.catchup_frames--;
+	else if (coop->value && !AnyClientInGame ())
 		return;
 
 	level.framenum++;

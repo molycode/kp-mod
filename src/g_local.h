@@ -434,6 +434,8 @@ typedef struct
 	// JOSEPH 13-JUN-99
 	int helpchange;	
 	// END JOSEPH
+
+	int			catchup_frames;
 } level_locals_t;
 
 

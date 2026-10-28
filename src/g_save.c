@@ -966,6 +966,8 @@ void WriteGame (char *filename, qboolean autosave)
 	fclose (f);
 }
 
+static qboolean	loading_game;
+
 void ReadGame (char *filename)
 {
 	FILE	*f;
@@ -1020,6 +1022,8 @@ void ReadGame (char *filename)
 		ReadClient (f, &game.clients[i]);
 
 	fclose (f);
+
+	loading_game = true;
 }
 
 //==========================================================
@@ -1568,4 +1572,7 @@ void ReadLevel (char *filename)
 		}
 	}
 
+	// SV_CheckForSavegame runs a level returned to, not a loaded one, 100 frames before anyone is back
+	level.catchup_frames = loading_game ? 0 : 100;
+	loading_game = false;
 }
