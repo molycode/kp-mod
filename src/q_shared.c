@@ -1265,7 +1265,7 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	len = vsprintf (bigbuffer,fmt,argptr);
 	va_end (argptr);
 	if (len >= size)
-		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
+		Com_Printf ("Com_sprintf: overflow of %i in %i: \"%.512s\"\n", len, size, bigbuffer);
 	strncpy (dest, bigbuffer, size-1);
 	dest[size-1] = 0;
 }
