@@ -1123,6 +1123,11 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 			&& ent->model && !Q_stricmp(ent->model, "*27"))
 			ent->spawnflags &= ~SPAWNFLAG_NOT_HARD;
 
+		// pv_h's manhole lid would seal the sewer the co-op players respawn in
+		if (coop->value && !Q_stricmp(level.mapname, "pv_h") && ent->classname && !Q_stricmp(ent->classname, "func_wall")
+			&& ent->model && (!Q_stricmp(ent->model, "*97") || !Q_stricmp(ent->model, "*20")))
+			ent->targetname = NULL;
+
 		// remove things (except the world) from different skill levels or deathmatch
 		if (ent != g_edicts)
 		{
